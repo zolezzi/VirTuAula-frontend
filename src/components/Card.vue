@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-card
-      :title="classroomName"
+      :title="classroom.name"
       img-src="../assets/classroom.png"
       img-alt="classroom"
       img-top
@@ -16,7 +16,7 @@
         <b-progress-bar :value="value" variant="success" show-progress :label="`${((value / max) * 100)}%`"></b-progress-bar>
       </b-progress>
 
-      <b-button href="#" variant="warning" class="m-auto">Ingresar</b-button>
+      <b-button href="#" variant="warning" class="m-auto" @click="ingresar()" >Ingresar</b-button>
     </b-card>
   </div>
 </template>
@@ -28,15 +28,21 @@ export default {
       return {
         max: 100,
         timer: null,
-        value: 0
+        value: 0,
       }
     },
     mounted() {
       this.timer = setInterval(() => {
-        this.value = this.progress;
+        this.value = this.classroom.progress;
       }, 500)
     },
-    props: ['classroomName', 'progress']
+    props: ['classroom'],
+    methods: {
+      ingresar() {
+        this.$store.commit('addActual', this.classroom);
+        this.$router.push({name: 'Classroom'})
+      }
+    },
 }
 </script>
 

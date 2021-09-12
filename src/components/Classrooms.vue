@@ -1,10 +1,10 @@
 <template>
   <div>
     <b-container>
-      <b-row>
-        <div v-for="(classroom, index) in classrooms" :key="classroom.id">
+      <b-row align-h="center">
+        <div v-for="classroom in classrooms" :key="classroom.id">
           <b-col>
-            <Card :classroomName="classroom.name" class="animate__animated animate__fadeInDown animate__faster" :class="delay(index)" />
+            <Card :classroomName="classroom.name" :progress="classroom.progress" class="animate__animated animate__zoomIn animate__faster" />
           </b-col>
         </div>
       </b-row>
@@ -19,22 +19,17 @@ export default {
   data() {
     return {
       classrooms: [
-        { id: 1, name: "Matemáticas" },
-        { id: 2, name: "Ciencias" },
-        { id: 3, name: "Lengua" },
-        { id: 4, name: "Química" },
-        { id: 5, name: "Programación" },
-        { id: 6, name: "Física" },
+        { id: 1, name: "Matemáticas", progress: 0 },
+        { id: 2, name: "Ciencias", progress: 10},
+        { id: 3, name: "Lengua", progress: 50},
+        { id: 4, name: "Química", progress: 70 },
+        { id: 5, name: "Programación", progress: 100 },
+        { id: 6, name: "Física", progress: 20},
       ],
     };
   },
   components: {
     Card,
-  },
-  methods: {
-      delay(seconds) {
-          return `animate__delay-${seconds}s`;
-      }
   }
 };
 </script>

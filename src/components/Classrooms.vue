@@ -4,7 +4,7 @@
       <b-row align-h="center">
         <div v-for="classroom in this.$store.getters.getClassrooms" :key="classroom.id">
           <b-col>
-            <Card :classroom="classroom" class="animate__animated animate__zoomIn animate__faster" />
+            <Card :classroom="classroom"  :hide="hide" @update="hideUpdate" class="animate__animated animate__zoomIn animate__faster" />
           </b-col>
         </div>
       </b-row>
@@ -18,6 +18,16 @@ export default {
   name: "Classrooms",
   components: {
     Card,
+  },
+  data() {
+    return {
+      hide: false,
+    }
+  },
+  methods: {
+    hideUpdate(newValue) {
+      this.hide = newValue;
+    }
   }
 };
 </script>

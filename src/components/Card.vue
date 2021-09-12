@@ -1,5 +1,7 @@
 <template>
-  <div>
+  <div
+    :class="hide ? 'animate__animated animate__zoomOut animate__faster' : ''"
+  >
     <b-card
       :title="classroom.name"
       img-src="../assets/classroom.png"
@@ -13,39 +15,46 @@
         of the card's content.
       </b-card-text>
       <b-progress :max="max" class="mb-3">
-        <b-progress-bar :value="value" variant="success" show-progress :label="`${((value / max) * 100)}%`"></b-progress-bar>
+        <b-progress-bar
+          :value="value"
+          variant="success"
+          show-progress
+          :label="`${(value / max) * 100}%`"
+        ></b-progress-bar>
       </b-progress>
 
-      <b-button href="#" variant="warning" class="m-auto" @click="ingresar()" >Ingresar</b-button>
+      <b-button href="#" variant="warning" class="m-auto" @click="ingresar()"
+        >Ingresar</b-button
+      >
     </b-card>
   </div>
 </template>
 
 <script>
 export default {
-    name: "Card",
-    data() {
-      return {
-        max: 100,
-        timer: null,
-        value: 0,
-      }
+  name: "Card",
+  data() {
+    return {
+      max: 100,
+      timer: null,
+      value: 0,
+    };
+  },
+  mounted() {
+    this.timer = setInterval(() => {
+      this.value = this.classroom.progress;
+    }, 500);
+  },
+  props: ["classroom", "hide"],
+  methods: {
+    ingresar() {
+      this.$emit("update", true);
+      this.$store.commit("addActual", this.classroom);
+      setTimeout( () => this.$router.push({ name: "Classroom" }), 500);
     },
-    mounted() {
-      this.timer = setInterval(() => {
-        this.value = this.classroom.progress;
-      }, 500)
-    },
-    props: ['classroom'],
-    methods: {
-      ingresar() {
-        this.$store.commit('addActual', this.classroom);
-        this.$router.push({name: 'Classroom'})
-      }
-    },
-}
+  },
+};
 </script>
 
 <style scoped>
-
 </style>

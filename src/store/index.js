@@ -6,7 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     classrooms: [
-      { id: 1, name: "Matemáticas", progress: 30 },
+      { id: 1, name: "Matemáticas", progress: 30},
       { id: 2, name: "Historia", progress: 10},
       { id: 3, name: "Lengua", progress: 50},
       { id: 4, name: "Química", progress: 70 },

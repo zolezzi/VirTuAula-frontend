@@ -1,9 +1,9 @@
 <template>
   <div>
-    <h2 class="animate__animated animate__bounceInDown animate__faster mt-2">
-      {{ this.$store.getters.getActual.name }}
+    <h2 class="mt-2" :class="hide ? 'animate__animated animate__zoomOut animate__faster' : 'animate__animated animate__bounceInDown animate__faster'">
+      {{ this.$store.getters.getActualClassroom.name }}
     </h2>
-    <Lessons :classroomId="this.$store.getters.getActual.id" class="animate__animated animate__zoomIn animate__faster"/>
+    <Lessons :classroomId="this.$store.getters.getActualClassroom.id" class="animate__animated animate__zoomIn animate__faster"/>
   </div>
 </template>
 
@@ -13,6 +13,11 @@ export default {
   components: {
     Lessons,
   },
+  data() {
+    return {
+      hide: false
+    }
+  }
 };
 </script>
 

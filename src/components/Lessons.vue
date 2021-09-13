@@ -3,7 +3,7 @@
     <b-container>
       <b-row align-h="center">
         <div v-for="lesson in this.$store.getters.getLessons(classroomId)" :key="lesson.id">
-          <CardLesson :lesson="lesson" />
+          <CardLesson :lesson="lesson" :hide="hide" @update="hideUpdate" />
         </div>
       </b-row>
     </b-container>
@@ -16,7 +16,18 @@ export default {
   components: {
     CardLesson,
   },
-  props: ['classroomId']
+  props: ['classroomId'],
+  data() {
+    return {
+      hide: false,
+    }
+  },
+  methods: {
+    hideUpdate(newValue) {
+      this.hide = newValue;
+      this.$parent.hide = newValue;
+    }
+  }
 };
 </script>
 

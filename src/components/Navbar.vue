@@ -1,6 +1,7 @@
 <template>
   <div>
     <b-navbar type="dark" variant="secondary">
+      <router-link to="/" class="virtuaula-link">
         <b-navbar-nav class="virtuaula-logo">
           <div class="virtuaula-box">
             <img
@@ -15,12 +16,13 @@
             </p>
           </div>
         </b-navbar-nav>
-        <b-navbar-nav class="ml-auto">
-          <b-nav-text class="virtuaula-guest">
-            Guest
-            <b-avatar variant="warning ml-2"></b-avatar>
-          </b-nav-text>
-        </b-navbar-nav>
+      </router-link>
+      <b-navbar-nav class="ml-auto">
+        <b-nav-text class="virtuaula-guest">
+          Guest
+          <b-avatar variant="warning ml-2"></b-avatar>
+        </b-nav-text>
+      </b-navbar-nav>
     </b-navbar>
   </div>
 </template>
@@ -57,6 +59,11 @@ export default {
 .virtuaula-guest {
   display: flex;
   align-items: center;
+}
+
+.virtuaula-link {
+  color: inherit;
+  text-decoration: inherit;
 }
 
 /* Mobile */

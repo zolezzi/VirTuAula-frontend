@@ -49,7 +49,7 @@ export default {
   methods: {
     ingresar() {
       this.$emit("update", true);
-      this.$store.commit("addActual", this.classroom);
+      this.$store.commit("addActualClassroom", this.classroom);
       setTimeout( () => this.$router.push({ name: "Classroom" }), 500);
     },
   },

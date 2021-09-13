@@ -6,7 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     classrooms: [
-      { id: 1, name: "Matemáticas", progress: 0 },
+      { id: 1, name: "Matemáticas", progress: 30 },
       { id: 2, name: "Historia", progress: 10},
       { id: 3, name: "Lengua", progress: 50},
       { id: 4, name: "Química", progress: 70 },
@@ -30,22 +30,29 @@ export default new Vuex.Store({
       {id: 14, name: "Fuerza", progress: 100, classroomId: 6},
       {id: 15, name: "Velocidad", progress: 70, classroomId: 6},
     ],
-    actualClassroom: {}
+    actualClassroom: {},
+    actualLesson: {},
   },
   getters: {
     getClassrooms: state => {
       return state.classrooms;
     },
-    getActual: state => {
+    getActualClassroom: state => {
       return state.actualClassroom;
     }, 
     getLessons: state => classroomId => {
       return state.lessons.filter(lesson => lesson.classroomId === classroomId);
+    },
+    getActualLesson: state => {
+      return state.actualLesson;
     }
   },
   mutations: {
-    addActual(state, classroom) {
+    addActualClassroom(state, classroom) {
       state.actualClassroom = classroom;
+    },
+    addActualLesson(state, lesson) {
+      state.actualLesson = lesson;
     }
   },
   actions: {

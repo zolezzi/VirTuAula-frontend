@@ -19,7 +19,7 @@
           :value="value"
           variant="success"
           show-progress
-          :label="`${(value / max) * 100}%`"
+          :label="`${value}%`"
         ></b-progress-bar>
       </b-progress>
 

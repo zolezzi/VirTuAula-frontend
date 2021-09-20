@@ -7,6 +7,9 @@ import router from './router'
 import store from './store'
 import "animate.css"
 import './scss/style.scss'
+import axios from 'axios'
+
+axios.defaults.baseURL = 'http://localhost:8081/api';
 
 Vue.config.productionTip = false
 

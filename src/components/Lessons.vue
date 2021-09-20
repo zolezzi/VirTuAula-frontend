@@ -27,6 +27,9 @@ export default {
       this.hide = newValue;
       this.$parent.hide = newValue;
     }
+  },
+  created() {
+    this.$store.dispatch('fetchLessons', this.classroomId);
   }
 };
 </script>

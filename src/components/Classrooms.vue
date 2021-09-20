@@ -28,7 +28,11 @@ export default {
     hideUpdate(newValue) {
       this.hide = newValue;
     }
+  },
+  created() {
+    this.$store.dispatch('fetchClasses');
   }
+
 };
 </script>
 

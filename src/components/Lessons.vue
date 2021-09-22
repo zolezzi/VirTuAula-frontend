@@ -29,7 +29,7 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch('fetchLessons', this.classroomId);
+    this.$store.dispatch('fetchLessons');
   }
 };
 </script>

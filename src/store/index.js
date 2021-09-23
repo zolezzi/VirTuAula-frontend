@@ -1,6 +1,8 @@
-import axios from "axios";
 import Vue from "vue";
 import Vuex from "vuex";
+import lessonService from "../services/lesson-service"
+import classroomService from "../services/classroom-service"
+import taskService from "../services/task-service"
 
 Vue.use(Vuex);
 
@@ -31,15 +33,15 @@ export default new Vuex.Store({
   },
   actions: {
     async fetchClasses() {
-      const response = await axios.get("/classrooms");
+      const response = await classroomService.fetchClasses();
       this.commit("setClasses", response.data);
     },
     async fetchLessons() {
-      const response = await axios.get(`/lessons/${this.state.actualClassroom.id}`);
+      const response = await lessonService.fetchLessons(this.state.actualClassroom.id);
       this.commit("setLessons", response.data);
     },
     async fetchTasks() {
-      const response = await axios.get(`/tasks/${this.state.actualLesson.id}`);
+      const response = await taskService.fetchTasks(this.state.actualLesson.id);
       this.commit("setTasks", response.data);
     },
   },

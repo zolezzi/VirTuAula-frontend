@@ -12,7 +12,7 @@
             </b-card-text>
             <b-container>
               <b-row>
-                <b-col cols="8" sm="9" lg="10">
+                <b-col cols="7" sm="9" lg="10">
                   <b-progress :max="max" class="mt-2">
                     <b-progress-bar
                       :value="value"
@@ -22,9 +22,9 @@
                     ></b-progress-bar>
                   </b-progress>
                 </b-col>
-                <b-col cols="1" xs="2">
+                <b-col cols="2">
                   <b-button href="#" variant="warning" @click="realizar()"
-                    >Realizar</b-button
+                    >{{lesson.progress === 100 ? 'Ver': 'Realizar'}}</b-button
                   >
                 </b-col>
               </b-row>
@@ -62,4 +62,7 @@ export default {
 </script>
 
 <style scoped>
+.btn-warning {
+  width: 6rem;
+}
 </style>

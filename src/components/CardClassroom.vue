@@ -16,8 +16,8 @@
       </b-card-text>
       <b-progress :max="max" class="mb-3">
         <b-progress-bar
-          :value="value"
-          variant="success"
+          :value="classroom.progress === 0 ? 100 : value"
+          :variant="classroom.progress === 0 ? 'danger': 'success'"
           show-progress
           :label="`${value}%`"
         ></b-progress-bar>

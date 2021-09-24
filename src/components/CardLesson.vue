@@ -15,8 +15,8 @@
                 <b-col cols="7" sm="9" lg="10">
                   <b-progress :max="max" class="mt-2">
                     <b-progress-bar
-                      :value="value"
-                      variant="success"
+                      :value="lesson.progress === 0 ? 100 : value"
+                      :variant="lesson.progress === 0 ? 'danger': 'success'"
                       show-progress
                       :label="`${value}%`"
                     ></b-progress-bar>

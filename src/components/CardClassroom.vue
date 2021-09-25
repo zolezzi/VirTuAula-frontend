@@ -17,14 +17,14 @@
       <b-progress :max="max" class="mb-3">
         <b-progress-bar
           :value="classroom.progress === 0 ? 100 : value"
-          :variant="classroom.progress === 0 ? 'danger': 'success'"
+          :variant="classroom.progress === 0 ? 'secondary': 'success'"
           show-progress
           :label="`${value}%`"
         ></b-progress-bar>
       </b-progress>
 
-      <b-button href="#" variant="warning" class="m-auto" @click="ingresar()"
-        >Ingresar</b-button
+      <b-button href="#" variant="warning" class="m-auto" @click="enter()"
+        >Enter</b-button
       >
     </b-card>
   </div>
@@ -47,7 +47,7 @@ export default {
   },
   props: ["classroom", "hide"],
   methods: {
-    ingresar() {
+    enter() {
       this.$emit("update", true);
       this.$store.commit("addActualClassroom", this.classroom);
       setTimeout( () => this.$router.push({ name: "Classroom" }), 500);

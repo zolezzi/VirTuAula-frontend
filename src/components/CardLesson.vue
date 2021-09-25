@@ -16,15 +16,15 @@
                   <b-progress :max="max" class="mt-2">
                     <b-progress-bar
                       :value="lesson.progress === 0 ? 100 : value"
-                      :variant="lesson.progress === 0 ? 'danger': 'success'"
+                      :variant="lesson.progress === 0 ? 'secondary': 'success'"
                       show-progress
                       :label="`${value}%`"
                     ></b-progress-bar>
                   </b-progress>
                 </b-col>
                 <b-col cols="2">
-                  <b-button href="#" variant="warning" @click="realizar()"
-                    >{{lesson.progress === 100 ? 'Ver': 'Realizar'}}</b-button
+                  <b-button href="#" variant="warning" @click="doLesson()"
+                    >{{lesson.progress === 100 ? 'View': 'Do'}}</b-button
                   >
                 </b-col>
               </b-row>
@@ -52,7 +52,8 @@ export default {
     }, 500);
   },
   methods: {
-    realizar() {
+    doLesson() {
+      this.$store.commit('resetTaskResponse');
       this.$emit("update", true);
       this.$store.commit("addActualLesson", this.lesson);
       setTimeout(() => this.$router.push({ name: "Lesson" }), 500);

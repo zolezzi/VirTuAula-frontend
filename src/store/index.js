@@ -29,6 +29,7 @@ export default new Vuex.Store({
     setClasses: (state, classrooms) => (state.classrooms = classrooms),
     setLessons: (state, lessons) => (state.lessons = lessons),
     addTaskResponse: (state, taskResponse) => state.tasksResponse.some(task => task.id === taskResponse.id) ? state.tasksResponse.find(task=> task.id === taskResponse.id).answer = taskResponse.answer : state.tasksResponse.push(taskResponse),
+    resetTaskResponse: (state) => state.tasksResponse = [],
     setTasks: (state, tasks) => (state.tasks = tasks)
   },
   actions: {

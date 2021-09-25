@@ -10,7 +10,7 @@
         </div>
       </b-row>
       <b-row align-h="center" :class="hide ? 'animate__animated animate__zoomOut animate__faster' : ''">
-        <b-col><b-button variant="success" @click="enviar" :disabled="disabled === 100">Enviar</b-button></b-col>
+        <b-col><b-button variant="success" @click="send" :disabled="disabled === 100 || complete">Send</b-button></b-col>
       </b-row>
     </b-container>
   </div>
@@ -36,10 +36,15 @@ export default {
       this.hide = newValue;
       this.$parent.hide = newValue;
     },
-    enviar() {
+    send() {
         lessonService.completeTask(this.$store.getters.getActualClassroom.id, this.lessonId, this.$store.getters.getTasksResponse);
         this.hideUpdate(true);
         setTimeout( () => this.$router.push({ name: "Classroom" }), 500);
+    }
+  },
+  computed: {
+    complete() {
+      return this.$store.getters.getTasks(this.lessonId).length !== this.$store.getters.getTasksResponse.length
     }
   },
   created() {

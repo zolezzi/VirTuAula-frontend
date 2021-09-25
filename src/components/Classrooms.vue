@@ -27,6 +27,7 @@ export default {
   methods: {
     hideUpdate(newValue) {
       this.hide = newValue;
+      this.$parent.hide = newValue;
     }
   },
   created() {

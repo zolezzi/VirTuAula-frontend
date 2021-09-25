@@ -8,7 +8,7 @@
           <b-card
             img-alt="lesson"
             img-left
-            :title="task.statement"
+            :title="'¿' + task.statement + '?'"
             class="mb-3"
           >
             <b-form-group>

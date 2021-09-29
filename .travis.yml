@@ -3,6 +3,11 @@ node_js:
   - 12
 script:
   - npm run test:unit
-after_success:
   - npm run coverage:open
   - npm run coverage:push
+
+before_script:
+  - bash <(curl -Ls https://coverage.codacy.com/get.sh) download
+
+after_success:
+  - bash <(curl -Ls https://coverage.codacy.com/get.sh)

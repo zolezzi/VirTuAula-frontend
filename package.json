@@ -6,9 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
-    "coverage": "codacy-coverage",
     "test:coverage": "jest --coverage",
-    "coverage:open": "test:coverage && cat ./coverage/lcov.info",
+    "coverage:show":"cat ./coverage/lcov.info",
     "coverage:push": "curl -Ls https://coverage.codacy.com/get.sh | bash"
   },
   "dependencies": {

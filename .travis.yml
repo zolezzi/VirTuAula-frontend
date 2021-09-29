@@ -3,7 +3,8 @@ node_js:
   - 12
 script:
   - npm run test:unit
-  - npm run coverage:open
+  - test:coverage
+  - coverage:show
   - npm run coverage:push
 
 before_script:

@@ -1,7 +1,11 @@
 const axios = require("axios");
 const taskService = (function() {
-  function fetchTasks(lessonId) {
-      return axios.get(`/tasks/${lessonId}`)
+  function fetchTasks(lessonId, token) {
+      return axios.get(`/api/tasks/${lessonId}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
   }
 
   return {

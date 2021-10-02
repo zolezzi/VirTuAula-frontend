@@ -1,7 +1,11 @@
 const axios = require("axios");
 const classroomService = (function() {
-  function fetchClasses() {
-      return axios.get("/classrooms");
+  function fetchClasses(token) {
+      return axios.get("/api/classrooms", {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
   }
 
   return {

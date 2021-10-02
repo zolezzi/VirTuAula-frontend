@@ -13,7 +13,9 @@ export default new Vuex.Store({
     tasks: [],
     actualClassroom: {},
     actualLesson: {},
-    tasksResponse: []
+    tasksResponse: [],
+    token: '',
+    username: ''
   },
   getters: {
     getClassrooms: (state) => state.classrooms,
@@ -21,7 +23,9 @@ export default new Vuex.Store({
     getLessons: (state) => (classroomId) => state.lessons.filter((lesson) => lesson.classroomId === classroomId),
     getActualLesson: (state) => state.actualLesson,
     getTasks: (state) => (lessonId) => state.tasks,
-    getTasksResponse: (state) => state.tasksResponse
+    getTasksResponse: (state) => state.tasksResponse,
+    getToken: (state) => state.token,
+    getUsername: (state) => state.username
   },
   mutations: {
     addActualClassroom: (state, classroom) => (state.actualClassroom = classroom),
@@ -30,19 +34,21 @@ export default new Vuex.Store({
     setLessons: (state, lessons) => (state.lessons = lessons),
     addTaskResponse: (state, taskResponse) => state.tasksResponse.some(task => task.id === taskResponse.id) ? state.tasksResponse.find(task=> task.id === taskResponse.id).answer = taskResponse.answer : state.tasksResponse.push(taskResponse),
     resetTaskResponse: (state) => state.tasksResponse = [],
-    setTasks: (state, tasks) => (state.tasks = tasks)
+    setTasks: (state, tasks) => (state.tasks = tasks),
+    addToken: (state, token) => state.token = token,
+    addUsername: (state, username) => state.username = username
   },
   actions: {
     async fetchClasses() {
-      const response = await classroomService.fetchClasses();
+      const response = await classroomService.fetchClasses(this.state.token);
       this.commit("setClasses", response.data);
     },
     async fetchLessons() {
-      const response = await lessonService.fetchLessons(this.state.actualClassroom.id);
+      const response = await lessonService.fetchLessons(this.state.actualClassroom.id, this.state.token);
       this.commit("setLessons", response.data);
     },
     async fetchTasks() {
-      const response = await taskService.fetchTasks(this.state.actualLesson.id);
+      const response = await taskService.fetchTasks(this.state.actualLesson.id, this.state.token);
       this.commit("setTasks", response.data);
     },
   },

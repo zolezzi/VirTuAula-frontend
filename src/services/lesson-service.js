@@ -1,11 +1,19 @@
 const axios = require("axios");
 const lessonService = (function() {
-  function completeTask(classroomId, lessonId, tasks) {
-    return axios.post(`/lessons/${classroomId}/${lessonId}`, tasks);
+  function completeTask(classroomId, lessonId, tasks, token) {
+    return axios.post(`/api/lessons/${classroomId}/${lessonId}`, tasks, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
   }
 
-  function fetchLessons(classroomId) {
-    return axios.get(`/lessons/${classroomId}`);
+  function fetchLessons(classroomId, token) {
+    return axios.get(`/api/lessons/${classroomId}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });
   }
 
   return {

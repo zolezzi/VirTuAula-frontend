@@ -10,8 +10,7 @@
               img-alt="lesson"
               img-left
               :title="task.statement"
-              class="mb-3"
-              style="width: 30rem;"
+              class="mb-3 virtuaula-card"
             >
               <b-form-group>
                 <template v-for="option in task.options">
@@ -59,4 +58,18 @@ export default {
 </script>
 
 <style scoped>
+.virtuaula-card {
+  width: 30rem;
+}
+@media (max-width: 600px) {
+  .virtuaula-card {
+    width: 22rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .virtuaula-card {
+    width: 18rem;
+  }
+}
 </style>

@@ -5,7 +5,7 @@
         title="Login"
         style="max-width: 20rem"
         align="center"
-        class="mt-5"
+        class="mt-5 animate__animated animate__zoomInDown"
       >
         <b-form-input
           id="username"
@@ -25,10 +25,7 @@
           @keyup.enter="login"
         ></b-form-input>
         <b-container class="mt-4">
-          <b-row align-h="between">
-            <b-button variant="outline-warning" @click="register">{{
-              "Sign up"
-            }}</b-button>
+          <b-row align-h="center">
             <template v-if="spinner">
               <b-spinner variant="warning" label="Spinning"></b-spinner>
             </template>
@@ -89,9 +86,6 @@ export default {
         toaster: "b-toaster-bottom-right",
         solid: true,
       });
-    },
-    register() {
-      this.$router.push("/register");
     },
   },
 };

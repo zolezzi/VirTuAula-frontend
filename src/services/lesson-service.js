@@ -16,9 +16,18 @@ const lessonService = (function() {
     });
   }
 
+  function create(classroomId, token, accountId, lesson) {
+    return axios.post(`/api/lessons/create/${classroomId}/${accountId}`, lesson, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });    
+  }
+
   return {
     completeTask: completeTask,
     fetchLessons: fetchLessons,
+    create: create
   };
 })();
 

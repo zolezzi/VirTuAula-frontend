@@ -4,6 +4,8 @@ import Home from '../views/Home.vue'
 import Classroom from '../views/Classroom.vue'
 import Lesson from '../views/Lesson.vue'
 import Login from '../views/Login.vue'
+import FormLesson from '../views/FormLesson.vue'
+import Forbidden from '../views/Forbidden.vue'
 import store from '../store'
 
 Vue.use(VueRouter)
@@ -15,6 +17,7 @@ const routes = [
     component: Home,
     meta: {
       requiresAuth: true,
+      requiresRole: false
     }
   },
   {
@@ -23,6 +26,7 @@ const routes = [
     component: Classroom,
     meta: {
       requiresAuth: true,
+      requiresRole: false
     }
   },
   {
@@ -31,12 +35,27 @@ const routes = [
     component: Lesson,
     meta: {
       requiresAuth: true,
+      requiresRole: false
+    }
+  },
+  {
+    path: '/add-lesson',
+    name: 'FormLesson',
+    component: FormLesson,
+    meta: {
+      requiresAuth: true,
+      requiresRole: true
     }
   },
   {
     path: "/login",
     name: "Login",
     component: Login,
+  },
+  {
+    path: "/forbidden",
+    name: "Forbidden",
+    component: Forbidden,
   },
 ]
 
@@ -46,13 +65,27 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    if (!store.getters.getUser.token) {
-      next({ name: "Login" });
-    } else {
-      next();
-    }
+    checkAuthPermission()
   } else {
     next();
+  }
+
+  function checkAuthPermission() {
+    if (!store.getters.getUser.token) {
+      next({ name: "Login" })
+    } else if (to.matched.some((record) => record.meta.requiresRole)) {
+      checkTeacherPermission()
+    } else {
+      next()
+    }
+  }
+
+  function checkTeacherPermission() {
+    if (store.getters.getUser.account.accountType.name !== 'TEACHER') {
+      next({ name: "Forbidden" })
+    } else {
+      next()
+    }
   }
 });
 

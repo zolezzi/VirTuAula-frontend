@@ -37,7 +37,7 @@ export default {
       this.$parent.hide = newValue;
     },
     send() {
-        lessonService.completeTask(this.$store.getters.getActualClassroom.id, this.lessonId, this.$store.getters.getTasksResponse, this.$store.getters.getToken);
+        lessonService.completeTask(this.$store.getters.getActualClassroom.id, this.lessonId, this.$store.getters.getTasksResponse, this.$store.getters.getUser.token);
         this.hideUpdate(true);
         setTimeout( () => this.$router.push({ name: "Classroom" }), 500);
     }

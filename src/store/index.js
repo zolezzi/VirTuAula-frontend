@@ -14,8 +14,7 @@ export default new Vuex.Store({
     actualClassroom: {},
     actualLesson: {},
     tasksResponse: [],
-    token: '',
-    username: ''
+    user: {}
   },
   getters: {
     getClassrooms: (state) => state.classrooms,
@@ -24,8 +23,7 @@ export default new Vuex.Store({
     getActualLesson: (state) => state.actualLesson,
     getTasks: (state) => (lessonId) => state.tasks,
     getTasksResponse: (state) => state.tasksResponse,
-    getToken: (state) => state.token,
-    getUsername: (state) => state.username
+    getUser: (state) => state.user
   },
   mutations: {
     addActualClassroom: (state, classroom) => (state.actualClassroom = classroom),
@@ -35,20 +33,19 @@ export default new Vuex.Store({
     addTaskResponse: (state, taskResponse) => state.tasksResponse.some(task => task.id === taskResponse.id) ? state.tasksResponse.find(task=> task.id === taskResponse.id).answer = taskResponse.answer : state.tasksResponse.push(taskResponse),
     resetTaskResponse: (state) => state.tasksResponse = [],
     setTasks: (state, tasks) => (state.tasks = tasks),
-    addToken: (state, token) => state.token = token,
-    addUsername: (state, username) => state.username = username
+    addUser: (state, user) => state.user = user
   },
   actions: {
     async fetchClasses() {
-      const response = await classroomService.fetchClasses(this.state.token);
+      const response = await classroomService.fetchClasses(this.state.user.token, this.state.user.account.accountId);
       this.commit("setClasses", response.data);
     },
     async fetchLessons() {
-      const response = await lessonService.fetchLessons(this.state.actualClassroom.id, this.state.token);
+      const response = await lessonService.fetchLessons(this.state.actualClassroom.id, this.state.user.token);
       this.commit("setLessons", response.data);
     },
     async fetchTasks() {
-      const response = await taskService.fetchTasks(this.state.actualLesson.id, this.state.token);
+      const response = await taskService.fetchTasks(this.state.actualLesson.id, this.state.user.token);
       this.commit("setTasks", response.data);
     },
   },

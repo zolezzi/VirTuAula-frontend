@@ -1,7 +1,7 @@
 const axios = require("axios");
 const classroomService = (function() {
-  function fetchClasses(token) {
-      return axios.get("/api/classrooms", {
+  function fetchClasses(token, accountId) {
+      return axios.get(`/api/classrooms/${accountId}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }

@@ -18,8 +18,8 @@
         </b-navbar-nav>
       </router-link>
       <b-navbar-nav class="ml-auto">
-        <b-nav-text v-show="this.$store.getters.getToken" class="virtuaula-guest">
-          {{this.$store.getters.getUsername}}
+        <b-nav-text v-show="this.$store.getters.getUser.token" class="virtuaula-guest">
+          {{this.$store.getters.getUser.username}}
           <b-avatar variant="warning ml-2"></b-avatar>
         </b-nav-text>
       </b-navbar-nav>

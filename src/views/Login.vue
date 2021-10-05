@@ -68,8 +68,7 @@ export default {
       axios
         .post("/login", body)
         .then((response) => {
-          this.$store.commit('addToken',response.data.token);
-          this.$store.commit('addUsername',response.data.username);
+          this.$store.commit('addUser',response.data);
         })
         .then(() => (this.spinner = false))
         .then(() => this.$router.push("/"))

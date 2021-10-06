@@ -9,7 +9,7 @@
           <CardTask :task="task" :hide="hide"/>
         </div>
       </b-row>
-      <b-row align-h="center" :class="hide ? 'animate__animated animate__zoomOut animate__faster' : ''">
+      <b-row v-show="this.$store.getters.getUser.account.accountType.name !== 'TEACHER'" align-h="center" :class="hide ? 'animate__animated animate__zoomOut animate__faster' : ''">
         <b-col><b-button variant="success" @click="send" :disabled="disabled === 100 || complete">Send</b-button></b-col>
       </b-row>
     </b-container>

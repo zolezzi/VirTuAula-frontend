@@ -16,7 +16,7 @@
                 <template v-for="option in task.options">
                   <b-form-radio
                     v-model="selected"
-                    :disabled="disabled === 100"
+                    :disabled="disabled === 100 || isTeacher"
                     :key="option.id"
                     :value="option.id"
                     >{{ option.responseValue }}</b-form-radio
@@ -40,6 +40,7 @@ export default {
       timer: null,
       selected: this.task.answer,
       disabled: this.$store.getters.getActualLesson.progress,
+      isTeacher: this.$store.getters.getUser.account.accountType.name === 'TEACHER'
     };
   },
   props: ["task", "hide"],

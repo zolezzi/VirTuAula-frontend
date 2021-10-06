@@ -1,23 +1,12 @@
 <template>
-  <div class="animate__animated animate__zoomIn animate__faster">
+  <div :class="hide ? 'animate__animated animate__zoomOut animate__faster' :'animate__animated animate__zoomIn animate__faster'">
     <b-container>
       <b-row align-h="center">
         <h2>Add a Lesson</h2>
       </b-row>
-      <b-row align-h="center" class="mt-4 mb-4">
-        <b-card style="width:400px;">
-          <b-form>
-            <label for="virtuaula-lesson-name">Lesson Name</label>
-            <b-input
-              id="virtuaula-lesson-name"
-              v-model="name"
-              placeholder="Lesson name"
-            ></b-input>
-          </b-form>
-        </b-card>
-      </b-row>
+      <CardFormLesson />
       <b-row align-h="center">
-        <b-button variant="success" :disabled="!name" @click="create"
+        <b-button variant="success" :disabled="!this.$store.getters.getNewLesson.name" @click="create"
           >Create</b-button
         >
       </b-row>
@@ -27,22 +16,28 @@
 
 <script>
 import lessonService from "../services/lesson-service";
+import CardFormLesson from "../components/CardFormLesson.vue";
 
 export default {
+  name: "FormLesson",
+  components: {
+    CardFormLesson,
+  },
   data() {
     return {
-      name: "",
+      hide: false
     };
   },
   methods: {
     create() {
-      let lesson = { name: this.name };
       lessonService.create(
         this.$store.getters.getActualClassroom.id,
         this.$store.getters.getUser.token,
         this.$store.getters.getUser.account.accountId,
-        lesson
+        this.$store.getters.getNewLesson
       );
+      this.$store.commit("addNewLesson", {});
+      this.hide = true;
       setTimeout(() => this.$router.push({ name: "Classroom" }), 500);
     },
   },

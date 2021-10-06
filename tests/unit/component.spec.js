@@ -10,12 +10,13 @@ localVue.use(BootstrapVue);
 
 describe("CardTask.vue", () => {
   const actualLesson = { progress: 0 };
+  const user = {account: {accountType: {name: 'TEACHER'}}};
   let store;
 
   beforeEach(() => {
     store = new Vuex.Store({
-      state: { actualLesson: actualLesson, tasksResponse: [] },
-      getters: { getActualLesson: () => actualLesson },
+      state: { actualLesson: actualLesson, tasksResponse: [], user: user },
+      getters: { getActualLesson: () => actualLesson, getUser: () => user },
       mutations: {
         addTaskResponse: (state, taskResponse) =>
           state.tasksResponse.some((task) => task.id === taskResponse.id)
@@ -54,15 +55,17 @@ describe("Tasks.vue", () => {
   const actualLesson = { progress: 0 };
   const tasks = [];
   const tasksResponse = [];
+  const user = {account: {accountType: {name: 'TEACHER'}}};
   let store;
 
   beforeEach(() => {
     store = new Vuex.Store({
-      state: { actualLesson: actualLesson, tasks: tasks, tasksRespose: tasksResponse },
+      state: { actualLesson: actualLesson, tasks: tasks, tasksRespose: tasksResponse, user: user },
       getters: {
         getTasks: (state) => (lessonId) => tasks,
         getActualLesson: () => actualLesson,
         getTasksResponse: () => tasksResponse,
+        getUser: () => user
       },
       actions: { fetchTasks: () => [] },
     });

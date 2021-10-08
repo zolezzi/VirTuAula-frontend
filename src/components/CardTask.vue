@@ -12,16 +12,15 @@
               :title="task.statement"
               class="mb-3 virtuaula-card"
             >
-              <b-form-group>
-                <template v-for="option in task.options">
-                  <b-form-radio
-                    v-model="selected"
-                    :disabled="disabled === 100 || isTeacher"
-                    :key="option.id"
-                    :value="option.id"
-                    >{{ option.responseValue }}</b-form-radio
-                  >
-                </template>
+              <b-form-group class="virtuaula-group">
+                <b-form-radio-group
+                  class="virtuaula-options"
+                  stacked
+                  v-model="selected"
+                  :disabled="disabled === 100 || isTeacher"
+                  :options="options"
+                >
+                </b-form-radio-group>
               </b-form-group>
             </b-card>
           </b-col>
@@ -40,10 +39,20 @@ export default {
       timer: null,
       selected: this.task.answer,
       disabled: this.$store.getters.getActualLesson.progress,
-      isTeacher: this.$store.getters.getUser.account.accountType.name === 'TEACHER'
+      isTeacher:
+        this.$store.getters.getUser.account.accountType.name === "TEACHER",
     };
   },
   props: ["task", "hide"],
+  computed: {
+    options() {
+      let options = [];
+      this.task.options.forEach((option) => {
+        options.push({ text: option.responseValue, value: option.id });
+      });
+      return options;
+    },
+  },
   watch: {
     selected(newSelected) {
       if (newSelected) {
@@ -59,6 +68,16 @@ export default {
 </script>
 
 <style scoped>
+.virtuaula-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.virtuaula-options {
+  text-align: start;
+}
+
 .virtuaula-card {
   width: 30rem;
 }

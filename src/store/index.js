@@ -15,7 +15,6 @@ export default new Vuex.Store({
     actualLesson: {},
     tasksResponse: [],
     user: {},
-    newLesson: {}
   },
   getters: {
     getClassrooms: (state) => state.classrooms,
@@ -25,7 +24,6 @@ export default new Vuex.Store({
     getTasks: (state) => (lessonId) => state.tasks,
     getTasksResponse: (state) => state.tasksResponse,
     getUser: (state) => state.user,
-    getNewLesson: (state) => state.newLesson
   },
   mutations: {
     addActualClassroom: (state, classroom) => (state.actualClassroom = classroom),
@@ -36,7 +34,6 @@ export default new Vuex.Store({
     resetTaskResponse: (state) => state.tasksResponse = [],
     setTasks: (state, tasks) => (state.tasks = tasks),
     addUser: (state, user) => state.user = user,
-    addNewLesson: (state,newLesson) => state.newLesson = newLesson
   },
   actions: {
     async fetchClasses() {

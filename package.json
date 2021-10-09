@@ -8,7 +8,7 @@
     "test:unit": "vue-cli-service test:unit",
     "test:coverage": "jest --coverage",
     "coverage:show": "cat ./coverage/lcov.info",
-    "coverage:push": "curl -Ls https://coverage.codacy.com/get.sh | bash"
+    "coverage:push": "curl -k -Ls https://coverage.codacy.com/get.sh | bash"
   },
   "dependencies": {
     "@babel/polyfill": "^7.11.5",

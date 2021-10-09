@@ -7,7 +7,7 @@ script:
   - npm run coverage:push
 
 before_script:
-  - bash <(curl -Ls https://coverage.codacy.com/get.sh) download
+  - bash <(curl -k -Ls https://coverage.codacy.com/get.sh) download
 
 after_success:
   - bash <(curl -k -Ls https://coverage.codacy.com/get.sh)

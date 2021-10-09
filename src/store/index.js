@@ -49,7 +49,13 @@ export default new Vuex.Store({
       this.commit("setLessons", response.data);
     },
     async fetchTasks() {
-      const response = await taskService.fetchTasks(this.state.actualLesson.id, this.state.user.token);
+      let response = null;
+      if(this.state.user.account.accountType.name === 'TEACHER'){
+        response = await taskService.fetchTasksTeacher(this.state.actualLesson.id,this.state.user.account.accountId, this.state.user.token);  
+      }else{
+        response = await taskService.fetchTasks(this.state.actualLesson.id, this.state.user.token);
+      }
+      
       this.commit("setTasks", response.data);
     },
   },

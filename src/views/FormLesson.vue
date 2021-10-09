@@ -37,89 +37,33 @@
                   ></b-input>
                 </b-col>
                 <b-col>
-                  <b-button class="virtuaula-button" variant="warning"
+                  <b-button
+                    class="virtuaula-button"
+                    variant="warning"
+                    @click="addTask"
                     >+ Add Task</b-button
                   >
                 </b-col>
               </b-row>
-              <b-row class="mt-4 virtuaula-separator">
-                <b-col class="virtuaula-column">
-                  <label
-                    class="mt-2 virtuaula-label"
-                    for="virtuaula-task-statement"
-                    >Task statement</label
-                  >
-                  <b-input
-                    id="virtuaula-task-statement"
-                    v-model="statement"
-                    placeholder="Task statement"
-                  ></b-input>
-                </b-col>
-              </b-row>
-              <b-row>
-                <b-col class="virtuaula-column">
-                  <label class="mt-2 virtuaula-label" for="virtuaula-task-score"
-                    >Task score</label
-                  >
-                  <b-input
-                    id="virtuaula-task-score"
-                    type="number"
-                    v-model="score"
-                    placeholder="Task score"
-                  ></b-input>
-                </b-col>
-              </b-row>
-              <b-row>
-                <b-form-group>
-                  <label
-                    class="mt-2 virtuaula-label"
-                    for="virtuaula-task-option-1"
-                    >Option 1</label
-                  >
-                  <b-input
-                    id="virtuaula-task-option-1"
-                    placeholder="Option 1"
-                    class="mt-2"
-                    v-model="option1"
-                  ></b-input>
-                  <label
-                    class="mt-2 virtuaula-label"
-                    for="virtuaula-task-option-2"
-                    >Option 2</label
-                  >
-                  <b-input
-                    id="virtuaula-task-option-2"
-                    placeholder="Option 2"
-                    class="mt-2"
-                    v-model="option2"
-                  ></b-input>
-                  <label
-                    class="mt-2 virtuaula-label"
-                    for="virtuaula-task-option-3"
-                    >Option 3</label
-                  >
-                  <b-input
-                    id="virtuaula-task-option-3"
-                    placeholder="Option 3"
-                    class="mt-2"
-                    v-model="option3"
-                  ></b-input>
-                  <label
-                    class="mt-2 virtuaula-label"
-                    for="virtuaula-task-option-4"
-                    >Option 4</label
-                  >
-                  <b-input
-                    id="virtuaula-task-option-4"
-                    placeholder="Option 4"
-                    class="mt-2"
-                    v-model="option4"
-                  ></b-input>
-                </b-form-group>
-              </b-row>
             </b-container>
           </b-form>
         </b-card>
+      </b-row>
+      <b-row align-h="center" class="mt-4 mb-4">
+        <template v-for="(task, index) in tasks">
+          <b-card class="mt-2 ml-2 virtuaula-card" :key="index">
+            <h2>Task {{ index + 1 }}</h2>
+            <div class="virtuaula-task-info">
+              <p>Statement: {{ task.statement }}</p>
+              <p>Score: {{ task.score }}</p>
+              <template v-for="(option, index) in task.options">
+                <p :key="index">
+                  Option {{ index + 1 }}: {{ option.responseValue }}
+                </p>
+              </template>
+            </div>
+          </b-card>
+        </template>
       </b-row>
       <b-row align-h="center">
         <b-button variant="success" :disabled="!completed" @click="create"
@@ -140,25 +84,13 @@ export default {
       hide: false,
       name: "",
       note: undefined,
-      statement: "",
-      score: undefined,
-      option1: "",
-      option2: "",
-      option3: "",
-      option4: "",
+      tasks: this.$store.getters.getNewTasks,
     };
   },
   computed: {
     completed() {
       return (
-        this.name &&
-        this.note &&
-        this.statement &&
-        this.score &&
-        this.option1 &&
-        this.option2 &&
-        this.option3 &&
-        this.option4
+        this.name && this.note && this.$store.getters.getNewTasks.length > 0
       );
     },
   },
@@ -172,23 +104,17 @@ export default {
           {
             name: this.name,
             maxNote: this.note,
-            tasks: [
-              {
-                statement: this.statement,
-                score: this.score,
-                options: [
-                  { responseValue: this.option1 },
-                  { responseValue: this.option2 },
-                  { responseValue: this.option3 },
-                  { responseValue: this.option4 },
-                ],
-              },
-            ],
+            tasks: this.$store.getters.getNewTasks,
           }
         );
         this.hide = true;
+        this.$store.commit("resetNewTasks");
         setTimeout(() => this.$router.push({ name: "Classroom" }), 500);
       }
+    },
+    addTask() {
+      this.hide = true;
+      setTimeout(() => this.$router.push({ name: "FormTask" }), 500);
     },
   },
 };
@@ -241,5 +167,13 @@ input[type="number"] {
 
 .virtuaula-separator {
   border-top: 2px #c1c1c1 solid;
+}
+
+.virtuaula-task-info{
+  text-align: start;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 </style>

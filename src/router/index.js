@@ -5,6 +5,7 @@ import Classroom from '../views/Classroom.vue'
 import Lesson from '../views/Lesson.vue'
 import Login from '../views/Login.vue'
 import FormLesson from '../views/FormLesson.vue'
+import FormTask from '../views/FormTask.vue'
 import Forbidden from '../views/Forbidden.vue'
 import store from '../store'
 
@@ -42,6 +43,15 @@ const routes = [
     path: '/add-lesson',
     name: 'FormLesson',
     component: FormLesson,
+    meta: {
+      requiresAuth: true,
+      requiresRole: true
+    }
+  },
+  {
+    path: '/add-task',
+    name: 'FormTask',
+    component: FormTask,
     meta: {
       requiresAuth: true,
       requiresRole: true

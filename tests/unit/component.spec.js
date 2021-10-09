@@ -33,7 +33,7 @@ describe("CardTask.vue", () => {
       store,
       localVue,
       propsData: {
-        task: { id: 1, answer: "" },
+        task: { id: 1, answer: "", options: [{id: 1, responseValue:"hola"}] },
       },
     });
     expect(wrapper.vm.selected).toMatch("");
@@ -44,7 +44,7 @@ describe("CardTask.vue", () => {
       store,
       localVue,
       propsData: {
-        task: { id: 1, answer: "2" },
+        task: { id: 1, answer: "2",options: [{id: 1, responseValue:"hola"}] },
       },
     });
     expect(wrapper.vm.selected).toMatch("2");

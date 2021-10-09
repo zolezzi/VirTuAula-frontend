@@ -10,7 +10,7 @@ localVue.use(BootstrapVue);
 
 describe("CardTask.vue", () => {
   const actualLesson = { progress: 0 };
-  const user = {account: {accountType: {name: 'TEACHER'}}};
+  const user = {account: {accountType: {name: 'STUDENT'}}};
   let store;
 
   beforeEach(() => {
@@ -44,7 +44,7 @@ describe("CardTask.vue", () => {
       store,
       localVue,
       propsData: {
-        task: { id: 1, answer: "2",options: [{id: 1, responseValue:"hola"}] },
+        task: { id: 1, answer: "2" ,options: [{id: 1, responseValue:"hola"}] },
       },
     });
     expect(wrapper.vm.selected).toMatch("2");
@@ -55,7 +55,7 @@ describe("Tasks.vue", () => {
   const actualLesson = { progress: 0 };
   const tasks = [];
   const tasksResponse = [];
-  const user = {account: {accountType: {name: 'TEACHER'}}};
+  const user = {account: {accountType: {name: 'STUDENT'}}};
   let store;
 
   beforeEach(() => {

@@ -37,7 +37,7 @@ export default {
       value: 0,
       max: 100,
       timer: null,
-      selected: this.answer,
+      selected: this.$store.getters.getUser.account.accountType.name === "TEACHER" ? this.task.correctAnswer :this.task.answer,
       disabled: this.$store.getters.getActualLesson.progress,
       isTeacher:
         this.$store.getters.getUser.account.accountType.name === "TEACHER",
@@ -51,9 +51,6 @@ export default {
         options.push({ text: option.responseValue, value: option.id });
       });
       return options;
-    },
-    answer(){
-      return this.$store.getters.getUser.account.accountType.name === "TEACHER" ? this.task.correctAnswer :this.task.answer
     }
   },
   watch: {

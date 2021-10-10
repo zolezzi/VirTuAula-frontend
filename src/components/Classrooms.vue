@@ -2,9 +2,14 @@
   <div>
     <b-container>
       <b-row align-h="center">
-        <div v-for="classroom in this.$store.getters.getClassrooms" :key="classroom.id">
+        <div v-for="classroom in classrooms" :key="classroom.id">
           <b-col>
-            <CardClassroom :classroom="classroom"  :hide="hide" @update="hideUpdate" class="animate__animated animate__zoomIn animate__faster" />
+            <CardClassroom
+              :classroom="classroom"
+              :hide="hide"
+              @update="hideUpdate"
+              class="animate__animated animate__zoomIn animate__faster"
+            />
           </b-col>
         </div>
       </b-row>
@@ -14,6 +19,7 @@
 
 <script>
 import CardClassroom from "./CardClassroom.vue";
+import classroomService from "../services/classroom-service";
 export default {
   name: "Classrooms",
   components: {
@@ -21,22 +27,25 @@ export default {
   },
   data() {
     return {
+      classrooms: [],
       hide: false,
-    }
+    };
   },
   methods: {
     hideUpdate(newValue) {
       this.hide = newValue;
       this.$parent.hide = newValue;
-    }
+    },
   },
-  created() {
-    this.$store.dispatch('fetchClasses');
-  }
-
+  async beforeCreate() {
+    let response = await classroomService.fetchClasses(
+      this.$store.getters.getUser.token,
+      this.$store.getters.getUser.account.accountId
+    );
+    this.classrooms = response.data;
+  },
 };
 </script>
 
 <style scoped>
-    
 </style>

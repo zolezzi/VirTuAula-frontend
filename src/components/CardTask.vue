@@ -37,10 +37,10 @@ export default {
       value: 0,
       max: 100,
       timer: null,
-      selected: this.$store.getters.getUser.account.accountType.name === "TEACHER" ? this.task.correctAnswer :this.task.answer,
+      selected: this.$store.getters.getUser.isTeacher() ? this.task.correctAnswer :this.task.answer,
       disabled: this.$store.getters.getActualLesson.progress,
       isTeacher:
-        this.$store.getters.getUser.account.accountType.name === "TEACHER",
+        this.$store.getters.getUser.isTeacher(),
     };
   },
   props: ["task", "hide"],

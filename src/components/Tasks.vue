@@ -7,9 +7,7 @@
         </div>
       </b-row>
       <b-row
-        v-show="
-          this.$store.getters.getUser.account.accountType.name !== 'TEACHER'
-        "
+        v-show="this.$store.getters.getUser.isTeacher()"
         align-h="center"
         :class="
           hide ? 'animate__animated animate__zoomOut animate__faster' : ''
@@ -55,7 +53,7 @@ export default {
         this.$store.getters.getActualClassroom.id,
         this.lessonId,
         this.$store.getters.getTasksResponse,
-        this.$store.getters.getUser.token
+        this.$store.getters.getUser.getToken()
       );
       this.hideUpdate(true);
       setTimeout(() => this.$router.push({ name: "Classroom" }), 500);
@@ -63,24 +61,21 @@ export default {
   },
   computed: {
     complete() {
-      return (
-        this.tasks.length !==
-        this.$store.getters.getTasksResponse.length
-      );
+      return this.tasks.length !== this.$store.getters.getTasksResponse.length;
     },
   },
   async beforeCreate() {
-    if (this.$store.getters.getUser.account.accountType.name === "TEACHER") {
+    if (this.$store.getters.getUser.isTeacher()) {
       let response = await taskService.fetchTasksTeacher(
         this.$store.getters.getActualLesson.id,
-        this.$store.getters.getUser.account.accountId,
-        this.$store.getters.getUser.token
+        this.$store.getters.getUser.getAccountId(),
+        this.$store.getters.getUser.getToken()
       );
       this.tasks = response.data;
     } else {
       let response = await taskService.fetchTasks(
         this.$store.getters.getActualLesson.id,
-        this.$store.getters.getUser.token
+        this.$store.getters.getUser.getToken()
       );
       this.tasks = response.data;
     }

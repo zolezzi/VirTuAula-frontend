@@ -14,7 +14,7 @@
         Some quick example text to build on the card title and make up the bulk
         of the card's content.
       </b-card-text>
-      <b-progress v-show="this.$store.getters.getUser.account.accountType.name !== 'TEACHER'" :max="max" class="mb-3">
+      <b-progress v-show="this.$store.getters.getUser.isTeacher()" :max="max" class="mb-3">
         <b-progress-bar
           :value="classroom.progress === 0 ? 100 : value"
           :variant="classroom.progress === 0 ? 'secondary': 'success'"

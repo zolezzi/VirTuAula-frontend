@@ -81,7 +81,7 @@ router.beforeEach((to, from, next) => {
   }
 
   function checkAuthPermission() {
-    if (!store.getters.getUser.token) {
+    if (!store.getters.getUser.getToken()) {
       next({ name: "Login" })
     } else if (to.matched.some((record) => record.meta.requiresRole)) {
       checkTeacherPermission()
@@ -91,7 +91,7 @@ router.beforeEach((to, from, next) => {
   }
 
   function checkTeacherPermission() {
-    if (store.getters.getUser.account.accountType.name !== 'TEACHER') {
+    if (!store.getters.getUser.isTeacher()) {
       next({ name: "Forbidden" })
     } else {
       next()

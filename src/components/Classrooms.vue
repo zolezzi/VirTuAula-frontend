@@ -39,8 +39,8 @@ export default {
   },
   async beforeCreate() {
     let response = await classroomService.fetchClasses(
-      this.$store.getters.getUser.token,
-      this.$store.getters.getUser.account.accountId
+      this.$store.getters.getUser.getToken(),
+      this.$store.getters.getUser.getAccountId()
     );
     this.classrooms = response.data;
   },

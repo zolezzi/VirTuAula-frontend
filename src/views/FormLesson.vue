@@ -99,8 +99,8 @@ export default {
       if (this.completed) {
         lessonService.create(
           this.$store.getters.getActualClassroom.id,
-          this.$store.getters.getUser.token,
-          this.$store.getters.getUser.account.accountId,
+          this.$store.getters.getUser.getToken(),
+          this.$store.getters.getUser.getAccountId(),
           {
             name: this.name,
             maxNote: this.note,

@@ -43,6 +43,8 @@
 
 <script>
 let sha256 = require("js-sha256");
+let User = require('../entity/User');
+
 import axios from "axios";
 export default {
   name: "Login",
@@ -68,7 +70,8 @@ export default {
       axios
         .post("/login", body)
         .then((response) => {
-          this.$store.commit('addUser',response.data);
+          let user = new User(response.data.username, response.data.token, response.data.account);
+          this.$store.commit('addUser',user);
         })
         .then(() => (this.spinner = false))
         .then(() => this.$router.push("/"))

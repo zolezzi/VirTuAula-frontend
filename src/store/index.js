@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+const User = require('../entity/User');
 
 Vue.use(Vuex);
 
@@ -8,7 +9,7 @@ export default new Vuex.Store({
     actualClassroom: {},
     actualLesson: {},
     tasksResponse: [],
-    user: {},
+    user: new User(),
     newTasks: []
   },
   getters: {

@@ -2,9 +2,7 @@
   <div class="mt-3">
     <b-container>
       <b-row
-        v-show="
-          this.$store.getters.getUser.account.accountType.name === 'TEACHER'
-        "
+        v-show="this.$store.getters.getUser.isTeacher()"
         align-h="center"
         class="mb-4"
       >
@@ -19,10 +17,7 @@
         >
       </b-row>
       <b-row align-h="center">
-        <div
-          v-for="lesson in lessons"
-          :key="lesson.id"
-        >
+        <div v-for="lesson in lessons" :key="lesson.id">
           <CardLesson :lesson="lesson" :hide="hide" @update="hideUpdate" />
         </div>
       </b-row>
@@ -32,7 +27,7 @@
 
 <script>
 import CardLesson from "./CardLesson.vue";
-import lessonService from "../services/lesson-service"
+import lessonService from "../services/lesson-service";
 export default {
   components: {
     CardLesson,
@@ -58,7 +53,7 @@ export default {
   async beforeCreate() {
     let response = await lessonService.fetchLessons(
       this.$store.getters.getActualClassroom.id,
-      this.$store.getters.getUser.token
+      this.$store.getters.getUser.getToken()
     );
     this.lessons = response.data;
   },

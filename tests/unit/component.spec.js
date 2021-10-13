@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import CardTask from "../../src/components/CardTask.vue";
 import Tasks from "../../src/components/Tasks.vue";
 import { BootstrapVue } from "bootstrap-vue";
+const User = require('../../src/entity/User');
 const localVue = createLocalVue();
 
 localVue.use(Vuex);
@@ -10,7 +11,7 @@ localVue.use(BootstrapVue);
 
 describe("CardTask.vue", () => {
   const actualLesson = { progress: 0 };
-  const user = {account: {accountType: {name: 'STUDENT'}}};
+  const user = new User('teacher', 'token', {accountType: {name: 'STUDENT'}});
   let store;
 
   beforeEach(() => {
@@ -55,7 +56,7 @@ describe("Tasks.vue", () => {
   const actualLesson = { progress: 0 };
   const tasks = [];
   const tasksResponse = [];
-  const user = {account: {accountType: {name: 'STUDENT'}}};
+  const user = new User('teacher', 'token', {accountType: {name: 'STUDENT'}});
   let store;
 
   beforeEach(() => {

@@ -5,7 +5,12 @@
         title="Login"
         style="max-width: 20rem"
         align="center"
-        class="mt-5 animate__animated animate__zoomInDown"
+        class="mt-5"
+        :class="
+          hide
+            ? 'animate__animated animate__zoomOut'
+            : 'animate__animated animate__zoomInDown'
+        "
       >
         <b-form-input
           id="username"
@@ -25,14 +30,15 @@
           @keyup.enter="login"
         ></b-form-input>
         <b-container class="mt-4">
-          <b-row align-h="center">
+          <b-row align-h="between">
+            <b-button variant="outline-warning" @click="register"
+              >Sign-Up</b-button
+            >
             <template v-if="spinner">
               <b-spinner variant="warning" label="Spinning"></b-spinner>
             </template>
             <template v-else>
-              <b-button variant="warning" @click="login">{{
-                "Login"
-              }}</b-button>
+              <b-button variant="warning" @click="login"> Login </b-button>
             </template>
           </b-row>
         </b-container>
@@ -43,13 +49,14 @@
 
 <script>
 let sha256 = require("js-sha256");
-let User = require('../entity/User');
+let User = require("../entity/User");
 
 import axios from "axios";
 export default {
   name: "Login",
   data() {
     return {
+      hide: false,
       username: "",
       password: "",
       spinner: false,
@@ -70,16 +77,24 @@ export default {
       axios
         .post("/login", body)
         .then((response) => {
-          let user = new User(response.data.username, response.data.token, response.data.account);
-          this.$store.commit('addUser',user);
+          let user = new User(
+            response.data.username,
+            response.data.token,
+            response.data.account
+          );
+          this.$store.commit("addUser", user);
         })
         .then(() => (this.spinner = false))
         .then(() => this.$router.push("/"))
-        .then(() => this.makeToast("success", "Login","Successful Login"))
+        .then(() => this.makeToast("success", "Login", "Successful Login"))
         .catch(() => {
           this.spinner = false;
           this.makeToast("danger", "Login", "Login failed");
         });
+    },
+    register() {
+      this.hide = true;
+      setTimeout(() => this.$router.push("/register"), 500);
     },
     makeToast(variant, title, bodyMessage) {
       this.$bvToast.toast(bodyMessage, {

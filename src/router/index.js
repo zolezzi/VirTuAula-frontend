@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Classroom from '../views/Classroom.vue'
 import Lesson from '../views/Lesson.vue'
 import Login from '../views/Login.vue'
+import Register from '../views/Register.vue'
 import FormLesson from '../views/FormLesson.vue'
 import FormTask from '../views/FormTask.vue'
 import Forbidden from '../views/Forbidden.vue'
@@ -61,6 +62,11 @@ const routes = [
     path: "/login",
     name: "Login",
     component: Login,
+  },
+  {
+    path: "/register",
+    name: "Register",
+    component: Register,
   },
   {
     path: "/forbidden",

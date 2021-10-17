@@ -7,7 +7,7 @@
         </div>
       </b-row>
       <b-row
-        v-show="this.$store.getters.getUser.isTeacher()"
+        v-show="!this.$store.getters.getUser.isTeacher()"
         align-h="center"
         :class="
           hide ? 'animate__animated animate__zoomOut animate__faster' : ''
@@ -53,7 +53,8 @@ export default {
         this.$store.getters.getActualClassroom.id,
         this.lessonId,
         this.$store.getters.getTasksResponse,
-        this.$store.getters.getUser.getToken()
+        this.$store.getters.getUser.getToken(),
+        this.$store.getters.getUser.getAccountId()
       );
       this.hideUpdate(true);
       setTimeout(() => this.$router.push({ name: "Classroom" }), 500);

@@ -17,7 +17,7 @@
             <b-container>
               <b-row>
                 <b-col cols="7" sm="9" lg="10">
-                  <b-progress v-show="this.$store.getters.getUser.isTeacher()" :max="max" class="mt-2">
+                  <b-progress v-show="!this.$store.getters.getUser.isTeacher()" :max="max" class="mt-2">
                     <b-progress-bar
                       :value="lesson.progress === 0 ? 100 : value"
                       :variant="lesson.progress === 0 ? 'secondary': 'success'"

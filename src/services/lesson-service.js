@@ -1,14 +1,22 @@
 const axios = require("axios");
 const lessonService = (function() {
-  function completeTask(classroomId, lessonId, tasks, token) {
-    return axios.post(`/api/lessons/${classroomId}/${lessonId}`, tasks, {
+  function completeTask(classroomId, lessonId, tasks, token, accountId) {
+    return axios.post(`/api/lessons/${classroomId}/${lessonId}/${accountId}`, tasks, {
       headers: {
         'Authorization': `Bearer ${token}`
       }
     });
   }
 
-  function fetchLessons(classroomId, token) {
+  function fetchLessons(classroomId, token, accountId) {
+    return axios.get(`/api/lessons/${classroomId}/${accountId}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+  }
+  
+  function fetchLessonsTeacher(classroomId, token) {
     return axios.get(`/api/lessons/${classroomId}`, {
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -27,6 +35,7 @@ const lessonService = (function() {
   return {
     completeTask: completeTask,
     fetchLessons: fetchLessons,
+    fetchLessonsTeacher:fetchLessonsTeacher,
     create: create
   };
 })();

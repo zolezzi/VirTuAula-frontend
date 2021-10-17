@@ -36,6 +36,9 @@ export default {
     return {
       value: 0,
       max: 100,
+      options: this.task.options.map(option => {
+        return { text: option.responseValue, value: option.id };
+      }),
       timer: null,
       selected: this.$store.getters.getUser.isTeacher() ? this.task.correctAnswer :this.task.answer,
       disabled: this.$store.getters.getActualLesson.progress,
@@ -44,15 +47,6 @@ export default {
     };
   },
   props: ["task", "hide"],
-  computed: {
-    options() {
-      let options = [];
-      this.task.options.forEach((option) => {
-        options.push({ text: option.responseValue, value: option.id });
-      });
-      return options;
-    }
-  },
   watch: {
     selected(newSelected) {
       if (newSelected) {

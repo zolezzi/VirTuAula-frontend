@@ -51,10 +51,19 @@ export default {
     },
   },
   async beforeCreate() {
-    let response = await lessonService.fetchLessons(
-      this.$store.getters.getActualClassroom.id,
-      this.$store.getters.getUser.getToken()
-    );
+    let response;
+    if (this.$store.getters.getUser.isTeacher()) {
+      response = await lessonService.fetchLessonsTeacher(
+        this.$store.getters.getActualClassroom.id,
+        this.$store.getters.getUser.getToken()
+      );
+    } else {
+      response = await lessonService.fetchLessons(
+        this.$store.getters.getActualClassroom.id,
+        this.$store.getters.getUser.getToken(),
+        this.$store.getters.getUser.getAccountId()
+      );
+    }
     this.lessons = response.data;
   },
 };

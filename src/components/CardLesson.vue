@@ -8,7 +8,7 @@
           <b-card img-alt="lesson" img-left class="mb-3">
             <div class="virtuaula-title">
               <h4 class="card-title">{{lesson.name}}</h4>
-              <h4 v-show="lesson.note != null && this.$store.getters.getUser.isTeacher()"><b-badge class="virtuaula-mark" variant="warning">Mark: {{lesson.note}}</b-badge></h4>
+              <h4 v-show="lesson.note != null && !this.$store.getters.getUser.isTeacher()"><b-badge class="virtuaula-mark" variant="warning">Mark: {{lesson.note}}</b-badge></h4>
             </div>
             <b-card-text>
               Some quick example text to build on the card and make up the bulk

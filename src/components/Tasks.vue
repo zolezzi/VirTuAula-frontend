@@ -76,7 +76,8 @@ export default {
     } else {
       let response = await taskService.fetchTasks(
         this.$store.getters.getActualLesson.id,
-        this.$store.getters.getUser.getToken()
+        this.$store.getters.getUser.getToken(),
+        this.$store.getters.getUser.getAccountId()
       );
       this.tasks = response.data;
     }

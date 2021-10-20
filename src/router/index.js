@@ -7,6 +7,7 @@ import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import FormLesson from '../views/FormLesson.vue'
 import FormTask from '../views/FormTask.vue'
+import FormClassroom from '../views/FormClassroom.vue'
 import Forbidden from '../views/Forbidden.vue'
 import store from '../store'
 
@@ -53,6 +54,15 @@ const routes = [
     path: '/add-task',
     name: 'FormTask',
     component: FormTask,
+    meta: {
+      requiresAuth: true,
+      requiresRole: true
+    }
+  },
+  {
+    path: '/add-classroom',
+    name: 'FormClassroom',
+    component: FormClassroom,
     meta: {
       requiresAuth: true,
       requiresRole: true

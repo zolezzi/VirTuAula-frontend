@@ -20,6 +20,10 @@ class User {
   isTeacher() {
     return this.account.accountType.name === "TEACHER";
   }
+
+  getExperience() {
+    return this.account.experience;
+  }
 }
 
 module.exports = User;

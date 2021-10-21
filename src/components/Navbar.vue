@@ -17,9 +17,22 @@
           </div>
         </b-navbar-nav>
       </router-link>
-      <b-navbar-nav class="ml-auto">
-        <b-nav-text v-show="this.$store.getters.getUser.getToken()" class="virtuaula-guest">
-          {{this.$store.getters.getUser.getUsername()}}
+      <b-navbar-nav v-if="this.$store.getters.getUser.account" class="ml-auto">
+        <div v-show="!this.$store.getters.getUser.isTeacher()" class="virtuaula-experience">
+          <h5 class="virtuaula-h5">Exp:</h5>
+          <b-progress
+            variant="warning"
+            :value="this.$store.getters.getUser.getExperience()"
+            show-progress
+            animated
+            class="virtuaula-progress"
+          ></b-progress>
+        </div>
+        <b-nav-text
+          v-show="this.$store.getters.getUser.getToken()"
+          class="virtuaula-guest"
+        >
+          {{ this.$store.getters.getUser.getUsername() }}
           <b-avatar variant="warning ml-2"></b-avatar>
         </b-nav-text>
       </b-navbar-nav>
@@ -91,5 +104,48 @@ export default {
   .virtuaula-logo {
     margin: auto;
   }
+}
+
+@media (max-width: 414px) {
+  div.virtuaula-experience {
+    width: 8rem;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 376px) {
+  div.virtuaula-experience {
+    width: 6rem;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 361px) {
+  div.virtuaula-experience {
+    width: 5rem;
+    flex-direction: column;
+  }
+}
+@media (max-width: 320px) {
+  div.virtuaula-experience {
+    width: 3rem;
+    flex-direction: column;
+  }
+}
+
+.virtuaula-experience {
+  display: flex;
+  align-items: center;
+  width: 15rem;
+}
+
+.virtuaula-progress {
+  margin-left: 2%;
+  margin-right: 12%;
+  width: 100%;
+}
+
+.virtuaula-h5 {
+  margin-bottom: 0;
 }
 </style>

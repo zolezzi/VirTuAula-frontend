@@ -24,6 +24,10 @@ class User {
   getExperience() {
     return this.account.experience;
   }
+
+  setExperience(experience) {
+    this.account.experience = experience;
+  }
 }
 
 module.exports = User;

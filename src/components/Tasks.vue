@@ -30,6 +30,7 @@
 import CardTask from "./CardTask.vue";
 import lessonService from "../services/lesson-service";
 import taskService from "../services/task-service";
+import accountService from "../services/account-service";
 
 export default {
   components: {
@@ -49,13 +50,25 @@ export default {
       this.$parent.hide = newValue;
     },
     send() {
-      lessonService.completeTask(
-        this.$store.getters.getActualClassroom.id,
-        this.lessonId,
-        this.$store.getters.getTasksResponse,
-        this.$store.getters.getUser.getToken(),
-        this.$store.getters.getUser.getAccountId()
-      );
+      lessonService
+        .completeTask(
+          this.$store.getters.getActualClassroom.id,
+          this.lessonId,
+          this.$store.getters.getTasksResponse,
+          this.$store.getters.getUser.getToken(),
+          this.$store.getters.getUser.getAccountId()
+        )
+        .then(() => {
+          accountService
+            .getExperience(
+              this.$store.getters.getUser.getToken(),
+              this.$store.getters.getUser.getAccountId()
+            )
+            .then((response) =>
+              this.$store.getters.getUser.setExperience(response.data)
+            );
+        });
+
       this.hideUpdate(true);
       setTimeout(() => this.$router.push({ name: "Classroom" }), 500);
     },

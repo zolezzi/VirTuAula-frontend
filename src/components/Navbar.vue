@@ -24,6 +24,7 @@
             variant="warning"
             :value="this.$store.getters.getUser.getExperience()"
             show-progress
+            height="1.5rem"
             animated
             class="virtuaula-progress"
           ></b-progress>

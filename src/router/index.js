@@ -9,6 +9,7 @@ import FormLesson from '../views/FormLesson.vue'
 import FormTask from '../views/FormTask.vue'
 import FormClassroom from '../views/FormClassroom.vue'
 import Forbidden from '../views/Forbidden.vue'
+import Account from '../views/Account.vue'
 import store from '../store'
 
 Vue.use(VueRouter)
@@ -66,6 +67,14 @@ const routes = [
     meta: {
       requiresAuth: true,
       requiresRole: true
+    }
+  },
+  {
+    path: '/add-account',
+    name: 'Account',
+    component: Account,
+    meta: {
+      requiresAuth: true,
     }
   },
   {

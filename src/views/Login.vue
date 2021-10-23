@@ -50,6 +50,7 @@
 <script>
 let sha256 = require("js-sha256");
 let User = require("../entity/User");
+const accountService = require("../services/account-service");
 
 import axios from "axios";
 export default {
@@ -78,6 +79,7 @@ export default {
         .post("/login", body)
         .then((response) => {
           let user = new User(
+            response.data.userId,
             response.data.username,
             response.data.token,
             response.data.account
@@ -85,7 +87,23 @@ export default {
           this.$store.commit("addUser", user);
         })
         .then(() => (this.spinner = false))
-        .then(() => this.$router.push("/"))
+        .then(() => {
+          if (!this.$store.getters.getUser.hasAccount()) {
+            this.$router.push("/add-account");
+          } else {
+            if (!this.$store.getters.getUser.isTeacher()) {
+              accountService
+                .getExperience(
+                  this.$store.getters.getUser.getToken(),
+                  this.$store.getters.getUser.getAccountId()
+                )
+                .then((response) =>
+                  this.$store.getters.getUser.setExperience(response.data)
+                );
+            }
+            this.$router.push("/");
+          }
+        })
         .then(() => this.makeToast("success", "Login", "Successful Login"))
         .catch(() => {
           this.spinner = false;

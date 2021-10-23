@@ -1,5 +1,6 @@
 class User {
-  constructor(_username, _token, _account) {
+  constructor(user_id,_username, _token, _account) {
+    this.userId = user_id;
     this.username = _username;
     this.token = _token;
     this.account = _account;
@@ -14,11 +15,13 @@ class User {
   }
 
   getAccountId() {
-    return this.account.accountId;
+    if(this.account) {
+      return this.account.accountId;
+    }
   }
 
   isTeacher() {
-    return this.account.accountType.name === "TEACHER";
+    return this.account && this.account.accountType.name === "TEACHER";
   }
 
   getExperience() {
@@ -27,6 +30,18 @@ class User {
 
   setExperience(experience) {
     this.account.experience = experience;
+  }
+
+  hasAccount() {
+    return this.account;
+  }
+
+  getUserId() {
+    return this.userId;
+  }
+
+  setAccount(account) {
+    this.account = account;
   }
 }
 

@@ -9,8 +9,17 @@ const accountService = (function() {
     });
   }
 
+  function createAccount(token, accountId, account) {
+    return axios.post(`/api/account/create/${accountId}`, account, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+
   return {
     getExperience: getExperience,
+    createAccount: createAccount
   };
 })();
 

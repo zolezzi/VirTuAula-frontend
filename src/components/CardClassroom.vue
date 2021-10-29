@@ -8,23 +8,32 @@
       img-alt="classroom"
       img-top
       style="max-width: 20rem"
-      class="mb-2"
+      class="mb-2 virtuaula-card"
     >
-      <b-card-text>
-        {{classroom.description}}
+      <b-card-text class="virtuaula-text">
+        {{ classroom.description }}
       </b-card-text>
-      <b-progress v-show="!this.$store.getters.getUser.isTeacher()" :max="max" class="mb-3">
+      <b-progress
+        v-show="!this.$store.getters.getUser.isTeacher()"
+        :max="max"
+        class="mb-3"
+      >
         <b-progress-bar
           :value="classroom.progress === 0 ? 100 : value"
-          :variant="classroom.progress === 0 ? 'secondary': 'success'"
+          :variant="classroom.progress === 0 ? 'secondary' : 'success'"
           show-progress
           :label="`${value}%`"
         ></b-progress-bar>
       </b-progress>
 
-      <b-button href="#" variant="warning" class="m-auto" @click="enter()"
-        >Enter</b-button
+      <b-button
+        href="#"
+        variant="warning"
+        class="m-auto"
+        @click="enter()"
       >
+        Enter
+      </b-button>
     </b-card>
   </div>
 </template>
@@ -49,11 +58,18 @@ export default {
     enter() {
       this.$emit("update", true);
       this.$store.commit("addActualClassroom", this.classroom);
-      setTimeout( () => this.$router.push({ name: "Classroom" }), 500);
+      setTimeout(() => this.$router.push({ name: "Classroom" }), 500);
     },
   },
 };
 </script>
 
 <style scoped>
+.virtuaula-card {
+  height: 390px;
+}
+
+.virtuaula-text {
+  height: 50px;
+}
 </style>

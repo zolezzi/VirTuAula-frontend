@@ -2,7 +2,7 @@
   <b-container>
     <b-col align="center">
       <b-card
-        title="Register Teacher Account"
+        title="Personal Info"
         style="max-width: 20rem"
         align="center"
         class="mt-5"
@@ -58,7 +58,7 @@
             </template>
             <template v-else>
               <b-button variant="warning" @click="register"
-                >Register Account</b-button
+                >Send</b-button
               >
             </template>
           </b-row>

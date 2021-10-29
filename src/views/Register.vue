@@ -124,11 +124,11 @@ export default {
     emailValid() {
       const re =
         /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-      if(this.email.length > 0) {
-          return re.test(String(this.email).toLowerCase());
+      if (this.email.length > 0) {
+        return re.test(String(this.email).toLowerCase());
       } else {
-          return null;
-      } 
+        return null;
+      }
     },
     encodedPassword() {
       return sha256(this.password);
@@ -142,18 +142,18 @@ export default {
           username: this.username,
           password: this.encodedPassword,
           repeatPassword: this.encodedPassword,
-          email: this.email
+          email: this.email,
         };
         axios
           .post("/register", body)
           .then(() => (this.spinner = false))
-          .then(() => {
-            this.hide = true;
-            setTimeout(() => this.$router.push("/login"), 500);
-          })
           .then(() =>
             this.makeToast("success", "awesome", "registration-success")
           )
+          .then(() => {
+            this.hide = true;
+            setTimeout(() => this.$router.push("/login"), 1500);
+          })
           .catch(() => {
             this.spinner = false;
             this.makeToast("danger", "sorry", "registration-fail");

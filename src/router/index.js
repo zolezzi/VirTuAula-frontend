@@ -1,81 +1,82 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
-import Classroom from '../views/Classroom.vue'
-import Lesson from '../views/Lesson.vue'
-import Login from '../views/Login.vue'
-import Register from '../views/Register.vue'
-import FormLesson from '../views/FormLesson.vue'
-import FormTask from '../views/FormTask.vue'
-import FormClassroom from '../views/FormClassroom.vue'
-import Forbidden from '../views/Forbidden.vue'
-import Account from '../views/Account.vue'
-import store from '../store'
+import Vue from "vue";
+import VueRouter from "vue-router";
+import Home from "../views/Home.vue";
+import Classroom from "../views/Classroom.vue";
+import Lesson from "../views/Lesson.vue";
+import Login from "../views/Login.vue";
+import Register from "../views/Register.vue";
+import FormLesson from "../views/FormLesson.vue";
+import FormTask from "../views/FormTask.vue";
+import FormClassroom from "../views/FormClassroom.vue";
+import Forbidden from "../views/Forbidden.vue";
+import Account from "../views/Account.vue";
+import Students from "../views/Students.vue";
+import store from "../store";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
-    name: 'Home',
+    path: "/",
+    name: "Home",
     component: Home,
     meta: {
       requiresAuth: true,
-      requiresRole: false
-    }
+      requiresRole: false,
+    },
   },
   {
-    path: '/classroom',
-    name: 'Classroom',
+    path: "/classroom",
+    name: "Classroom",
     component: Classroom,
     meta: {
       requiresAuth: true,
-      requiresRole: false
-    }
+      requiresRole: false,
+    },
   },
   {
-    path: '/lesson',
-    name: 'Lesson',
+    path: "/lesson",
+    name: "Lesson",
     component: Lesson,
     meta: {
       requiresAuth: true,
-      requiresRole: false
-    }
+      requiresRole: false,
+    },
   },
   {
-    path: '/add-lesson',
-    name: 'FormLesson',
+    path: "/add-lesson",
+    name: "FormLesson",
     component: FormLesson,
     meta: {
       requiresAuth: true,
-      requiresRole: true
-    }
+      requiresRole: true,
+    },
   },
   {
-    path: '/add-task',
-    name: 'FormTask',
+    path: "/add-task",
+    name: "FormTask",
     component: FormTask,
     meta: {
       requiresAuth: true,
-      requiresRole: true
-    }
+      requiresRole: true,
+    },
   },
   {
-    path: '/add-classroom',
-    name: 'FormClassroom',
+    path: "/add-classroom",
+    name: "FormClassroom",
     component: FormClassroom,
     meta: {
       requiresAuth: true,
-      requiresRole: true
-    }
+      requiresRole: true,
+    },
   },
   {
-    path: '/add-account',
-    name: 'Account',
+    path: "/add-account",
+    name: "Account",
     component: Account,
     meta: {
       requiresAuth: true,
-    }
+    },
   },
   {
     path: "/login",
@@ -92,36 +93,45 @@ const routes = [
     name: "Forbidden",
     component: Forbidden,
   },
-]
+  {
+    path: "/students",
+    name: "Students",
+    component: Students,
+    meta: {
+      requiresAuth: true,
+      requiresRole: true,
+    },
+  },
+];
 
 const router = new VueRouter({
-  routes
-})
+  routes,
+});
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    checkAuthPermission()
+    checkAuthPermission();
   } else {
     next();
   }
 
   function checkAuthPermission() {
     if (!store.getters.getUser.getToken()) {
-      next({ name: "Login" })
+      next({ name: "Login" });
     } else if (to.matched.some((record) => record.meta.requiresRole)) {
-      checkTeacherPermission()
+      checkTeacherPermission();
     } else {
-      next()
+      next();
     }
   }
 
   function checkTeacherPermission() {
     if (!store.getters.getUser.isTeacher()) {
-      next({ name: "Forbidden" })
+      next({ name: "Forbidden" });
     } else {
-      next()
+      next();
     }
   }
 });
 
-export default router
+export default router;

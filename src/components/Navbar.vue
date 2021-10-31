@@ -17,8 +17,26 @@
           </div>
         </b-navbar-nav>
       </router-link>
+      <b-navbar-nav
+        v-show="
+          this.$store.getters.getUser.isTeacher() &&
+          !(currentRouteName === 'Students')
+        "
+        class="
+          ml-5
+          mt-2
+          virtuaula-img
+          animate__animated animate__zoomIn
+          virtuaula-students
+        "
+      >
+        <b-nav-item @click="addStudents()">Add Students</b-nav-item>
+      </b-navbar-nav>
       <b-navbar-nav v-if="this.$store.getters.getUser.account" class="ml-auto">
-        <div v-show="!this.$store.getters.getUser.isTeacher()" class="virtuaula-experience">
+        <div
+          v-show="!this.$store.getters.getUser.isTeacher()"
+          class="virtuaula-experience"
+        >
           <h5 class="virtuaula-h5">Exp:</h5>
           <b-progress
             variant="warning"
@@ -44,6 +62,16 @@
 <script>
 export default {
   name: "Navbar",
+  computed: {
+    currentRouteName() {
+      return this.$route.name;
+    },
+  },
+  methods: {
+    addStudents() {
+      setTimeout(() => this.$router.push({ name: "Students" }), 500);
+    },
+  },
 };
 </script>
 
@@ -78,6 +106,10 @@ export default {
 .virtuaula-link {
   color: inherit;
   text-decoration: inherit;
+}
+
+.virtuaula-students:hover {
+  color: #808080;
 }
 
 /* Mobile */

@@ -9,7 +9,7 @@
         <b-button
           variant="success"
           :class="
-            hide ? 'animate__animated animate__zoomOut animate__faster' : ''
+            hide ? 'animate__animated animate__zoomOut animate__faster' : 'animate__animated animate__zoomIn animate__faster'
           "
           @click="addClassroom"
         >

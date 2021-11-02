@@ -17,9 +17,21 @@ const accountService = (function() {
     });
   }
 
+  function addStudents(token, accountId, file) {
+    return axios.post(
+      `/api/account/upload-file-students/${accountId}`, file,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+  }
+
   return {
     getExperience: getExperience,
-    createAccount: createAccount
+    createAccount: createAccount,
+    addStudents: addStudents,
   };
 })();
 

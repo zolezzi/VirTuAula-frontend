@@ -58,6 +58,7 @@
 
 <script>
 import Papa from "papaparse";
+import accountService from "../services/account-service";
 
 export default {
   data() {
@@ -81,8 +82,26 @@ export default {
     },
     send() {
       const formData = new FormData();
-      formData.append( this.file, 'students.csv');
-      console.log("Sending...", formData);
+      formData.append("file", this.file);
+      accountService
+        .addStudents(
+          this.$store.getters.getUser.getToken(),
+          this.$store.getters.getUser.getAccountId(),
+          formData
+        )
+        .then(() => this.$router.push("/"))
+        .then(() => this.makeToast("success", "Uploading", "Successful upload"))
+        .catch(() => {
+          this.makeToast("danger", "Uploading", "Upload failed");
+        });
+    },
+    makeToast(variant, title, bodyMessage) {
+      this.$bvToast.toast(bodyMessage, {
+        title: title,
+        variant: variant,
+        toaster: "b-toaster-bottom-right",
+        solid: true,
+      });
     },
   },
   computed: {

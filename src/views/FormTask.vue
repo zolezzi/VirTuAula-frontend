@@ -35,120 +35,44 @@
               ></b-input>
             </b-col>
           </b-row>
-          <b-row>
-            <b-col cols="12"
-              ><label class="mt-3 virtuaula-label" for="virtuaula-task-option-1"
-                >Option 1</label
-              ></b-col
-            >
-            <b-col cols="10">
-              <b-input
-                id="virtuaula-task-option-1"
-                placeholder="Option 1"
-                class="mt-1"
-                v-model="option1"
-              ></b-input>
-            </b-col>
-            <b-col cols="2">
-              <b-form-checkbox
-                id="option-1"
-                v-model="check1"
-                name="option-1"
-                class="mt-2"
-                :disabled="aCheckIsSelected && !check1"
-              >
-              </b-form-checkbox>
-            </b-col>
-          </b-row>
-          <b-row>
-            <b-col cols="12">
-              <label class="mt-2 virtuaula-label" for="virtuaula-task-option-2"
-                >Option 2</label
-              >
-            </b-col>
-            <b-col cols="10">
-              <b-input
-                id="virtuaula-task-option-2"
-                placeholder="Option 2"
-                class="mt-2"
-                v-model="option2"
-              ></b-input>
-            </b-col>
-            <b-col cols="2">
-              <b-form-checkbox
-                id="option-2"
-                v-model="check2"
-                name="option-2"
-                class="mt-3"
-                :disabled="aCheckIsSelected && !check2"
-              >
-              </b-form-checkbox>
-            </b-col>
-          </b-row>
-          <b-row>
-            <b-col cols="12">
-              <label class="mt-2 virtuaula-label" for="virtuaula-task-option-3"
-                >Option 3</label
-              >
-            </b-col>
-            <b-col cols="10">
-              <b-input
-                id="virtuaula-task-option-3"
-                placeholder="Option 3"
-                class="mt-2"
-                v-model="option3"
-              ></b-input>
-            </b-col>
-            <b-col cols="2">
-              <b-form-checkbox
-                id="option-3"
-                v-model="check3"
-                name="option-3"
-                class="mt-3"
-                :disabled="aCheckIsSelected && !check3"
-              >
-              </b-form-checkbox>
-            </b-col>
-          </b-row>
-          <b-row>
-            <b-col cols="12">
-              <label class="mt-2 virtuaula-label" for="virtuaula-task-option-4"
-                >Option 4</label
-              >
-            </b-col>
-            <b-col cols="10">
-              <b-input
-                id="virtuaula-task-option-4"
-                placeholder="Option 4"
-                class="mt-2"
-                v-model="option4"
-              ></b-input>
-            </b-col>
-            <b-col cols="2">
-              <b-form-checkbox
-                id="option-4"
-                v-model="check4"
-                name="option-4"
-                class="mt-3"
-                :disabled="aCheckIsSelected && !check4"
-              >
-              </b-form-checkbox>
-            </b-col>
-          </b-row>
-          <b-row class="mt-3" align-h="center"
+          <b-button @click="addOption" variant="success" class="mt-4">
+            + Add Option</b-button
+          >
+          <template v-for="(option, index) in options">
+            <div :key="index">
+              <b-row>
+                <b-col cols="12">
+                  <label
+                    class="mt-3 virtuaula-label"
+                    :for="'virtuaula-task-option-' + index"
+                    >Option {{ index + 1 }}</label
+                  >
+                </b-col>
+                <b-col cols="10">
+                  <b-input
+                    :id="'virtuaula-task-option-' + index"
+                    :placeholder="'Option' + (index + 1)"
+                    class="mt-1"
+                    v-model="option.responseValue"
+                  ></b-input>
+                </b-col>
+                <b-col cols="2">
+                  <b-form-checkbox
+                    :id="'option-' + index"
+                    v-model="option.isCorrect"
+                    :name="'option' + index"
+                    class="mt-2"
+                    :disabled="aCheckIsSelected && !option.isCorrect"
+                  >
+                  </b-form-checkbox>
+                </b-col>
+              </b-row>
+            </div>
+          </template>
+          <b-row v-show="this.allComplete()" class="mt-3" align-h="center"
             ><b-button
               variant="warning"
-              :disabled="
-                !(
-                  this.option1 &&
-                  this.option2 &&
-                  this.option3 &&
-                  this.option4 &&
-                  this.statement &&
-                  this.score
-                  && this.aCheckIsSelected
-                )
-              "
+              :disabled="!this.allComplete()"
               @click="add"
               >Add</b-button
             ></b-row
@@ -166,19 +90,12 @@ export default {
       hide: false,
       statement: "",
       score: undefined,
-      option1: "",
-      option2: "",
-      option3: "",
-      option4: "",
-      check1: false,
-      check2: false,
-      check3: false,
-      check4: false,
+      options: [],
     };
   },
   computed: {
     aCheckIsSelected() {
-      return this.check1 || this.check2 || this.check3 || this.check4;
+      return this.options.some((option) => option.isCorrect);
     },
   },
   methods: {
@@ -187,22 +104,18 @@ export default {
         this.$store.commit("addNewTask", {
           statement: this.statement,
           score: this.score,
-          options: [
-            { responseValue: this.option1, isCorrect: this.check1 },
-            { responseValue: this.option2, isCorrect: this.check2 },
-            { responseValue: this.option3, isCorrect: this.check3 },
-            { responseValue: this.option4, isCorrect: this.check4 },
-          ],
+          options: this.options,
         });
         setTimeout(() => this.$router.push({ name: "FormLesson" }), 500);
       }
     },
+    addOption() {
+      this.options.push({ responseValue: "", isCorrect: false });
+    },
     allComplete() {
       return (
-        this.option1 &&
-        this.option2 &&
-        this.option3 &&
-        this.option4 &&
+        this.options.length > 0 &&
+        this.options.every((option) => option.responseValue) &&
         this.statement &&
         this.score &&
         this.aCheckIsSelected

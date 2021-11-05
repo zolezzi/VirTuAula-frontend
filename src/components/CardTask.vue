@@ -74,6 +74,7 @@ export default {
 
 .virtuaula-card {
   width: 30rem;
+  height: 15rem;
 }
 @media (max-width: 600px) {
   .virtuaula-card {

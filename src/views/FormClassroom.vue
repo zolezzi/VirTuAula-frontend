@@ -20,22 +20,34 @@
                 >
                 <b-input
                   id="virtuaula-classroom-name"
-                  v-model="name"
+                  v-model="classroom.name"
                   placeholder="Classroom name"
                 ></b-input>
               </b-row>
               <b-row class="mt-3">
-                  <label
-                    class="virtuaula-label"
-                    for="virtuaula-classroom-description"
-                    >Classroom Description</label
-                  >
-                  <b-form-textarea
-                    id="virtuaula-classroom-description"
-                    v-model="description"
-                    placeholder="Classroom Description"
-                    rows="8"
-                  ></b-form-textarea>
+                <label
+                  class="virtuaula-label"
+                  for="virtuaula-classroom-description"
+                  >Classroom Description</label
+                >
+                <b-form-textarea
+                  id="virtuaula-classroom-description"
+                  v-model="classroom.description"
+                  placeholder="Classroom Description"
+                  rows="8"
+                ></b-form-textarea>
+              </b-row>
+              <b-row class="mt-3">
+                <label class="virtuaula-label" for="virtuaula-students"
+                  >Students</label
+                >
+                <b-form-select
+                  id="virtuaula-students"
+                  v-model="studentsSelected"
+                  :options="students"
+                  multiple
+                  :select-size="4"
+                ></b-form-select>
               </b-row>
             </b-container>
           </b-form>
@@ -52,19 +64,26 @@
 
 <script>
 import classroomService from "../services/classroom-service";
+import accountService from "../services/account-service";
 
 export default {
   data() {
     return {
       hide: false,
-      name: "",
-      description: "",
+      classroom: {
+        name: "",
+        description: "",
+      },
+      students: [],
+      studentsSelected: [],
     };
   },
   computed: {
     completed() {
       return (
-        this.name && this.description
+        this.classroom.name &&
+        this.classroom.description &&
+        this.studentsSelected.length > 0
       );
     },
   },
@@ -75,15 +94,29 @@ export default {
           this.$store.getters.getUser.getToken(),
           this.$store.getters.getUser.getAccountId(),
           {
-            name: this.name,
-            description: this.description,
+            classroom: this.classroom,
+            students: this.studentsSelected
           }
         );
         this.hide = true;
         setTimeout(() => this.$router.push({ name: "Home" }), 500);
       }
     },
-  }
+  },
+  mounted() {
+    accountService
+      .getStudents(
+        this.$store.getters.getUser.getToken(),
+        this.$store.getters.getUser.getAccountId()
+      )
+      .then(
+        (response) =>
+          (this.students = response.data.map((student) => {
+            return { value: student.id, text: student.username };
+          }))
+      )
+      .catch((error) => console.log(error));
+  },
 };
 </script>
 

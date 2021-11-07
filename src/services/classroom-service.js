@@ -8,8 +8,8 @@ const classroomService = (function() {
     });
   }
 
-  function createClassroom(token, accountId, classroom) {
-    return axios.post(`/api/classrooms/create/${accountId}`, classroom, {
+  function createClassroom(token, accountId, formData) {
+    return axios.post(`/api/classrooms/create/${accountId}`, formData, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

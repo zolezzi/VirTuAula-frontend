@@ -18,20 +18,26 @@ const accountService = (function() {
   }
 
   function addStudents(token, accountId, file) {
-    return axios.post(
-      `/api/account/upload-file-students/${accountId}`, file,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    return axios.post(`/api/account/upload-file-students/${accountId}`, file, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+
+  function getStudents(token, accountId) {
+    return axios.get(`/api/account/students/${accountId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   }
 
   return {
     getExperience: getExperience,
     createAccount: createAccount,
     addStudents: addStudents,
+    getStudents: getStudents,
   };
 })();
 

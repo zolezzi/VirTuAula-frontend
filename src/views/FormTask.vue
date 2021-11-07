@@ -10,6 +10,12 @@
       <h2>Add a Task</h2>
       <b-row align-h="center" class="mt-4 mb-4">
         <b-card class="virtuaula-card">
+          <b-row class="mr-1 ml-1">
+            <b-form-select
+              v-model="taskTypeSelected"
+              :options="taskTypes"
+            ></b-form-select>
+          </b-row>
           <b-row>
             <b-col class="virtuaula-column">
               <label class="mt-2 virtuaula-label" for="virtuaula-task-score"
@@ -35,39 +41,41 @@
               ></b-input>
             </b-col>
           </b-row>
-          <b-button @click="addOption" variant="success" class="mt-4">
-            + Add Option</b-button
-          >
-          <template v-for="(option, index) in options">
-            <div :key="index">
-              <b-row>
-                <b-col cols="12">
-                  <label
-                    class="mt-3 virtuaula-label"
-                    :for="'virtuaula-task-option-' + index"
-                    >Option {{ index + 1 }}</label
-                  >
-                </b-col>
-                <b-col cols="10">
-                  <b-input
-                    :id="'virtuaula-task-option-' + index"
-                    :placeholder="'Option' + (index + 1)"
-                    class="mt-1"
-                    v-model="option.responseValue"
-                  ></b-input>
-                </b-col>
-                <b-col cols="2">
-                  <b-form-checkbox
-                    :id="'option-' + index"
-                    v-model="option.isCorrect"
-                    :name="'option' + index"
-                    class="mt-2"
-                    :disabled="aCheckIsSelected && !option.isCorrect"
-                  >
-                  </b-form-checkbox>
-                </b-col>
-              </b-row>
-            </div>
+          <template v-if="taskTypeSelected === 1">
+            <b-button @click="addOption" variant="success" class="mt-4">
+              + Add Option</b-button
+            >
+            <template v-for="(option, index) in options">
+              <div :key="index">
+                <b-row>
+                  <b-col cols="12">
+                    <label
+                      class="mt-3 virtuaula-label"
+                      :for="'virtuaula-task-option-' + index"
+                      >Option {{ index + 1 }}</label
+                    >
+                  </b-col>
+                  <b-col cols="10">
+                    <b-input
+                      :id="'virtuaula-task-option-' + index"
+                      :placeholder="'Option' + (index + 1)"
+                      class="mt-1"
+                      v-model="option.responseValue"
+                    ></b-input>
+                  </b-col>
+                  <b-col cols="2">
+                    <b-form-checkbox
+                      :id="'option-' + index"
+                      v-model="option.isCorrect"
+                      :name="'option' + index"
+                      class="mt-2"
+                      :disabled="aCheckIsSelected && !option.isCorrect"
+                    >
+                    </b-form-checkbox>
+                  </b-col>
+                </b-row>
+              </div>
+            </template>
           </template>
           <b-row v-show="this.allComplete()" class="mt-3" align-h="center"
             ><b-button
@@ -84,6 +92,8 @@
 </template>
 
 <script>
+import taskTypeService from "../services/task-types";
+
 export default {
   data() {
     return {
@@ -91,6 +101,9 @@ export default {
       statement: "",
       score: undefined,
       options: [],
+      taskTypes: [],
+      taskTypeSelected: null,
+      story: "",
     };
   },
   computed: {
@@ -105,6 +118,7 @@ export default {
           statement: this.statement,
           score: this.score,
           options: this.options,
+          taskTypeId: this.taskTypeSelected,
         });
         setTimeout(() => this.$router.push({ name: "FormLesson" }), 500);
       }
@@ -121,6 +135,16 @@ export default {
         this.aCheckIsSelected
       );
     },
+  },
+  mounted() {
+    taskTypeService
+      .fetchTasksTypes(this.$store.getters.getUser.getToken())
+      .then((response) => {
+        this.taskTypes = response.data.map((taskType) => {
+          return { value: taskType.id, text: taskType.name };
+        });
+      })
+      .catch((error) => console.log(error));
   },
 };
 </script>

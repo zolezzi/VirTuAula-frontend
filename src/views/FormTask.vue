@@ -114,13 +114,25 @@ export default {
   methods: {
     add() {
       if (this.allComplete()) {
-        this.$store.commit("addNewTask", {
+        this.$store.commit("addNewTask", this.getNewTask());
+        setTimeout(() => this.$router.push({ name: "FormLesson" }), 500);
+      }
+    },
+    getNewTask() {
+      if(this.taskTypeSelected === 1) {
+        return {
           statement: this.statement,
           score: this.score,
           options: this.options,
           taskTypeId: this.taskTypeSelected,
-        });
-        setTimeout(() => this.$router.push({ name: "FormLesson" }), 500);
+        }
+      } else {
+        return {
+          statement: this.statement,
+          score: this.score,
+          options: [{ responseValue: "Story", isCorrect: true }],
+          taskTypeId: this.taskTypeSelected,
+        }
       }
     },
     addOption() {
@@ -128,11 +140,13 @@ export default {
     },
     allComplete() {
       return (
-        this.options.length > 0 &&
-        this.options.every((option) => option.responseValue) &&
-        this.statement &&
-        this.score &&
-        this.aCheckIsSelected
+        (this.taskTypeSelected === 1 &&
+          this.options.length > 0 &&
+          this.options.every((option) => option.responseValue) &&
+          this.statement &&
+          this.score &&
+          this.aCheckIsSelected) ||
+        (this.taskTypeSelected == 2 && this.statement && this.score)
       );
     },
   },

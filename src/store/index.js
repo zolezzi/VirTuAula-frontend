@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-const User = require('../entity/User');
+const User = require("../entity/User");
 
 Vue.use(Vuex);
 
@@ -10,23 +10,34 @@ export default new Vuex.Store({
     actualLesson: {},
     tasksResponse: [],
     user: new User(),
-    newTasks: []
+    newTasks: [],
   },
   getters: {
     getActualClassroom: (state) => state.actualClassroom,
     getActualLesson: (state) => state.actualLesson,
     getTasksResponse: (state) => state.tasksResponse,
     getUser: (state) => state.user,
-    getNewTasks: (state) => state.newTasks
+    getNewTasks: (state) => state.newTasks,
   },
   mutations: {
-    addActualClassroom: (state, classroom) => (state.actualClassroom = classroom),
+    addActualClassroom: (state, classroom) =>
+      (state.actualClassroom = classroom),
     addActualLesson: (state, lesson) => (state.actualLesson = lesson),
-    addTaskResponse: (state, taskResponse) => state.tasksResponse.some(task => task.id === taskResponse.id) ? state.tasksResponse.find(task=> task.id === taskResponse.id).answer = taskResponse.answer : state.tasksResponse.push(taskResponse),
-    resetTaskResponse: (state) => state.tasksResponse = [],
-    addUser: (state, user) => state.user = user,
+    addTaskResponse: (state, taskResponse) => {
+      if (state.tasksResponse.some((task) => task.id === taskResponse.id)) {
+        let task = state.tasksResponse.find(
+          (task) => task.id === taskResponse.id
+        );
+        task.answerId = taskResponse.answerId;
+        task.story = taskResponse.story;
+      } else {
+        state.tasksResponse.push(taskResponse);
+      }
+    },
+    resetTaskResponse: (state) => (state.tasksResponse = []),
+    addUser: (state, user) => (state.user = user),
     addNewTask: (state, task) => state.newTasks.push(task),
-    resetNewTasks: (state) => state.newTasks = []
+    resetNewTasks: (state) => (state.newTasks = []),
   },
   actions: {},
   modules: {},

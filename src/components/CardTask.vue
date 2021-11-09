@@ -12,16 +12,30 @@
               :title="task.statement"
               class="mb-3 virtuaula-card"
             >
-              <b-form-group class="virtuaula-group">
-                <b-form-radio-group
-                  class="virtuaula-options"
-                  stacked
-                  v-model="selected"
-                  :disabled="disabled === 100 || isTeacher"
-                  :options="options"
+              <template v-if="task.taskTypeId === 1">
+                <b-form-group class="virtuaula-group">
+                  <b-form-radio-group
+                    class="virtuaula-options"
+                    stacked
+                    v-model="selected"
+                    :disabled="disabled === 100 || isTeacher"
+                    :options="options"
+                  >
+                  </b-form-radio-group>
+                </b-form-group>
+              </template>
+              <template v-if="task.taskTypeId === 2 && !this.$store.getters.getUser.isTeacher()" >
+                <label class="mt-2 virtuaula-label" for="virtuaula-story"
+                  >Tell a Story</label
                 >
-                </b-form-radio-group>
-              </b-form-group>
+                <b-form-textarea
+                  id="virtuaula-story"
+                  v-model="storyWrited"
+                  placeholder="Tell a story..."
+                  rows="3"
+                  max-rows="6"
+                ></b-form-textarea>
+              </template>
             </b-card>
           </b-col>
         </b-row>
@@ -36,14 +50,16 @@ export default {
     return {
       value: 0,
       max: 100,
-      options: this.task.options.map(option => {
+      options: this.task.options.map((option) => {
         return { text: option.responseValue, value: option.id };
       }),
       timer: null,
-      selected: this.$store.getters.getUser.isTeacher() ? this.task.correctAnswer :this.task.answer,
+      selected: this.$store.getters.getUser.isTeacher()
+        ? this.task.correctAnswer
+        : this.task.answer,
       disabled: this.$store.getters.getActualLesson.progress,
-      isTeacher:
-        this.$store.getters.getUser.isTeacher(),
+      isTeacher: this.$store.getters.getUser.isTeacher(),
+      storyWrited: this.task.story ? this.task.story: ""
     };
   },
   props: ["task", "hide"],
@@ -57,6 +73,16 @@ export default {
         });
       }
     },
+    storyWrited(newStory) {
+      if(newStory) {
+        this.task.answer = this.options[0].value;
+        this.$store.commit("addTaskResponse", {
+          id: this.task.id,
+          answerId: this.options[0].value,
+          story: newStory
+        })
+      }
+    }
   },
 };
 </script>

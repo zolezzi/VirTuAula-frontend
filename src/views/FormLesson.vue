@@ -25,6 +25,35 @@
                 ></b-input>
               </b-row>
               <b-row class="mt-3">
+                <b-col cols="6" class="virtuaula-delivery-date-form">
+                  <label for="virtuaula-delivery-date"
+                    >Choose a delivery date</label
+                  >
+                  <b-form-datepicker
+                    id="virtuaula-delivery-date"
+                    v-model="deliveryDate"
+                    :date-format-options="{
+                      year: 'numeric',
+                      month: 'short',
+                      day: '2-digit',
+                      weekday: 'short',
+                    }"
+                    class="mb-2"
+                  ></b-form-datepicker>
+                </b-col>
+                <b-col cols="6" class="virtuaula-delivery-hour-form">
+                  <label for="virtuaula-delivery-hour"
+                    >Choose a delivery hour</label
+                  >
+                  <b-form-timepicker
+                    id="virtuaula-delivery-hour"
+                    v-model="deliveryHour"
+                    placeholder="Choose a time"
+                    locale="en"
+                  ></b-form-timepicker>
+                </b-col>
+              </b-row>
+              <b-row class="mt-3">
                 <b-col cols="12" md="8" class="virtuaula-column">
                   <label class="virtuaula-label" for="virtuaula-lesson-note"
                     >Max Note</label
@@ -85,12 +114,19 @@ export default {
       name: "",
       note: undefined,
       tasks: this.$store.getters.getNewTasks,
+      deliveryDate: undefined,
+      deliveryHour: undefined,
     };
   },
   computed: {
     completed() {
+      console.log(this.deliveryDate, this.deliveryHour);
       return (
-        this.name && this.note && this.$store.getters.getNewTasks.length > 0
+        this.name &&
+        this.note &&
+        this.$store.getters.getNewTasks.length > 0 &&
+        this.deliveryDate &&
+        this.deliveryHour
       );
     },
   },
@@ -105,6 +141,7 @@ export default {
             name: this.name,
             maxNote: this.note,
             tasks: this.$store.getters.getNewTasks,
+            deliveryDate: `${this.deliveryDate} ${this.deliveryHour}`,
           }
         );
         this.hide = true;
@@ -169,11 +206,18 @@ input[type="number"] {
   border-top: 2px #c1c1c1 solid;
 }
 
-.virtuaula-task-info{
+.virtuaula-task-info {
   text-align: start;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+}
+
+.virtuaula-delivery-date-form {
+  padding-left: 0;
+}
+.virtuaula-delivery-hour-form {
+  padding-right: 0;
 }
 </style>

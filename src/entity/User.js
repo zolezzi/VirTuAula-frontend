@@ -1,9 +1,11 @@
+const Level = require("./Level");
 class User {
   constructor(user_id,_username, _token, _account) {
     this.userId = user_id;
     this.username = _username;
     this.token = _token;
     this.account = _account;
+    this.level = undefined
   }
 
   getUsername() {
@@ -30,6 +32,14 @@ class User {
 
   setExperience(experience) {
     this.account.experience = experience;
+  }
+
+  getLevel() {
+    return this.level;
+  }
+
+  setLevel(level) {
+    this.level = new Level(level.id, level.name, level.numberLevel, level.description, level.imagePath);
   }
 
   hasAccount() {

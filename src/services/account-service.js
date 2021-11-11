@@ -9,6 +9,14 @@ const accountService = (function() {
     });
   }
 
+  function getLevel(token, accountId) {
+    return axios.get(`/api/account/level/${accountId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+
   function createAccount(token, accountId, account) {
     return axios.post(`/api/account/create/${accountId}`, account, {
       headers: {
@@ -38,6 +46,7 @@ const accountService = (function() {
     createAccount: createAccount,
     addStudents: addStudents,
     getStudents: getStudents,
+    getLevel: getLevel
   };
 })();
 

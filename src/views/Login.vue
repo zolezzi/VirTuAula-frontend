@@ -92,14 +92,8 @@ export default {
             this.$router.push("/add-account");
           } else {
             if (!this.$store.getters.getUser.isTeacher()) {
-              accountService
-                .getExperience(
-                  this.$store.getters.getUser.getToken(),
-                  this.$store.getters.getUser.getAccountId()
-                )
-                .then((response) =>
-                  this.$store.getters.getUser.setExperience(response.data)
-                );
+              this.addExperience();
+              this.addLevel();
             }
             this.$router.push("/");
           }
@@ -121,6 +115,26 @@ export default {
         toaster: "b-toaster-bottom-right",
         solid: true,
       });
+    },
+    addExperience() {
+      accountService
+        .getExperience(
+          this.$store.getters.getUser.getToken(),
+          this.$store.getters.getUser.getAccountId()
+        )
+        .then((response) =>
+          this.$store.getters.getUser.setExperience(response.data)
+        );
+    },
+    addLevel() {
+      accountService
+        .getLevel(
+          this.$store.getters.getUser.getToken(),
+          this.$store.getters.getUser.getAccountId()
+        )
+        .then((response) =>
+          this.$store.getters.getUser.setLevel(response.data)
+        );
     },
   },
 };

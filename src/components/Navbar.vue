@@ -34,18 +34,35 @@
       </b-navbar-nav>
       <b-navbar-nav v-if="this.$store.getters.getUser.account" class="ml-auto">
         <div
-          v-show="!this.$store.getters.getUser.isTeacher()"
+          v-if="!this.$store.getters.getUser.isTeacher() && this.$store.getters.getUser.getLevel()"
           class="virtuaula-experience"
         >
-          <h5 class="virtuaula-h5">Exp:</h5>
-          <b-progress
-            variant="warning"
-            :value="this.$store.getters.getUser.getExperience()"
-            show-progress
-            height="1.5rem"
-            animated
-            class="virtuaula-progress"
-          ></b-progress>
+          <b-badge variant="warning" class="mr-2 ml-2 mb-1">
+            <div v-if="!isMobile">
+              <h5 class="virtuaula-h5">
+                {{
+                  this.$store.getters.getUser.getLevel().getName() +
+                  " Lvl." +
+                  this.$store.getters.getUser.getLevel().getNumberLevel()
+                }}
+              </h5>
+            </div>
+            <div v-else>
+              <h5 class="virtuaula-h5">
+                {{
+                  "Lvl." +
+                  this.$store.getters.getUser.getLevel().getNumberLevel()
+                }}
+              </h5>
+            </div>
+          </b-badge>
+          <progress-bar
+            bar-color="#ffc107"
+            :val="this.$store.getters.getUser.getExperience()"
+            size="8"
+            max="1000"
+            :text="this.$store.getters.getUser.getExperience() + '/1000'"
+          ></progress-bar>
         </div>
         <b-nav-text
           v-show="this.$store.getters.getUser.getToken()"
@@ -60,8 +77,18 @@
 </template>
 
 <script>
+import ProgressBar from "vue-simple-progress";
+
 export default {
   name: "Navbar",
+  data() {
+    return {
+      isMobile: window.innerWidth < 800
+    }
+  },
+  components: {
+    ProgressBar,
+  },
   computed: {
     currentRouteName() {
       return this.$route.name;
@@ -86,7 +113,7 @@ export default {
 
 .virtuaula-text {
   font-size: 2rem;
-  color: orange;
+  color: #ffc107;
   font-family: "Gagalin";
   padding-left: 5%;
   margin-bottom: 0;

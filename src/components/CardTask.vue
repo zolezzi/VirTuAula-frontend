@@ -12,19 +12,19 @@
               :title="task.statement"
               class="mb-3 virtuaula-card"
             >
-              <template v-if="task.taskTypeId === 1">
+              <template v-if="task.missionTypeId === 1">
                 <b-form-group class="virtuaula-group">
                   <b-form-radio-group
                     class="virtuaula-options"
                     stacked
                     v-model="selected"
-                    :disabled="disabled === 100 || isTeacher"
+                    :disabled="disabled === 100 || isLeader"
                     :options="options"
                   >
                   </b-form-radio-group>
                 </b-form-group>
               </template>
-              <template v-if="task.taskTypeId === 2 && !this.$store.getters.getUser.isTeacher()" >
+              <template v-if="task.missionTypeId === 2 && !this.$store.getters.getUser.isLeader()" >
                 <label class="mt-2 virtuaula-label" for="virtuaula-story"
                   >Tell a Story</label
                 >
@@ -54,11 +54,11 @@ export default {
         return { text: option.responseValue, value: option.id };
       }),
       timer: null,
-      selected: this.$store.getters.getUser.isTeacher()
+      selected: this.$store.getters.getUser.isLeader()
         ? this.task.correctAnswer
         : this.task.answer,
       disabled: this.$store.getters.getActualLesson.progress,
-      isTeacher: this.$store.getters.getUser.isTeacher(),
+      isLeader: this.$store.getters.getUser.isLeader(),
       storyWrited: this.task.story ? this.task.story: ""
     };
   },

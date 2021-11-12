@@ -124,14 +124,14 @@ export default {
           statement: this.statement,
           score: this.score,
           options: this.options,
-          taskTypeId: this.taskTypeSelected,
+          missionTypeId: this.taskTypeSelected,
         }
       } else {
         return {
           statement: this.statement,
           score: this.score,
           options: [{ responseValue: "Story", isCorrect: true }],
-          taskTypeId: this.taskTypeSelected,
+          missionTypeId: this.taskTypeSelected,
         }
       }
     },

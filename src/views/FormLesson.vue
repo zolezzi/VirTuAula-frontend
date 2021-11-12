@@ -140,7 +140,7 @@ export default {
           {
             name: this.name,
             maxNote: this.note,
-            tasks: this.$store.getters.getNewTasks,
+            missions: this.$store.getters.getNewTasks,
             deliveryDate: `${this.deliveryDate} ${this.deliveryHour}`,
           }
         );

@@ -12,7 +12,7 @@
                 <h4
                   v-show="
                     lesson.note != null &&
-                    !this.$store.getters.getUser.isTeacher()
+                    !this.$store.getters.getUser.isLeader()
                   "
                 >
                   <b-badge class="virtuaula-mark" variant="warning"
@@ -21,7 +21,7 @@
                 </h4>
               </template>
               <template v-else>
-                <h4 v-show="!this.$store.getters.getUser.isTeacher()">
+                <h4 v-show="!this.$store.getters.getUser.isLeader()">
                   <b-badge class="virtuaula-mark" variant="danger"
                     >Expired</b-badge
                   >
@@ -36,7 +36,7 @@
               <b-row>
                 <b-col cols="7" sm="9" lg="10">
                   <b-progress
-                    v-show="!this.$store.getters.getUser.isTeacher()"
+                    v-show="!this.$store.getters.getUser.isLeader()"
                     :max="max"
                     class="mt-2"
                   >
@@ -51,7 +51,7 @@
                 <b-col cols="2" v-show="!this.deliveryDateExpired">
                   <b-button href="#" variant="warning" @click="doLesson()">{{
                     lesson.progress === 100 ||
-                    this.$store.getters.getUser.isTeacher()
+                    this.$store.getters.getUser.isLeader()
                       ? "View"
                       : "Do"
                   }}</b-button>

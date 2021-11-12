@@ -94,8 +94,8 @@ export default {
           this.$store.getters.getUser.getToken(),
           this.$store.getters.getUser.getAccountId(),
           {
-            classroom: this.classroom,
-            students: this.studentsSelected
+            newGame: this.classroom,
+            players: this.studentsSelected
           }
         );
         this.hide = true;

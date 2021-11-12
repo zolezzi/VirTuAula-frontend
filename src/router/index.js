@@ -126,7 +126,7 @@ router.beforeEach((to, from, next) => {
   }
 
   function checkTeacherPermission() {
-    if (!store.getters.getUser.isTeacher()) {
+    if (!store.getters.getUser.isLeader()) {
       next({ name: "Forbidden" });
     } else {
       next();

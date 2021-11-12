@@ -1,42 +1,50 @@
 const axios = require("axios");
 const lessonService = (function() {
-  function completeTask(classroomId, lessonId, tasks, token, accountId) {
-    return axios.post(`/api/lessons/${classroomId}/${lessonId}/${accountId}`, tasks, {
+  function fetchLessonsTeacher(newGameId, token) {
+    return axios.get(`/api/campaigns/${newGameId}`, {
       headers: {
-        'Authorization': `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+
+  function fetchLessons(newGameId, token, accountId) {
+    return axios.get(`/api/campaigns/${newGameId}/${accountId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+
+  function completeTask(newGameId, missionId, missions, token, accountId) {
+    return axios.post(
+      `/api/campaigns/${newGameId}/${missionId}/${accountId}`,
+      missions,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       }
-    });
+    );
   }
 
-  function fetchLessons(classroomId, token, accountId) {
-    return axios.get(`/api/lessons/${classroomId}/${accountId}`, {
-      headers: {
-        'Authorization': `Bearer ${token}`,
-      },
-    });
-  }
-  
-  function fetchLessonsTeacher(classroomId, token) {
-    return axios.get(`/api/lessons/${classroomId}`, {
-      headers: {
-        'Authorization': `Bearer ${token}`,
-      },
-    });
-  }
-
-  function create(classroomId, token, accountId, lesson) {
-    return axios.post(`/api/lessons/create/${classroomId}/${accountId}`, lesson, {
-      headers: {
-        'Authorization': `Bearer ${token}`,
-      },
-    });    
+  function create(newGameId, token, accountId, campaign) {
+    return axios.post(
+      `/api/campaigns/create/${newGameId}/${accountId}`,
+      campaign,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
   }
 
   return {
     completeTask: completeTask,
     fetchLessons: fetchLessons,
-    fetchLessonsTeacher:fetchLessonsTeacher,
-    create: create
+    fetchLessonsTeacher: fetchLessonsTeacher,
+    create: create,
   };
 })();
 

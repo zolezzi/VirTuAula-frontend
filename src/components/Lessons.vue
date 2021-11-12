@@ -2,7 +2,7 @@
   <div class="mt-3">
     <b-container>
       <b-row
-        v-show="this.$store.getters.getUser.isTeacher()"
+        v-show="this.$store.getters.getUser.isLeader()"
         align-h="center"
         class="mb-4"
       >
@@ -52,7 +52,7 @@ export default {
   },
   async beforeCreate() {
     let response;
-    if (this.$store.getters.getUser.isTeacher()) {
+    if (this.$store.getters.getUser.isLeader()) {
       response = await lessonService.fetchLessonsTeacher(
         this.$store.getters.getActualClassroom.id,
         this.$store.getters.getUser.getToken()

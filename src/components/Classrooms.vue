@@ -2,7 +2,7 @@
   <div>
     <b-container>
       <b-row
-        v-show="this.$store.getters.getUser.isTeacher()"
+        v-show="this.$store.getters.getUser.isLeader()"
         align-h="center"
         class="mb-4 mt-3"
       >

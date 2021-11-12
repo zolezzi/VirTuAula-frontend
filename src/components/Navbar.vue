@@ -19,7 +19,7 @@
       </router-link>
       <b-navbar-nav
         v-show="
-          this.$store.getters.getUser.isTeacher() &&
+          this.$store.getters.getUser.isLeader() &&
           !(currentRouteName === 'Students')
         "
         class="
@@ -34,7 +34,7 @@
       </b-navbar-nav>
       <b-navbar-nav v-if="this.$store.getters.getUser.account" class="ml-auto">
         <div
-          v-if="!this.$store.getters.getUser.isTeacher() && this.$store.getters.getUser.getLevel()"
+          v-if="!this.$store.getters.getUser.isLeader() && this.$store.getters.getUser.getLevel()"
           class="virtuaula-experience"
         >
           <b-badge variant="warning" class="mr-2 ml-2 mb-1">
@@ -113,7 +113,7 @@ export default {
 
 .virtuaula-text {
   font-size: 2rem;
-  color: #ffc107;
+  color: orange;
   font-family: "Gagalin";
   padding-left: 5%;
   margin-bottom: 0;

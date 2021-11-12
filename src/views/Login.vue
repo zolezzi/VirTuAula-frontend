@@ -91,7 +91,7 @@ export default {
           if (!this.$store.getters.getUser.hasAccount()) {
             this.$router.push("/add-account");
           } else {
-            if (!this.$store.getters.getUser.isTeacher()) {
+            if (!this.$store.getters.getUser.isLeader()) {
               this.addExperience();
               this.addLevel();
             }

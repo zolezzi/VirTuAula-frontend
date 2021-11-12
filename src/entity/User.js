@@ -22,8 +22,8 @@ class User {
     }
   }
 
-  isTeacher() {
-    return this.account && this.account.accountType.name === "TEACHER";
+  isLeader() {
+    return this.account && this.account.accountType.name === "LEADER";
   }
 
   getExperience() {

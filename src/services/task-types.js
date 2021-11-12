@@ -1,7 +1,7 @@
 const axios = require("axios");
 const taskTypeService = (function() {
   function fetchTasksTypes(token) {
-      return axios.get(`/api/task-types`, {
+      return axios.get(`/api/mission-types`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }

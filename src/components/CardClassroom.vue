@@ -14,7 +14,7 @@
         {{ classroom.description }}
       </b-card-text>
       <b-progress
-        v-show="!this.$store.getters.getUser.isTeacher()"
+        v-show="!this.$store.getters.getUser.isLeader()"
         :max="max"
         class="mb-3"
       >

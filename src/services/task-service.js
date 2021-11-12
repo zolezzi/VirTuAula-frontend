@@ -1,14 +1,14 @@
 const axios = require("axios");
 const taskService = (function() {
-  function fetchTasks(lessonId, token, accountId) {
-      return axios.get(`/api/tasks/students/${lessonId}/${accountId}`, {
+  function fetchTasks(campaignId, token, accountId) {
+      return axios.get(`/api/missions/players/${campaignId}/${accountId}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       })
   }
-  function fetchTasksTeacher(lessonId, accountId, token) {
-    return axios.get(`/api/tasks/${lessonId}/${accountId}`, {
+  function fetchTasksTeacher(campaignId, accountId, token) {
+    return axios.get(`/api/missions/${campaignId}/${accountId}`, {
       headers: {
         'Authorization': `Bearer ${token}`
       }

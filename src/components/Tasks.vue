@@ -7,7 +7,7 @@
         </div>
       </b-row>
       <b-row
-        v-show="!this.$store.getters.getUser.isTeacher()"
+        v-show="!this.$store.getters.getUser.isLeader()"
         align-h="center"
         :class="
           hide ? 'animate__animated animate__zoomOut animate__faster' : ''
@@ -79,7 +79,7 @@ export default {
     },
   },
   async beforeCreate() {
-    if (this.$store.getters.getUser.isTeacher()) {
+    if (this.$store.getters.getUser.isLeader()) {
       let response = await taskService.fetchTasksTeacher(
         this.$store.getters.getActualLesson.id,
         this.$store.getters.getUser.getAccountId(),

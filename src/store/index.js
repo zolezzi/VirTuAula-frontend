@@ -6,38 +6,38 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    actualClassroom: {},
-    actualLesson: {},
-    tasksResponse: [],
+    actualNewGame: {},
+    actualCampaign: {},
+    missionsResponse: [],
     user: new User(),
-    newTasks: [],
+    newMissions: [],
   },
   getters: {
-    getActualClassroom: (state) => state.actualClassroom,
-    getActualLesson: (state) => state.actualLesson,
-    getTasksResponse: (state) => state.tasksResponse,
+    getActualNewGame: (state) => state.actualNewGame,
+    getActualCampaign: (state) => state.actualCampaign,
+    getMissionsResponse: (state) => state.missionsResponse,
     getUser: (state) => state.user,
-    getNewTasks: (state) => state.newTasks,
+    getNewMissions: (state) => state.newMissions,
   },
   mutations: {
-    addActualClassroom: (state, classroom) =>
-      (state.actualClassroom = classroom),
-    addActualLesson: (state, lesson) => (state.actualLesson = lesson),
-    addTaskResponse: (state, taskResponse) => {
-      if (state.tasksResponse.some((task) => task.id === taskResponse.id)) {
-        let task = state.tasksResponse.find(
-          (task) => task.id === taskResponse.id
+    addActualNewGame: (state, newGame) =>
+      (state.actualNewGame = newGame),
+    addActualCampaign: (state, campaign) => (state.actualCampaign = campaign),
+    addMissionResponse: (state, missionResponse) => {
+      if (state.missionsResponse.some((mission) => mission.id === missionResponse.id)) {
+        let mission = state.missionsResponse.find(
+          (mission) => mission.id === missionResponse.id
         );
-        task.answerId = taskResponse.answerId;
-        task.story = taskResponse.story;
+        mission.answerId = missionResponse.answerId;
+        mission.story = missionResponse.story;
       } else {
-        state.tasksResponse.push(taskResponse);
+        state.missionsResponse.push(missionResponse);
       }
     },
-    resetTaskResponse: (state) => (state.tasksResponse = []),
+    resetMissionResponse: (state) => (state.missionsResponse = []),
     addUser: (state, user) => (state.user = user),
-    addNewTask: (state, task) => state.newTasks.push(task),
-    resetNewTasks: (state) => (state.newTasks = []),
+    addNewMission: (state, mission) => state.newMissions.push(mission),
+    resetNewMissions: (state) => (state.newMissions = []),
   },
   actions: {},
   modules: {},

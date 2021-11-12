@@ -5,18 +5,18 @@
     <b-container>
       <b-row>
         <b-col>
-          <b-card img-alt="lesson" img-left class="mb-3">
+          <b-card img-alt="campaign" img-left class="mb-3">
             <div class="virtuaula-title">
-              <h4 class="card-title">{{ lesson.name }}</h4>
+              <h4 class="card-title">{{ campaign.name }}</h4>
               <template v-if="!deliveryDateExpired">
                 <h4
                   v-show="
-                    lesson.note != null &&
+                    campaign.note != null &&
                     !this.$store.getters.getUser.isLeader()
                   "
                 >
                   <b-badge class="virtuaula-mark" variant="warning"
-                    >Mark: {{ lesson.note }}</b-badge
+                    >Mark: {{ campaign.note }}</b-badge
                   >
                 </h4>
               </template>
@@ -41,16 +41,16 @@
                     class="mt-2"
                   >
                     <b-progress-bar
-                      :value="lesson.progress === 0 ? 100 : value"
-                      :variant="lesson.progress === 0 ? 'secondary' : 'success'"
+                      :value="campaign.progress === 0 ? 100 : value"
+                      :variant="campaign.progress === 0 ? 'secondary' : 'success'"
                       show-progress
                       :label="`${value}%`"
                     ></b-progress-bar>
                   </b-progress>
                 </b-col>
                 <b-col cols="2" v-show="!this.deliveryDateExpired">
-                  <b-button href="#" variant="warning" @click="doLesson()">{{
-                    lesson.progress === 100 ||
+                  <b-button href="#" variant="warning" @click="doCampaign()">{{
+                    campaign.progress === 100 ||
                     this.$store.getters.getUser.isLeader()
                       ? "View"
                       : "Do"
@@ -76,22 +76,22 @@ export default {
       timer: null,
     };
   },
-  props: ["lesson", "hide"],
+  props: ["campaign", "hide"],
   mounted() {
     this.timer = setInterval(() => {
-      this.value = this.lesson.progress;
+      this.value = this.campaign.progress;
     }, 500);
   },
   computed: {
     deliveryDateExpired() {
-      return moment().isAfter(moment(this.lesson.deliveryDate)) && this.lesson.progress < 100;
+      return moment().isAfter(moment(this.campaign.deliveryDate)) && this.campaign.progress < 100;
     },
   },
   methods: {
-    doLesson() {
-      this.$store.commit("resetTaskResponse");
+    doCampaign() {
+      this.$store.commit("resetMissionResponse");
       this.$emit("update", true);
-      this.$store.commit("addActualLesson", this.lesson);
+      this.$store.commit("addActualCampaign", this.campaign);
       setTimeout(() => this.$router.push({ name: "Campaign" }), 500);
     },
   },

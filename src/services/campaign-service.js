@@ -1,5 +1,5 @@
 const axios = require("axios");
-const lessonService = (function() {
+const campaignService = (function() {
   function fetchCampaignsLeader(newGameId, token) {
     return axios.get(`/api/campaigns/${newGameId}`, {
       headers: {
@@ -48,4 +48,4 @@ const lessonService = (function() {
   };
 })();
 
-module.exports = lessonService;
+module.exports = campaignService;

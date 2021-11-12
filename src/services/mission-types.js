@@ -1,5 +1,5 @@
 const axios = require("axios");
-const taskTypeService = (function() {
+const missionTypeService = (function() {
   function fetchMissionsTypes(token) {
       return axios.get(`/api/mission-types`, {
         headers: {
@@ -13,4 +13,4 @@ const taskTypeService = (function() {
   };
 })();
 
-module.exports = taskTypeService;
+module.exports = missionTypeService;

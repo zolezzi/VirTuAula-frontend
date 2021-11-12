@@ -7,41 +7,41 @@
     "
   >
     <b-container>
-      <h2>Add a Task</h2>
+      <h2>Add a Mission</h2>
       <b-row align-h="center" class="mt-4 mb-4">
         <b-card class="virtuaula-card">
           <b-row class="mr-1 ml-1">
             <b-form-select
-              v-model="taskTypeSelected"
-              :options="taskTypes"
+              v-model="missionTypeSelected"
+              :options="missionTypes"
             ></b-form-select>
           </b-row>
           <b-row>
             <b-col class="virtuaula-column">
-              <label class="mt-2 virtuaula-label" for="virtuaula-task-score"
-                >Task score</label
+              <label class="mt-2 virtuaula-label" for="virtuaula-mission-score"
+                >Mission score</label
               >
               <b-input
-                id="virtuaula-task-score"
+                id="virtuaula-mission-score"
                 type="number"
                 v-model="score"
-                placeholder="Task score"
+                placeholder="Mission score"
               ></b-input>
             </b-col>
           </b-row>
           <b-row align-h="center">
             <b-col class="virtuaula-column">
-              <label class="mt-2 virtuaula-label" for="virtuaula-task-statement"
-                >Task statement</label
+              <label class="mt-2 virtuaula-label" for="virtuaula-mission-statement"
+                >Mission statement</label
               >
               <b-input
-                id="virtuaula-task-statement"
+                id="virtuaula-mission-statement"
                 v-model="statement"
-                placeholder="Task statement"
+                placeholder="Mission statement"
               ></b-input>
             </b-col>
           </b-row>
-          <template v-if="taskTypeSelected === 1">
+          <template v-if="missionTypeSelected === 1">
             <b-button @click="addOption" variant="success" class="mt-4">
               + Add Option</b-button
             >
@@ -51,13 +51,13 @@
                   <b-col cols="12">
                     <label
                       class="mt-3 virtuaula-label"
-                      :for="'virtuaula-task-option-' + index"
+                      :for="'virtuaula-mission-option-' + index"
                       >Option {{ index + 1 }}</label
                     >
                   </b-col>
                   <b-col cols="10">
                     <b-input
-                      :id="'virtuaula-task-option-' + index"
+                      :id="'virtuaula-mission-option-' + index"
                       :placeholder="'Option' + (index + 1)"
                       class="mt-1"
                       v-model="option.responseValue"
@@ -101,8 +101,8 @@ export default {
       statement: "",
       score: undefined,
       options: [],
-      taskTypes: [],
-      taskTypeSelected: null,
+      missionTypes: [],
+      missionTypeSelected: null,
       story: "",
     };
   },
@@ -114,24 +114,24 @@ export default {
   methods: {
     add() {
       if (this.allComplete()) {
-        this.$store.commit("addNewTask", this.getNewTask());
+        this.$store.commit("addNewMission", this.getNewMission());
         setTimeout(() => this.$router.push({ name: "FormCampaign" }), 500);
       }
     },
-    getNewTask() {
-      if(this.taskTypeSelected === 1) {
+    getNewMission() {
+      if(this.missionTypeSelected === 1) {
         return {
           statement: this.statement,
           score: this.score,
           options: this.options,
-          missionTypeId: this.taskTypeSelected,
+          missionTypeId: this.missionTypeSelected,
         }
       } else {
         return {
           statement: this.statement,
           score: this.score,
           options: [{ responseValue: "Story", isCorrect: true }],
-          missionTypeId: this.taskTypeSelected,
+          missionTypeId: this.missionTypeSelected,
         }
       }
     },
@@ -140,13 +140,13 @@ export default {
     },
     allComplete() {
       return (
-        (this.taskTypeSelected === 1 &&
+        (this.missionTypeSelected === 1 &&
           this.options.length > 0 &&
           this.options.every((option) => option.responseValue) &&
           this.statement &&
           this.score &&
           this.aCheckIsSelected) ||
-        (this.taskTypeSelected == 2 && this.statement && this.score)
+        (this.missionTypeSelected == 2 && this.statement && this.score)
       );
     },
   },
@@ -154,8 +154,8 @@ export default {
     missionTypesService
       .fetchMissionsTypes(this.$store.getters.getUser.getToken())
       .then((response) => {
-        this.taskTypes = response.data.map((taskType) => {
-          return { value: taskType.id, text: taskType.name };
+        this.missionTypes = response.data.map((missionType) => {
+          return { value: missionType.id, text: missionType.name };
         });
       })
       .catch((error) => console.log(error));

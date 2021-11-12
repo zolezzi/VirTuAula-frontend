@@ -2,9 +2,9 @@
 <div>
     <div>
     <h2 class="mt-2" :class="hide ? 'animate__animated animate__zoomOut animate__faster' : 'animate__animated animate__bounceInDown animate__faster'">
-      {{ this.$store.getters.getActualLesson.name }}
+      {{ this.$store.getters.getActualCampaign.name }}
     </h2>
-    <Missions :lessonId="this.$store.getters.getActualLesson.id" class="animate__animated animate__zoomIn animate__faster"/>
+    <Missions :campaignId="this.$store.getters.getActualCampaign.id" class="animate__animated animate__zoomIn animate__faster"/>
   </div>
   </div>    
 </template>

@@ -2,8 +2,8 @@
   <div class="mt-3">
     <b-container>
       <b-row align-h="center">
-        <div v-for="task in this.tasks" :key="task.id">
-          <CardMission :task="task" :hide="hide" />
+        <div v-for="mission in this.missions" :key="mission.id">
+          <CardMission :mission="mission" :hide="hide" />
         </div>
       </b-row>
       <b-row
@@ -36,12 +36,12 @@ export default {
   components: {
     CardMission,
   },
-  props: ["lessonId"],
+  props: ["campaignId"],
   data() {
     return {
-      tasks: [],
+      missions: [],
       hide: false,
-      disabled: this.$store.getters.getActualLesson.progress,
+      disabled: this.$store.getters.getActualCampaign.progress,
     };
   },
   methods: {
@@ -52,9 +52,9 @@ export default {
     send() {
       campaignService
         .completeMission(
-          this.$store.getters.getActualClassroom.id,
-          this.lessonId,
-          this.$store.getters.getTasksResponse,
+          this.$store.getters.getActualNewGame.id,
+          this.campaignId,
+          this.$store.getters.getMissionsResponse,
           this.$store.getters.getUser.getToken(),
           this.$store.getters.getUser.getAccountId()
         )
@@ -75,24 +75,24 @@ export default {
   },
   computed: {
     complete() {
-      return this.tasks.length !== this.$store.getters.getTasksResponse.length;
+      return this.missions.length !== this.$store.getters.getMissionsResponse.length;
     },
   },
   async beforeCreate() {
     if (this.$store.getters.getUser.isLeader()) {
       let response = await missionService.fetchMissionsLeader(
-        this.$store.getters.getActualLesson.id,
+        this.$store.getters.getActualCampaign.id,
         this.$store.getters.getUser.getAccountId(),
         this.$store.getters.getUser.getToken()
       );
-      this.tasks = response.data;
+      this.missions = response.data;
     } else {
       let response = await missionService.fetchMissions(
-        this.$store.getters.getActualLesson.id,
+        this.$store.getters.getActualCampaign.id,
         this.$store.getters.getUser.getToken(),
         this.$store.getters.getUser.getAccountId()
       );
-      this.tasks = response.data;
+      this.missions = response.data;
     }
   },
 };

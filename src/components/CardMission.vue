@@ -7,12 +7,10 @@
         <b-row>
           <b-col>
             <b-card
-              img-alt="lesson"
-              img-left
-              :title="task.statement"
+              :title="mission.statement"
               class="mb-3 virtuaula-card"
             >
-              <template v-if="task.missionTypeId === 1">
+              <template v-if="mission.missionTypeId === 1">
                 <b-form-group class="virtuaula-group">
                   <b-form-radio-group
                     class="virtuaula-options"
@@ -24,7 +22,7 @@
                   </b-form-radio-group>
                 </b-form-group>
               </template>
-              <template v-if="task.missionTypeId === 2 && !this.$store.getters.getUser.isLeader()" >
+              <template v-if="mission.missionTypeId === 2 && !this.$store.getters.getUser.isLeader()" >
                 <label class="mt-2 virtuaula-label" for="virtuaula-story"
                   >Tell a Story</label
                 >
@@ -50,34 +48,34 @@ export default {
     return {
       value: 0,
       max: 100,
-      options: this.task.options.map((option) => {
+      options: this.mission.options.map((option) => {
         return { text: option.responseValue, value: option.id };
       }),
       timer: null,
       selected: this.$store.getters.getUser.isLeader()
-        ? this.task.correctAnswer
-        : this.task.answer,
-      disabled: this.$store.getters.getActualLesson.progress,
+        ? this.mission.correctAnswer
+        : this.mission.answer,
+      disabled: this.$store.getters.getActualCampaign.progress,
       isLeader: this.$store.getters.getUser.isLeader(),
-      storyWrited: this.task.story ? this.task.story: ""
+      storyWrited: this.mission.story ? this.mission.story: ""
     };
   },
-  props: ["task", "hide"],
+  props: ["mission", "hide"],
   watch: {
     selected(newSelected) {
       if (newSelected) {
-        this.task.answer = this.selected;
-        this.$store.commit("addTaskResponse", {
-          id: this.task.id,
+        this.mission.answer = this.selected;
+        this.$store.commit("addMissionResponse", {
+          id: this.mission.id,
           answerId: newSelected,
         });
       }
     },
     storyWrited(newStory) {
       if(newStory) {
-        this.task.answer = this.options[0].value;
-        this.$store.commit("addTaskResponse", {
-          id: this.task.id,
+        this.mission.answer = this.options[0].value;
+        this.$store.commit("addMissionResponse", {
+          id: this.mission.id,
           answerId: this.options[0].value,
           story: newStory
         })

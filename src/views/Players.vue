@@ -7,7 +7,7 @@
           : 'animate__animated animate__bounceInDown animate__faster'
       "
     >
-      Students
+      Players
     </h2>
     <b-form
       :class="
@@ -64,7 +64,7 @@ export default {
   data() {
     return {
       file: null,
-      students: [],
+      players: [],
       hide: false,
     };
   },
@@ -76,7 +76,7 @@ export default {
         header: true,
         skipEmptyLines: true,
         complete: (results) => {
-          this.students = results.data;
+          this.players = results.data;
         },
       });
     },
@@ -108,7 +108,7 @@ export default {
     fileUpload() {
       if (this.file) {
         this.showCsv();
-        return this.students;
+        return this.players;
       }
     },
   },

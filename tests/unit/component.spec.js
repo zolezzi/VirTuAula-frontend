@@ -10,21 +10,21 @@ localVue.use(Vuex);
 localVue.use(BootstrapVue);
 
 describe("CardMission.vue", () => {
-  const actualLesson = { progress: 0 };
+  const actualCampaign = { progress: 0 };
   const user = new User('teacher', 'token', {accountType: {name: 'STUDENT'}});
   let store;
 
   beforeEach(() => {
     store = new Vuex.Store({
-      state: { actualLesson: actualLesson, tasksResponse: [], user: user },
-      getters: { getActualLesson: () => actualLesson, getUser: () => user },
+      state: { actualCampaign: actualCampaign, missionsResponse: [], user: user },
+      getters: { getActualCampaign: () => actualCampaign, getUser: () => user },
       mutations: {
-        addTaskResponse: (state, taskResponse) =>
-          state.tasksResponse.some((task) => task.id === taskResponse.id)
-            ? (state.tasksResponse.find(
-                (task) => task.id === taskResponse.id
-              ).answer = taskResponse.answer)
-            : state.tasksResponse.push(taskResponse),
+        addMissionResponse: (state, missionResponse) =>
+          state.missionsResponse.some((mission) => mission.id === missionResponse.id)
+            ? (state.missionsResponse.find(
+                (mission) => mission.id === missionResponse.id
+              ).answer = missionResponse.answer)
+            : state.missionsResponse.push(missionResponse),
       },
     });
   });
@@ -34,7 +34,7 @@ describe("CardMission.vue", () => {
       store,
       localVue,
       propsData: {
-        task: { id: 1, answer: "", options: [{id: 1, responseValue:"hola"}] },
+        mission: { id: 1, answer: "", options: [{id: 1, responseValue:"hola"}] },
       },
     });
     expect(wrapper.vm.selected).toMatch("");
@@ -45,7 +45,7 @@ describe("CardMission.vue", () => {
       store,
       localVue,
       propsData: {
-        task: { id: 1, answer: "2" ,options: [{id: 1, responseValue:"hola"}] },
+        mission: { id: 1, answer: "2" ,options: [{id: 1, responseValue:"hola"}] },
       },
     });
     expect(wrapper.vm.selected).toMatch("2");
@@ -53,34 +53,34 @@ describe("CardMission.vue", () => {
 });
 
 describe("Missions.vue", () => {
-  const actualLesson = { progress: 0 };
-  const tasks = [];
-  const tasksResponse = [];
+  const actualCampaign = { progress: 0 };
+  const missions = [];
+  const missionsResponse = [];
   const user = new User('teacher', 'token', {accountType: {name: 'STUDENT'}});
   let store;
 
   beforeEach(() => {
     store = new Vuex.Store({
-      state: { actualLesson: actualLesson, tasks: tasks, tasksRespose: tasksResponse, user: user },
+      state: { actualCampaign: actualCampaign, missions: missions, missionsRespose: missionsResponse, user: user },
       getters: {
-        getTasks: (state) => (lessonId) => tasks,
-        getActualLesson: () => actualLesson,
-        getTasksResponse: () => tasksResponse,
+        getMissions: (state) => (campaignId) => missions,
+        getActualCampaign: () => actualCampaign,
+        getMissionsResponse: () => missionsResponse,
         getUser: () => user
       },
-      actions: { fetchTasks: () => [] },
+      actions: { fetchMissions: () => [] },
     });
   });
 
-  it("has lessonId prop", () => {
+  it("has campaignId prop", () => {
     const wrapper = mount(Missions, {
       store,
       localVue,
       propsData: {
-        lessonId: 1,
+        campaignId: 1,
       },
     });
 
-    expect(wrapper.props("lessonId")).toBe(1);
+    expect(wrapper.props("campaignId")).toBe(1);
   });
 });

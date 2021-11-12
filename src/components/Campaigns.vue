@@ -11,14 +11,14 @@
           :class="
             hide ? 'animate__animated animate__zoomOut animate__faster' : ''
           "
-          @click="addLesson"
+          @click="addCampaign"
         >
-          + Add Lesson</b-button
+          + Add Campaign</b-button
         >
       </b-row>
       <b-row align-h="center">
-        <div v-for="lesson in lessons" :key="lesson.id">
-          <CardCampaign :lesson="lesson" :hide="hide" @update="hideUpdate" />
+        <div v-for="campaign in campaigns" :key="campaign.id">
+          <CardCampaign :campaign="campaign" :hide="hide" @update="hideUpdate" />
         </div>
       </b-row>
     </b-container>
@@ -32,10 +32,10 @@ export default {
   components: {
     CardCampaign,
   },
-  props: ["classroomId"],
+  props: ["newGameId"],
   data() {
     return {
-      lessons: [],
+      campaigns: [],
       hide: false,
     };
   },
@@ -44,7 +44,7 @@ export default {
       this.hide = newValue;
       this.$parent.hide = newValue;
     },
-    addLesson() {
+    addCampaign() {
       this.hide = true;
       this.$parent.hide = true;
       setTimeout(() => this.$router.push({ name: "FormCampaign" }), 500);
@@ -54,17 +54,17 @@ export default {
     let response;
     if (this.$store.getters.getUser.isLeader()) {
       response = await campaignService.fetchCampaignsLeader(
-        this.$store.getters.getActualClassroom.id,
+        this.$store.getters.getActualNewGame.id,
         this.$store.getters.getUser.getToken()
       );
     } else {
       response = await campaignService.fetchCampaigns(
-        this.$store.getters.getActualClassroom.id,
+        this.$store.getters.getActualNewGame.id,
         this.$store.getters.getUser.getToken(),
         this.$store.getters.getUser.getAccountId()
       );
     }
-    this.lessons = response.data;
+    this.campaigns = response.data;
   },
 };
 </script>

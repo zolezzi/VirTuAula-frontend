@@ -8,24 +8,24 @@
   >
     <b-container>
       <b-row align-h="center">
-        <h2>Add a Lesson</h2>
+        <h2>Add a Campaign</h2>
       </b-row>
       <b-row align-h="center" class="mt-4 mb-4">
         <b-card class="virtuaula-card">
           <b-form>
             <b-container>
               <b-row>
-                <label class="virtuaula-label" for="virtuaula-lesson-name"
-                  >Lesson Name</label
+                <label class="virtuaula-label" for="virtuaula-campaign-name"
+                  >Campaign Name</label
                 >
                 <b-input
-                  id="virtuaula-lesson-name"
+                  id="virtuaula-campaign-name"
                   v-model="name"
-                  placeholder="Lesson name"
+                  placeholder="Campaign name"
                 ></b-input>
               </b-row>
               <b-row class="mt-3">
-                <b-col cols="6" class="virtuaula-delivery-date-form">
+                <b-col cols="12" md="6" class="virtuaula-delivery-date-form">
                   <label for="virtuaula-delivery-date"
                     >Choose a delivery date</label
                   >
@@ -41,7 +41,7 @@
                     class="mb-2"
                   ></b-form-datepicker>
                 </b-col>
-                <b-col cols="6" class="virtuaula-delivery-hour-form">
+                <b-col cols="12" md="6" class="virtuaula-delivery-hour-form">
                   <label for="virtuaula-delivery-hour"
                     >Choose a delivery hour</label
                   >
@@ -54,23 +54,23 @@
                 </b-col>
               </b-row>
               <b-row class="mt-3">
-                <b-col cols="12" md="8" class="virtuaula-column">
-                  <label class="virtuaula-label" for="virtuaula-lesson-note"
+                <b-col cols="12" md="7" class="virtuaula-column">
+                  <label class="virtuaula-label" for="virtuaula-campaign-note"
                     >Max Note</label
                   >
                   <b-input
                     type="number"
-                    id="virtuaula-lesson-note"
+                    id="virtuaula-campaign-note"
                     v-model="note"
-                    placeholder="Lesson note"
+                    placeholder="Campaign note"
                   ></b-input>
                 </b-col>
                 <b-col>
                   <b-button
                     class="virtuaula-button"
                     variant="warning"
-                    @click="addTask"
-                    >+ Add Task</b-button
+                    @click="addMission"
+                    >+ Add Mission</b-button
                   >
                 </b-col>
               </b-row>
@@ -79,13 +79,13 @@
         </b-card>
       </b-row>
       <b-row align-h="center" class="mt-4 mb-4">
-        <template v-for="(task, index) in tasks">
+        <template v-for="(mission, index) in missions">
           <b-card class="mt-2 ml-2 virtuaula-card" :key="index">
-            <h2>Task {{ index + 1 }}</h2>
-            <div class="virtuaula-task-info">
-              <p>Statement: {{ task.statement }}</p>
-              <p>Score: {{ task.score }}</p>
-              <template v-for="(option, index) in task.options">
+            <h2>Mission {{ index + 1 }}</h2>
+            <div class="virtuaula-mission-info">
+              <p>Statement: {{ mission.statement }}</p>
+              <p>Score: {{ mission.score }}</p>
+              <template v-for="(option, index) in mission.options">
                 <p :key="index">
                   Option {{ index + 1 }}: {{ option.responseValue }}
                 </p>
@@ -113,7 +113,7 @@ export default {
       hide: false,
       name: "",
       note: undefined,
-      tasks: this.$store.getters.getNewTasks,
+      missions: this.$store.getters.getNewMissions,
       deliveryDate: undefined,
       deliveryHour: undefined,
     };
@@ -124,7 +124,7 @@ export default {
       return (
         this.name &&
         this.note &&
-        this.$store.getters.getNewTasks.length > 0 &&
+        this.$store.getters.getNewMissions.length > 0 &&
         this.deliveryDate &&
         this.deliveryHour
       );
@@ -134,22 +134,22 @@ export default {
     create() {
       if (this.completed) {
         campaignService.create(
-          this.$store.getters.getActualClassroom.id,
+          this.$store.getters.getActualNewGame.id,
           this.$store.getters.getUser.getToken(),
           this.$store.getters.getUser.getAccountId(),
           {
             name: this.name,
             maxNote: this.note,
-            missions: this.$store.getters.getNewTasks,
+            missions: this.$store.getters.getNewMissions,
             deliveryDate: `${this.deliveryDate} ${this.deliveryHour}`,
           }
         );
         this.hide = true;
-        this.$store.commit("resetNewTasks");
+        this.$store.commit("resetNewMissions");
         setTimeout(() => this.$router.push({ name: "NewGame" }), 500);
       }
     },
-    addTask() {
+    addMission() {
       this.hide = true;
       setTimeout(() => this.$router.push({ name: "FormMission" }), 500);
     },
@@ -167,7 +167,7 @@ export default {
 }
 
 .virtuaula-button {
-  margin-top: 27%;
+  margin-top: 21%;
 }
 
 .virtuaula-column {
@@ -180,6 +180,13 @@ export default {
   }
   .virtuaula-button {
     margin-top: 10%;
+  }
+
+  .virtuaula-delivery-date-form {
+    padding-right: 0;
+  }
+  .virtuaula-delivery-hour-form {
+    padding-left: 0;
   }
 }
 
@@ -206,7 +213,7 @@ input[type="number"] {
   border-top: 2px #c1c1c1 solid;
 }
 
-.virtuaula-task-info {
+.virtuaula-mission-info {
   text-align: start;
   display: flex;
   justify-content: center;

@@ -8,43 +8,43 @@
   >
     <b-container>
       <b-row align-h="center">
-        <h2>Add a Classroom</h2>
+        <h2>Add a New Game</h2>
       </b-row>
       <b-row align-h="center" class="mt-4 mb-4">
         <b-card class="virtuaula-card">
           <b-form>
             <b-container>
               <b-row>
-                <label class="virtuaula-label" for="virtuaula-classroom-name"
-                  >Classroom Name</label
+                <label class="virtuaula-label" for="virtuaula-new-game-name"
+                  >New Game Name</label
                 >
                 <b-input
-                  id="virtuaula-classroom-name"
-                  v-model="classroom.name"
-                  placeholder="Classroom name"
+                  id="virtuaula-new-game-name"
+                  v-model="newGame.name"
+                  placeholder="New Game Name"
                 ></b-input>
               </b-row>
               <b-row class="mt-3">
                 <label
                   class="virtuaula-label"
-                  for="virtuaula-classroom-description"
-                  >Classroom Description</label
+                  for="virtuaula-new-game-description"
+                  >New Game Description</label
                 >
                 <b-form-textarea
-                  id="virtuaula-classroom-description"
-                  v-model="classroom.description"
-                  placeholder="Classroom Description"
+                  id="virtuaula-new-game-description"
+                  v-model="newGame.description"
+                  placeholder="New Game Description"
                   rows="8"
                 ></b-form-textarea>
               </b-row>
               <b-row class="mt-3">
-                <label class="virtuaula-label" for="virtuaula-students"
-                  >Students</label
+                <label class="virtuaula-label" for="virtuaula-players"
+                  >Players</label
                 >
                 <b-form-select
-                  id="virtuaula-students"
-                  v-model="studentsSelected"
-                  :options="students"
+                  id="virtuaula-players"
+                  v-model="playersSelected"
+                  :options="players"
                   multiple
                   :select-size="4"
                 ></b-form-select>
@@ -70,20 +70,20 @@ export default {
   data() {
     return {
       hide: false,
-      classroom: {
+      newGame: {
         name: "",
         description: "",
       },
-      students: [],
-      studentsSelected: [],
+      players: [],
+      playersSelected: [],
     };
   },
   computed: {
     completed() {
       return (
-        this.classroom.name &&
-        this.classroom.description &&
-        this.studentsSelected.length > 0
+        this.newGame.name &&
+        this.newGame.description &&
+        this.playersSelected.length > 0
       );
     },
   },
@@ -94,8 +94,8 @@ export default {
           this.$store.getters.getUser.getToken(),
           this.$store.getters.getUser.getAccountId(),
           {
-            newGame: this.classroom,
-            players: this.studentsSelected
+            newGame: this.newGame,
+            players: this.playersSelected
           }
         );
         this.hide = true;
@@ -111,8 +111,8 @@ export default {
       )
       .then(
         (response) =>
-          (this.students = response.data.map((student) => {
-            return { value: student.id, text: student.username };
+          (this.players = response.data.map((player) => {
+            return { value: player.id, text: player.username };
           }))
       )
       .catch((error) => console.log(error));

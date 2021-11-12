@@ -3,15 +3,15 @@
     :class="hide ? 'animate__animated animate__zoomOut animate__faster' : ''"
   >
     <b-card
-      :title="classroom.name"
-      img-src="../assets/classroom.png"
-      img-alt="classroom"
+      :title="newGame.name"
+      img-src="../assets/newGame.png"
+      img-alt="newGame"
       img-top
       style="max-width: 20rem"
       class="mb-2 virtuaula-card"
     >
       <b-card-text class="virtuaula-text">
-        {{ classroom.description }}
+        {{ newGame.description }}
       </b-card-text>
       <b-progress
         v-show="!this.$store.getters.getUser.isLeader()"
@@ -19,8 +19,8 @@
         class="mb-3"
       >
         <b-progress-bar
-          :value="classroom.progress === 0 ? 100 : value"
-          :variant="classroom.progress === 0 ? 'secondary' : 'success'"
+          :value="newGame.progress === 0 ? 100 : value"
+          :variant="newGame.progress === 0 ? 'secondary' : 'success'"
           show-progress
           :label="`${value}%`"
         ></b-progress-bar>
@@ -50,14 +50,14 @@ export default {
   },
   mounted() {
     this.timer = setInterval(() => {
-      this.value = this.classroom.progress;
+      this.value = this.newGame.progress;
     }, 500);
   },
-  props: ["classroom", "hide"],
+  props: ["newGame", "hide"],
   methods: {
     enter() {
       this.$emit("update", true);
-      this.$store.commit("addActualClassroom", this.classroom);
+      this.$store.commit("addActualNewGame", this.newGame);
       setTimeout(() => this.$router.push({ name: "NewGame" }), 500);
     },
   },

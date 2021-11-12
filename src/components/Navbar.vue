@@ -20,17 +20,17 @@
       <b-navbar-nav
         v-show="
           this.$store.getters.getUser.isLeader() &&
-          !(currentRouteName === 'Students')
+          !(currentRouteName === 'Players')
         "
         class="
           ml-5
           mt-2
           virtuaula-img
           animate__animated animate__zoomIn
-          virtuaula-students
+          virtuaula-players
         "
       >
-        <b-nav-item @click="addStudents()">Add Students</b-nav-item>
+        <b-nav-item @click="addPlayers()">Add Players</b-nav-item>
       </b-navbar-nav>
       <b-navbar-nav v-if="this.$store.getters.getUser.account" class="ml-auto">
         <div
@@ -95,7 +95,7 @@ export default {
     },
   },
   methods: {
-    addStudents() {
+    addPlayers() {
       setTimeout(() => this.$router.push({ name: "Players" }), 500);
     },
   },
@@ -135,7 +135,7 @@ export default {
   text-decoration: inherit;
 }
 
-.virtuaula-students:hover {
+.virtuaula-players:hover {
   color: #808080;
 }
 

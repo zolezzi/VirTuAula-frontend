@@ -11,16 +11,16 @@
           :class="
             hide ? 'animate__animated animate__zoomOut animate__faster' : 'animate__animated animate__zoomIn animate__faster'
           "
-          @click="addClassroom"
+          @click="addNewGame"
         >
-          + Add Classroom</b-button
+          + Add New Game</b-button
         >
       </b-row>
       <b-row align-h="center">
-        <div v-for="classroom in classrooms" :key="classroom.id">
+        <div v-for="newGame in newGames" :key="newGame.id">
           <b-col>
             <CardNewGame
-              :classroom="classroom"
+              :newGame="newGame"
               :hide="hide"
               @update="hideUpdate"
               class="animate__animated animate__zoomIn animate__faster"
@@ -36,13 +36,13 @@
 import CardNewGame from "./CardNewGame.vue";
 import newGameService from "../services/new-game-service";
 export default {
-  name: "Classrooms",
+  name: "NewGames",
   components: {
     CardNewGame,
   },
   data() {
     return {
-      classrooms: [],
+      newGames: [],
       hide: false,
     };
   },
@@ -51,7 +51,7 @@ export default {
       this.hide = newValue;
       this.$parent.hide = newValue;
     },
-    addClassroom() {
+    addNewGame() {
       this.hide = true;
       this.$parent.hide = true;
       setTimeout(() => this.$router.push({ name: "FormNewGame" }), 500);
@@ -62,7 +62,7 @@ export default {
       this.$store.getters.getUser.getToken(),
       this.$store.getters.getUser.getAccountId()
     );
-    this.classrooms = response.data;
+    this.newGames = response.data;
   },
 };
 </script>

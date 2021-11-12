@@ -1,5 +1,5 @@
 const axios = require("axios");
-const classroomService = (function() {
+const newGameService = (function() {
   function fetchNewGames(token, accountId) {
     return axios.get(`/api/new-games/${accountId}`, {
       headers: {
@@ -22,4 +22,4 @@ const classroomService = (function() {
   };
 })();
 
-module.exports = classroomService;
+module.exports = newGameService;

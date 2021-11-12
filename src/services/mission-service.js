@@ -1,5 +1,5 @@
 const axios = require("axios");
-const taskService = (function() {
+const missionService = (function() {
   function fetchMissions(campaignId, token, accountId) {
       return axios.get(`/api/missions/players/${campaignId}/${accountId}`, {
         headers: {
@@ -21,4 +21,4 @@ const taskService = (function() {
   };
 })();
 
-module.exports = taskService;
+module.exports = missionService;

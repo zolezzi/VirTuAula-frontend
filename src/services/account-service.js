@@ -17,7 +17,7 @@ const accountService = (function() {
     });
   }
 
-  function addStudents(token, accountId, file) {
+  function addPlayers(token, accountId, file) {
     return axios.post(`/api/account/upload-file-players/${accountId}`, file, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -33,7 +33,7 @@ const accountService = (function() {
     });
   }
 
-  function getStudents(token, accountId) {
+  function getPlayers(token, accountId) {
     return axios.get(`/api/account/players/${accountId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -44,8 +44,8 @@ const accountService = (function() {
   return {
     getExperience: getExperience,
     createAccount: createAccount,
-    addStudents: addStudents,
-    getStudents: getStudents,
+    addPlayers: addPlayers,
+    getPlayers: getPlayers,
     getLevel: getLevel,
   };
 })();

@@ -104,10 +104,10 @@
 </template>
 
 <script>
-import lessonService from "../services/lesson-service";
+import campaignService from "../services/campaign-service";
 
 export default {
-  name: "FormLesson",
+  name: "FormCampaign",
   data() {
     return {
       hide: false,
@@ -133,7 +133,7 @@ export default {
   methods: {
     create() {
       if (this.completed) {
-        lessonService.create(
+        campaignService.create(
           this.$store.getters.getActualClassroom.id,
           this.$store.getters.getUser.getToken(),
           this.$store.getters.getUser.getAccountId(),
@@ -146,12 +146,12 @@ export default {
         );
         this.hide = true;
         this.$store.commit("resetNewTasks");
-        setTimeout(() => this.$router.push({ name: "Classroom" }), 500);
+        setTimeout(() => this.$router.push({ name: "NewGame" }), 500);
       }
     },
     addTask() {
       this.hide = true;
-      setTimeout(() => this.$router.push({ name: "FormTask" }), 500);
+      setTimeout(() => this.$router.push({ name: "FormMission" }), 500);
     },
   },
 };

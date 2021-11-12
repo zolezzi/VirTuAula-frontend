@@ -3,7 +3,7 @@
     <b-container>
       <b-row align-h="center">
         <div v-for="task in this.tasks" :key="task.id">
-          <CardTask :task="task" :hide="hide" />
+          <CardMission :task="task" :hide="hide" />
         </div>
       </b-row>
       <b-row
@@ -27,14 +27,14 @@
 </template>
 
 <script>
-import CardTask from "./CardTask.vue";
-import lessonService from "../services/lesson-service";
-import taskService from "../services/task-service";
+import CardMission from "./CardMission.vue";
+import campaignService from "../services/campaign-service";
+import missionService from "../services/mission-service";
 import accountService from "../services/account-service";
 
 export default {
   components: {
-    CardTask,
+    CardMission,
   },
   props: ["lessonId"],
   data() {
@@ -50,8 +50,8 @@ export default {
       this.$parent.hide = newValue;
     },
     send() {
-      lessonService
-        .completeTask(
+      campaignService
+        .completeMission(
           this.$store.getters.getActualClassroom.id,
           this.lessonId,
           this.$store.getters.getTasksResponse,
@@ -70,7 +70,7 @@ export default {
         });
 
       this.hideUpdate(true);
-      setTimeout(() => this.$router.push({ name: "Classroom" }), 500);
+      setTimeout(() => this.$router.push({ name: "NewGame" }), 500);
     },
   },
   computed: {
@@ -80,14 +80,14 @@ export default {
   },
   async beforeCreate() {
     if (this.$store.getters.getUser.isLeader()) {
-      let response = await taskService.fetchTasksTeacher(
+      let response = await missionService.fetchMissionsLeader(
         this.$store.getters.getActualLesson.id,
         this.$store.getters.getUser.getAccountId(),
         this.$store.getters.getUser.getToken()
       );
       this.tasks = response.data;
     } else {
-      let response = await taskService.fetchTasks(
+      let response = await missionService.fetchMissions(
         this.$store.getters.getActualLesson.id,
         this.$store.getters.getUser.getToken(),
         this.$store.getters.getUser.getAccountId()

@@ -92,7 +92,7 @@ export default {
       this.$store.commit("resetTaskResponse");
       this.$emit("update", true);
       this.$store.commit("addActualLesson", this.lesson);
-      setTimeout(() => this.$router.push({ name: "Lesson" }), 500);
+      setTimeout(() => this.$router.push({ name: "Campaign" }), 500);
     },
   },
 };

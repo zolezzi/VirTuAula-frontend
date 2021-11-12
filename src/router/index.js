@@ -1,16 +1,16 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
-import Classroom from "../views/Classroom.vue";
-import Lesson from "../views/Lesson.vue";
+import NewGame from "../views/NewGame.vue";
+import Campaign from "../views/Campaign.vue";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
-import FormLesson from "../views/FormLesson.vue";
-import FormTask from "../views/FormTask.vue";
-import FormClassroom from "../views/FormClassroom.vue";
+import FormCampaign from "../views/FormCampaign.vue";
+import FormMission from "../views/FormMission.vue";
+import FormNewGame from "../views/FormNewGame.vue";
 import Forbidden from "../views/Forbidden.vue";
 import Account from "../views/Account.vue";
-import Students from "../views/Students.vue";
+import Players from "../views/Players.vue";
 import store from "../store";
 
 Vue.use(VueRouter);
@@ -26,45 +26,45 @@ const routes = [
     },
   },
   {
-    path: "/classroom",
-    name: "Classroom",
-    component: Classroom,
+    path: "/new-game",
+    name: "NewGame",
+    component: NewGame,
     meta: {
       requiresAuth: true,
       requiresRole: false,
     },
   },
   {
-    path: "/lesson",
-    name: "Lesson",
-    component: Lesson,
+    path: "/campaign",
+    name: "Campaign",
+    component: Campaign,
     meta: {
       requiresAuth: true,
       requiresRole: false,
     },
   },
   {
-    path: "/add-lesson",
-    name: "FormLesson",
-    component: FormLesson,
+    path: "/add-campaign",
+    name: "FormCampaign",
+    component: FormCampaign,
     meta: {
       requiresAuth: true,
       requiresRole: true,
     },
   },
   {
-    path: "/add-task",
-    name: "FormTask",
-    component: FormTask,
+    path: "/add-mission",
+    name: "FormMission",
+    component: FormMission,
     meta: {
       requiresAuth: true,
       requiresRole: true,
     },
   },
   {
-    path: "/add-classroom",
-    name: "FormClassroom",
-    component: FormClassroom,
+    path: "/add-new-game",
+    name: "FormNewGame",
+    component: FormNewGame,
     meta: {
       requiresAuth: true,
       requiresRole: true,
@@ -94,9 +94,9 @@ const routes = [
     component: Forbidden,
   },
   {
-    path: "/students",
-    name: "Students",
-    component: Students,
+    path: "/players",
+    name: "Players",
+    component: Players,
     meta: {
       requiresAuth: true,
       requiresRole: true,

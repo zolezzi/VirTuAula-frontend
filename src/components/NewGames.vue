@@ -19,7 +19,7 @@
       <b-row align-h="center">
         <div v-for="classroom in classrooms" :key="classroom.id">
           <b-col>
-            <CardClassroom
+            <CardNewGame
               :classroom="classroom"
               :hide="hide"
               @update="hideUpdate"
@@ -33,12 +33,12 @@
 </template>
 
 <script>
-import CardClassroom from "./CardClassroom.vue";
-import classroomService from "../services/classroom-service";
+import CardNewGame from "./CardNewGame.vue";
+import newGameService from "../services/new-game-service";
 export default {
   name: "Classrooms",
   components: {
-    CardClassroom,
+    CardNewGame,
   },
   data() {
     return {
@@ -54,11 +54,11 @@ export default {
     addClassroom() {
       this.hide = true;
       this.$parent.hide = true;
-      setTimeout(() => this.$router.push({ name: "FormClassroom" }), 500);
+      setTimeout(() => this.$router.push({ name: "FormNewGame" }), 500);
     },
   },
   async beforeCreate() {
-    let response = await classroomService.fetchClasses(
+    let response = await newGameService.fetchNewGames(
       this.$store.getters.getUser.getToken(),
       this.$store.getters.getUser.getAccountId()
     );

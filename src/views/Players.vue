@@ -84,7 +84,7 @@ export default {
       const formData = new FormData();
       formData.append("file", this.file);
       accountService
-        .addStudents(
+        .addPlayers(
           this.$store.getters.getUser.getToken(),
           this.$store.getters.getUser.getAccountId(),
           formData

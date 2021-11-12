@@ -1,6 +1,6 @@
 const axios = require("axios");
 const classroomService = (function() {
-  function fetchClasses(token, accountId) {
+  function fetchNewGames(token, accountId) {
     return axios.get(`/api/new-games/${accountId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -8,7 +8,7 @@ const classroomService = (function() {
     });
   }
 
-  function createClassroom(token, accountId, formData) {
+  function createNewGame(token, accountId, formData) {
     return axios.post(`/api/new-games/create/${accountId}`, formData, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -17,8 +17,8 @@ const classroomService = (function() {
   }
 
   return {
-    fetchClasses: fetchClasses,
-    createClassroom: createClassroom,
+    fetchNewGames: fetchNewGames,
+    createNewGame: createNewGame,
   };
 })();
 

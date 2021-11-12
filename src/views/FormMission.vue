@@ -92,7 +92,7 @@
 </template>
 
 <script>
-import taskTypeService from "../services/task-types";
+import missionTypesService from "../services/mission-types";
 
 export default {
   data() {
@@ -115,7 +115,7 @@ export default {
     add() {
       if (this.allComplete()) {
         this.$store.commit("addNewTask", this.getNewTask());
-        setTimeout(() => this.$router.push({ name: "FormLesson" }), 500);
+        setTimeout(() => this.$router.push({ name: "FormCampaign" }), 500);
       }
     },
     getNewTask() {
@@ -151,8 +151,8 @@ export default {
     },
   },
   mounted() {
-    taskTypeService
-      .fetchTasksTypes(this.$store.getters.getUser.getToken())
+    missionTypesService
+      .fetchMissionsTypes(this.$store.getters.getUser.getToken())
       .then((response) => {
         this.taskTypes = response.data.map((taskType) => {
           return { value: taskType.id, text: taskType.name };

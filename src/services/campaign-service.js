@@ -1,6 +1,6 @@
 const axios = require("axios");
 const lessonService = (function() {
-  function fetchLessonsTeacher(newGameId, token) {
+  function fetchCampaignsLeader(newGameId, token) {
     return axios.get(`/api/campaigns/${newGameId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -8,7 +8,7 @@ const lessonService = (function() {
     });
   }
 
-  function fetchLessons(newGameId, token, accountId) {
+  function fetchCampaigns(newGameId, token, accountId) {
     return axios.get(`/api/campaigns/${newGameId}/${accountId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -16,7 +16,7 @@ const lessonService = (function() {
     });
   }
 
-  function completeTask(newGameId, missionId, missions, token, accountId) {
+  function completeMission(newGameId, missionId, missions, token, accountId) {
     return axios.post(
       `/api/campaigns/${newGameId}/${missionId}/${accountId}`,
       missions,
@@ -41,9 +41,9 @@ const lessonService = (function() {
   }
 
   return {
-    completeTask: completeTask,
-    fetchLessons: fetchLessons,
-    fetchLessonsTeacher: fetchLessonsTeacher,
+    completeMission: completeMission,
+    fetchCampaigns: fetchCampaigns,
+    fetchCampaignsLeader: fetchCampaignsLeader,
     create: create,
   };
 })();

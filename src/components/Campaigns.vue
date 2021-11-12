@@ -18,7 +18,7 @@
       </b-row>
       <b-row align-h="center">
         <div v-for="lesson in lessons" :key="lesson.id">
-          <CardLesson :lesson="lesson" :hide="hide" @update="hideUpdate" />
+          <CardCampaign :lesson="lesson" :hide="hide" @update="hideUpdate" />
         </div>
       </b-row>
     </b-container>
@@ -26,11 +26,11 @@
 </template>
 
 <script>
-import CardLesson from "./CardLesson.vue";
-import lessonService from "../services/lesson-service";
+import CardCampaign from "./CardCampaign.vue";
+import campaignService from "../services/campaign-service";
 export default {
   components: {
-    CardLesson,
+    CardCampaign,
   },
   props: ["classroomId"],
   data() {
@@ -47,18 +47,18 @@ export default {
     addLesson() {
       this.hide = true;
       this.$parent.hide = true;
-      setTimeout(() => this.$router.push({ name: "FormLesson" }), 500);
+      setTimeout(() => this.$router.push({ name: "FormCampaign" }), 500);
     },
   },
   async beforeCreate() {
     let response;
     if (this.$store.getters.getUser.isLeader()) {
-      response = await lessonService.fetchLessonsTeacher(
+      response = await campaignService.fetchCampaignsLeader(
         this.$store.getters.getActualClassroom.id,
         this.$store.getters.getUser.getToken()
       );
     } else {
-      response = await lessonService.fetchLessons(
+      response = await campaignService.fetchCampaigns(
         this.$store.getters.getActualClassroom.id,
         this.$store.getters.getUser.getToken(),
         this.$store.getters.getUser.getAccountId()

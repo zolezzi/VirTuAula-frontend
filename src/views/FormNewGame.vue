@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import classroomService from "../services/classroom-service";
+import newGameService from "../services/new-game-service";
 import accountService from "../services/account-service";
 
 export default {
@@ -90,7 +90,7 @@ export default {
   methods: {
     create() {
       if (this.completed) {
-        classroomService.createClassroom(
+        newGameService.createNewGame(
           this.$store.getters.getUser.getToken(),
           this.$store.getters.getUser.getAccountId(),
           {
@@ -105,7 +105,7 @@ export default {
   },
   mounted() {
     accountService
-      .getStudents(
+      .getPlayers(
         this.$store.getters.getUser.getToken(),
         this.$store.getters.getUser.getAccountId()
       )

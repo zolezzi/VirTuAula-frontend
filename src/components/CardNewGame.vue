@@ -40,7 +40,7 @@
 
 <script>
 export default {
-  name: "CardClassroom",
+  name: "CardNewGame",
   data() {
     return {
       max: 100,
@@ -58,7 +58,7 @@ export default {
     enter() {
       this.$emit("update", true);
       this.$store.commit("addActualClassroom", this.classroom);
-      setTimeout(() => this.$router.push({ name: "Classroom" }), 500);
+      setTimeout(() => this.$router.push({ name: "NewGame" }), 500);
     },
   },
 };

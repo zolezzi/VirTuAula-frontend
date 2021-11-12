@@ -96,7 +96,7 @@ export default {
   },
   methods: {
     addStudents() {
-      setTimeout(() => this.$router.push({ name: "Students" }), 500);
+      setTimeout(() => this.$router.push({ name: "Players" }), 500);
     },
   },
 };

@@ -1,7 +1,7 @@
 import { mount, createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
-import CardTask from "../../src/components/CardTask.vue";
-import Tasks from "../../src/components/Tasks.vue";
+import CardMission from "../../src/components/CardMission.vue";
+import Missions from "../../src/components/Missions.vue";
 import { BootstrapVue } from "bootstrap-vue";
 const User = require('../../src/entity/User');
 const localVue = createLocalVue();
@@ -9,7 +9,7 @@ const localVue = createLocalVue();
 localVue.use(Vuex);
 localVue.use(BootstrapVue);
 
-describe("CardTask.vue", () => {
+describe("CardMission.vue", () => {
   const actualLesson = { progress: 0 };
   const user = new User('teacher', 'token', {accountType: {name: 'STUDENT'}});
   let store;
@@ -30,7 +30,7 @@ describe("CardTask.vue", () => {
   });
 
   it("selected has no value", () => {
-    const wrapper = mount(CardTask, {
+    const wrapper = mount(CardMission, {
       store,
       localVue,
       propsData: {
@@ -41,7 +41,7 @@ describe("CardTask.vue", () => {
   });
 
   it("selected has value from prop task answer", () => {
-    const wrapper = mount(CardTask, {
+    const wrapper = mount(CardMission, {
       store,
       localVue,
       propsData: {
@@ -52,7 +52,7 @@ describe("CardTask.vue", () => {
   });
 });
 
-describe("Tasks.vue", () => {
+describe("Missions.vue", () => {
   const actualLesson = { progress: 0 };
   const tasks = [];
   const tasksResponse = [];
@@ -73,7 +73,7 @@ describe("Tasks.vue", () => {
   });
 
   it("has lessonId prop", () => {
-    const wrapper = mount(Tasks, {
+    const wrapper = mount(Missions, {
       store,
       localVue,
       propsData: {

@@ -30,7 +30,7 @@
           virtuaula-players
         "
       >
-        <b-nav-item @click="addPlayers()">Add Players</b-nav-item>
+        <b-nav-item class="virtuaula-add" @click="addPlayers()">Add Players</b-nav-item>
       </b-navbar-nav>
       <b-navbar-nav v-if="this.$store.getters.getUser.account" class="ml-auto">
         <div
@@ -81,11 +81,6 @@ import ProgressBar from "vue-simple-progress";
 
 export default {
   name: "Navbar",
-  data() {
-    return {
-      isMobile: window.innerWidth < 800
-    }
-  },
   components: {
     ProgressBar,
   },
@@ -93,6 +88,9 @@ export default {
     currentRouteName() {
       return this.$route.name;
     },
+    isMobile() {
+      return window.innerWidth < 800
+    }
   },
   methods: {
     addPlayers() {

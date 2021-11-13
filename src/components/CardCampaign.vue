@@ -48,7 +48,7 @@
                     ></b-progress-bar>
                   </b-progress>
                 </b-col>
-                <b-col cols="2" v-show="!this.deliveryDateExpired">
+                <b-col cols="2" v-show="this.$store.getters.getUser.isLeader() || !this.deliveryDateExpired">
                   <b-button href="#" variant="warning" @click="doCampaign()">{{
                     campaign.progress === 100 ||
                     this.$store.getters.getUser.isLeader()

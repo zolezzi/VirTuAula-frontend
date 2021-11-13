@@ -60,16 +60,16 @@
             bar-color="#ffc107"
             :val="this.$store.getters.getUser.getExperience()"
             size="8"
-            max="1000"
-            :text="this.$store.getters.getUser.getExperience() + '/1000'"
+            :max="this.$store.getters.getUser.getLevel().getMaxValue()"
+            :text="this.$store.getters.getUser.getExperience() + '/' + this.$store.getters.getUser.getLevel().getMaxValue()"
           ></progress-bar>
         </div>
         <b-nav-text
           v-show="this.$store.getters.getUser.getToken()"
-          class="virtuaula-guest"
+          class="virtuaula-guest ml-3"
         >
           {{ this.$store.getters.getUser.getUsername() }}
-          <b-avatar variant="warning ml-2"></b-avatar>
+          <b-avatar variant="warning" class="ml-2"></b-avatar>
         </b-nav-text>
       </b-navbar-nav>
     </b-navbar>

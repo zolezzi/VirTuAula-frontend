@@ -39,7 +39,7 @@ class User {
   }
 
   setLevel(level) {
-    this.level = new Level(level.id, level.name, level.numberLevel, level.description, level.imagePath);
+    this.level = new Level(level.id, level.name, level.numberLevel, level.maxValue, level.description, level.imagePath);
   }
 
   hasAccount() {

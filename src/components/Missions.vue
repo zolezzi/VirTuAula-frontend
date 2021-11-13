@@ -67,6 +67,16 @@ export default {
             .then((response) =>
               this.$store.getters.getUser.setExperience(response.data)
             );
+        })
+        .then(() => {
+          accountService
+            .getLevel(
+              this.$store.getters.getUser.getToken(),
+              this.$store.getters.getUser.getAccountId()
+            )
+            .then((response) =>
+              this.$store.getters.getUser.setLevel(response.data)
+            );
         });
 
       this.hideUpdate(true);
@@ -75,7 +85,9 @@ export default {
   },
   computed: {
     complete() {
-      return this.missions.length !== this.$store.getters.getMissionsResponse.length;
+      return (
+        this.missions.length !== this.$store.getters.getMissionsResponse.length
+      );
     },
   },
   async beforeCreate() {

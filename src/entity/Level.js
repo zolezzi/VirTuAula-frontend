@@ -1,8 +1,9 @@
 class Level {
-    constructor(id, name, numberLevel, description, imagePath) {
+    constructor(id, name, numberLevel, maxValue, description, imagePath) {
         this.id = id;
         this.name = name;
         this.numberLevel = numberLevel;
+        this.maxValue = maxValue;
         this.description = description;
         this.imagePath = imagePath
     }
@@ -15,6 +16,11 @@ class Level {
         return this.numberLevel;
     }
 
+    getMaxValue() {
+        return this.maxValue;
+    }
+
 }
+
 
 module.exports = Level;

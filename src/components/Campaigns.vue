@@ -7,6 +7,7 @@
         class="mb-4"
       >
         <b-button
+          class="ml-1"
           variant="success"
           :class="
             hide ? 'animate__animated animate__zoomOut animate__faster' : ''
@@ -14,6 +15,16 @@
           @click="addCampaign"
         >
           + Add Campaign</b-button
+        >
+        <b-button
+          class="ml-1"
+          variant="success"
+          :class="
+            hide ? 'animate__animated animate__zoomOut animate__faster' : ''
+          "
+          @click="addPlayers"
+        >
+          + Add Players to Game</b-button
         >
       </b-row>
       <b-row align-h="center">
@@ -48,6 +59,11 @@ export default {
       this.hide = true;
       this.$parent.hide = true;
       setTimeout(() => this.$router.push({ name: "FormCampaign" }), 500);
+    },
+    addPlayers() {
+      this.hide = true;
+      this.$parent.hide = true;
+      setTimeout(() => this.$router.push({ name: "FormPlayers" }), 500);
     },
   },
   async beforeCreate() {

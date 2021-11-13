@@ -11,6 +11,7 @@ import FormNewGame from "../views/FormNewGame.vue";
 import Forbidden from "../views/Forbidden.vue";
 import Account from "../views/Account.vue";
 import Players from "../views/Players.vue";
+import FormPlayers from "../views/FormPlayers.vue";
 import store from "../store";
 
 Vue.use(VueRouter);
@@ -65,6 +66,15 @@ const routes = [
     path: "/add-new-game",
     name: "FormNewGame",
     component: FormNewGame,
+    meta: {
+      requiresAuth: true,
+      requiresRole: true,
+    },
+  },
+  {
+    path: "/add-players",
+    name: "FormPlayers",
+    component: FormPlayers,
     meta: {
       requiresAuth: true,
       requiresRole: true,

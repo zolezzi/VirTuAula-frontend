@@ -16,9 +16,22 @@ const newGameService = (function() {
     });
   }
 
+  function assignPlayerToNewGame(token, newGameId, accountId, players) {
+    return axios.post(
+      `/api/new-games/assign/${newGameId}/${accountId}`,
+      players,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+  }
+
   return {
     fetchNewGames: fetchNewGames,
     createNewGame: createNewGame,
+    assignPlayerToNewGame: assignPlayerToNewGame,
   };
 })();
 

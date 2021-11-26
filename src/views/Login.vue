@@ -95,7 +95,7 @@ export default {
               this.addExperience();
               this.addLevel();
             }
-            this.$router.push("/");
+            this.$router.push("/home");
           }
         })
         .then(() => this.makeToast("success", "Login", "Successful Login"))

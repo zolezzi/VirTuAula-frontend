@@ -12,13 +12,14 @@ import Forbidden from "../views/Forbidden.vue";
 import Account from "../views/Account.vue";
 import Players from "../views/Players.vue";
 import FormPlayers from "../views/FormPlayers.vue";
+import Public from "../views/Public.vue";
 import store from "../store";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/",
+    path: "/home",
     name: "Home",
     component: Home,
     meta: {
@@ -87,6 +88,11 @@ const routes = [
     meta: {
       requiresAuth: true,
     },
+  },
+  {
+    path:"/",
+    name:"Public",
+    component: Public
   },
   {
     path: "/login",

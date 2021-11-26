@@ -1,22 +1,20 @@
 <template>
   <div>
     <b-navbar type="dark" variant="secondary">
-      <router-link to="/" class="virtuaula-link">
-        <b-navbar-nav class="virtuaula-logo">
-          <div class="virtuaula-box">
-            <img
-              class="virtuaula-img animate__animated animate__bounceInLeft"
-              src="../assets/logo.png"
-              alt="logo"
-              width="100"
-              height="80"
-            />
-            <p class="virtuaula-text animate__animated animate__bounceInRight">
-              VirTuAula
-            </p>
-          </div>
-        </b-navbar-nav>
-      </router-link>
+      <b-navbar-nav @click="redirect()" class="virtuaula-logo">
+        <div class="virtuaula-box">
+          <img
+            class="virtuaula-img animate__animated animate__bounceInLeft"
+            src="../assets/logo.png"
+            alt="logo"
+            width="100"
+            height="80"
+          />
+          <p class="virtuaula-text animate__animated animate__bounceInRight">
+            VirTuAula
+          </p>
+        </div>
+      </b-navbar-nav>
       <b-navbar-nav
         v-show="
           this.$store.getters.getUser.isLeader() &&
@@ -30,11 +28,25 @@
           virtuaula-players
         "
       >
-        <b-nav-item class="virtuaula-add" @click="addPlayers()">Add Players</b-nav-item>
+        <b-nav-item class="virtuaula-add" @click="addPlayers()"
+          >Add Players</b-nav-item
+        >
+      </b-navbar-nav>
+      <b-navbar-nav
+        v-if="
+          !this.$store.getters.getUser.account && currentRouteName === 'Public'
+        "
+        class="ml-auto"
+      >
+        <b-nav-item @click="register()">Register</b-nav-item>
+        <b-nav-item @click="login()">Login</b-nav-item>
       </b-navbar-nav>
       <b-navbar-nav v-if="this.$store.getters.getUser.account" class="ml-auto">
         <div
-          v-if="!this.$store.getters.getUser.isLeader() && this.$store.getters.getUser.getLevel()"
+          v-if="
+            !this.$store.getters.getUser.isLeader() &&
+            this.$store.getters.getUser.getLevel()
+          "
           class="virtuaula-experience"
         >
           <b-badge variant="warning" class="mr-2 ml-2 mb-1">
@@ -61,7 +73,11 @@
             :val="this.$store.getters.getUser.getExperience()"
             size="8"
             :max="this.$store.getters.getUser.getLevel().getMaxValue()"
-            :text="this.$store.getters.getUser.getExperience() + '/' + this.$store.getters.getUser.getLevel().getMaxValue()"
+            :text="
+              this.$store.getters.getUser.getExperience() +
+              '/' +
+              this.$store.getters.getUser.getLevel().getMaxValue()
+            "
           ></progress-bar>
         </div>
         <b-nav-text
@@ -89,12 +105,25 @@ export default {
       return this.$route.name;
     },
     isMobile() {
-      return window.innerWidth < 800
-    }
+      return window.innerWidth < 800;
+    },
   },
   methods: {
     addPlayers() {
       setTimeout(() => this.$router.push({ name: "Players" }), 500);
+    },
+    login() {
+      setTimeout(() => this.$router.push({ name: "Login" }), 500);
+    },
+    register() {
+      setTimeout(() => this.$router.push({ name: "Register" }), 500);
+    },
+    redirect() {
+      if (this.$store.getters.getUser.account && this.currentRouteName !== "Home" ) {
+        setTimeout(() => this.$router.push({ name: "Home" }), 500);
+      } else  if (!this.$store.getters.getUser.account && this.currentRouteName !== "Public") {
+        setTimeout(() => this.$router.push({ name: "Public" }), 500);
+      }
     },
   },
 };

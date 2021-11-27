@@ -8,7 +8,7 @@
           <b-card img-alt="campaign" img-left class="mb-3">
             <div class="virtuaula-title">
               <h4 class="card-title">{{ campaign.name }}</h4>
-              <template v-if="!deliveryDateExpired">
+              <template v-if="!deliveryDateExpired || campaign.state === 'COMPLETED'">
                 <h4
                   v-show="
                     campaign.note != null &&
@@ -20,10 +20,17 @@
                   >
                 </h4>
               </template>
-              <template v-else>
+              <template v-if="deliveryDateExpired && campaign.state === 'UNCOMPLETED'">
                 <h4 v-show="!this.$store.getters.getUser.isLeader()">
                   <b-badge class="virtuaula-mark" variant="danger"
                     >Expired</b-badge
+                  >
+                </h4>
+              </template>
+              <template v-if="!deliveryDateExpired && campaign.state === 'PENDING'">
+                <h4 v-show="!this.$store.getters.getUser.isLeader()">
+                  <b-badge class="virtuaula-mark" variant="secondary"
+                    >Pending</b-badge
                   >
                 </h4>
               </template>
@@ -51,7 +58,7 @@
                 <b-col cols="2" v-show="this.$store.getters.getUser.isLeader() || !this.deliveryDateExpired">
                   <b-button href="#" variant="warning" @click="doCampaign()">{{
                     campaign.progress === 100 ||
-                    this.$store.getters.getUser.isLeader()
+                    this.$store.getters.getUser.isLeader() || campaign.state === 'PENDING'
                       ? "View"
                       : "Do"
                   }}</b-button>

@@ -33,6 +33,23 @@
         >
       </b-navbar-nav>
       <b-navbar-nav
+        v-show="
+          this.$store.getters.getUser.isLeader() &&
+          !(currentRouteName === 'Teams')
+        "
+        :class="currentRouteName === 'Players' ? 'ml-5': ''"
+        class="
+          mt-2
+          virtuaula-img
+          animate__animated animate__zoomIn
+          virtuaula-players
+        "
+      >
+        <b-nav-item class="virtuaula-add" @click="adminTeams()"
+          >Teams</b-nav-item
+        >
+      </b-navbar-nav>
+      <b-navbar-nav
         v-if="
           !this.$store.getters.getUser.account && currentRouteName === 'Public'
         "
@@ -111,6 +128,9 @@ export default {
   methods: {
     addPlayers() {
       setTimeout(() => this.$router.push({ name: "Players" }), 500);
+    },
+    adminTeams() {
+      setTimeout(() => this.$router.push({ name: "Teams" }), 500);
     },
     login() {
       setTimeout(() => this.$router.push({ name: "Login" }), 500);

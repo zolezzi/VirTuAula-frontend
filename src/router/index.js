@@ -13,6 +13,7 @@ import Account from "../views/Account.vue";
 import Players from "../views/Players.vue";
 import FormPlayers from "../views/FormPlayers.vue";
 import Public from "../views/Public.vue";
+import Teams from "../views/Teams.vue";
 import store from "../store";
 
 Vue.use(VueRouter);
@@ -25,6 +26,15 @@ const routes = [
     meta: {
       requiresAuth: true,
       requiresRole: false,
+    },
+  },
+  {
+    path: "/teams",
+    name: "Teams",
+    component: Teams,
+    meta: {
+      requiresAuth: true,
+      requiresRole: true,
     },
   },
   {

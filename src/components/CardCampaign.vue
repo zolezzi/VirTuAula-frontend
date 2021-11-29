@@ -8,11 +8,15 @@
           <b-card img-alt="campaign" img-left class="mb-3">
             <div class="virtuaula-title">
               <h4 class="card-title">{{ campaign.name }}</h4>
-              <template v-if="!deliveryDateExpired || campaign.state === 'COMPLETED'">
+              <template
+                v-if="!deliveryDateExpired || campaign.state === 'COMPLETED'"
+              >
                 <h4
                   v-show="
-                    campaign.note != null &&
-                    !this.$store.getters.getUser.isLeader()
+                    (campaign.note != null &&
+                      !this.$store.getters.getUser.isLeader()) ||
+                    (campaign.note != null &&
+                      currentRouteName === 'PlayerCorrection')
                   "
                 >
                   <b-badge class="virtuaula-mark" variant="warning"
@@ -20,15 +24,44 @@
                   >
                 </h4>
               </template>
-              <template v-if="deliveryDateExpired && campaign.state === 'UNCOMPLETED'">
-                <h4 v-show="!this.$store.getters.getUser.isLeader()">
+              <template
+                v-if="deliveryDateExpired && campaign.state === 'UNCOMPLETED'"
+              >
+                <h4
+                  v-show="
+                    !this.$store.getters.getUser.isLeader() ||
+                    currentRouteName === 'PlayerCorrection'
+                  "
+                >
                   <b-badge class="virtuaula-mark" variant="danger"
                     >Expired</b-badge
                   >
                 </h4>
               </template>
-              <template v-if="!deliveryDateExpired && campaign.state === 'PENDING'">
-                <h4 v-show="!this.$store.getters.getUser.isLeader()">
+              <template
+                v-if="!deliveryDateExpired && campaign.state === 'UNCOMPLETED'"
+              >
+                <h4
+                  v-show="
+                    !this.$store.getters.getUser.isLeader() ||
+                    currentRouteName === 'PlayerCorrection'
+                  "
+                >
+                  Expiration Date
+                  <b-badge class="virtuaula-mark" variant="danger">{{
+                    deliveryDate
+                  }}</b-badge>
+                </h4>
+              </template>
+              <template
+                v-if="!deliveryDateExpired && campaign.state === 'PENDING'"
+              >
+                <h4
+                  v-show="
+                    !this.$store.getters.getUser.isLeader() ||
+                    currentRouteName === 'PlayerCorrection'
+                  "
+                >
                   <b-badge class="virtuaula-mark" variant="secondary"
                     >Pending</b-badge
                   >
@@ -43,25 +76,36 @@
               <b-row>
                 <b-col cols="7" sm="9" lg="10">
                   <b-progress
-                    v-show="!this.$store.getters.getUser.isLeader()"
+                    v-show="
+                      !this.$store.getters.getUser.isLeader() ||
+                      currentRouteName === 'PlayerCorrection'
+                    "
                     :max="max"
                     class="mt-2"
                   >
                     <b-progress-bar
                       :value="campaign.progress === 0 ? 100 : value"
-                      :variant="campaign.progress === 0 ? 'secondary' : 'success'"
+                      :variant="
+                        campaign.progress === 0 ? 'secondary' : 'success'
+                      "
                       show-progress
                       :label="`${value}%`"
                     ></b-progress-bar>
                   </b-progress>
                 </b-col>
-                <b-col cols="2" v-show="this.$store.getters.getUser.isLeader() || !this.deliveryDateExpired">
-                  <b-button href="#" variant="warning" @click="doCampaign()">{{
-                    campaign.progress === 100 ||
-                    this.$store.getters.getUser.isLeader() || campaign.state === 'PENDING'
-                      ? "View"
-                      : "Do"
-                  }}</b-button>
+                <b-col
+                  cols="2"
+                  v-show="
+                    this.$store.getters.getUser.isLeader() ||
+                    !this.deliveryDateExpired
+                  "
+                >
+                  <b-button
+                    href="#"
+                    :variant="variantButton()"
+                    @click="doCampaign()"
+                    >{{ buttonName() }}</b-button
+                  >
                 </b-col>
               </b-row>
             </b-container>
@@ -91,22 +135,58 @@ export default {
   },
   computed: {
     deliveryDateExpired() {
-      return moment().isAfter(moment(this.campaign.deliveryDate)) && this.campaign.progress < 100;
+      return (
+        moment().isAfter(moment(this.campaign.deliveryDate)) &&
+        this.campaign.progress < 100
+      );
+    },
+    deliveryDate() {
+      return moment(this.campaign.deliveryDate).format("DD-MM-YY");
+    },
+    currentRouteName() {
+      return this.$route.name;
     },
   },
   methods: {
     doCampaign() {
-      this.$store.commit("resetMissionResponse");
-      this.$emit("update", true);
-      this.$store.commit("addActualCampaign", this.campaign);
-      setTimeout(() => this.$router.push({ name: "Campaign" }), 500);
+      if (
+        this.currentRouteName === "PlayerCorrection" &&
+        this.campaign.state === "PENDING"
+      ) {
+        this.$store.commit("addCampaignToCorrect", this.campaign.id);
+        setTimeout(() => this.$router.push({ name: "MissionCorrect" }), 500);
+      } else if(this.currentRouteName === "PlayerCorrection" && this.campaign.state !== 'PENDING') {
+        console.log("Deberia ver las respuestas del alumno...")
+      }else {
+        this.$store.commit("resetMissionResponse");
+        this.$emit("update", true);
+        this.$store.commit("addActualCampaign", this.campaign);
+        setTimeout(() => this.$router.push({ name: "Campaign" }), 500);
+      }
     },
+    buttonName() {
+      if(this.currentRouteName === "PlayerCorrection" && this.campaign.state === "PENDING") {
+        return "Correct";
+      } else if (!this.$store.getters.getUser.isLeader() && this.campaign.state === "UNCOMPLETED") {
+        return "Do";
+      } else {
+        return "View";
+      }
+    },
+    variantButton() {
+      if(this.currentRouteName === "PlayerCorrection" && this.campaign.state === "PENDING") {
+        return "success";
+      }else {
+        return "warning";
+      }
+    }
+
   },
 };
 </script>
 
 <style scoped>
-.btn-warning {
+.btn {
   width: 6rem;
 }
 

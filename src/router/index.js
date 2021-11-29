@@ -14,6 +14,8 @@ import Players from "../views/Players.vue";
 import FormPlayers from "../views/FormPlayers.vue";
 import Public from "../views/Public.vue";
 import Teams from "../views/Teams.vue";
+import PlayerCorrection from "../views/PlayerCorrection.vue";
+import MissionCorrect from "../views/MissionCorrect.vue";
 import store from "../store";
 
 Vue.use(VueRouter);
@@ -32,6 +34,24 @@ const routes = [
     path: "/teams",
     name: "Teams",
     component: Teams,
+    meta: {
+      requiresAuth: true,
+      requiresRole: true,
+    },
+  },
+  {
+    path: "/correction",
+    name: "PlayerCorrection",
+    component: PlayerCorrection,
+    meta: {
+      requiresAuth: true,
+      requiresRole: true,
+    },
+  },
+  {
+    path: "/mission-correction",
+    name: "MissionCorrect",
+    component: MissionCorrect,
     meta: {
       requiresAuth: true,
       requiresRole: true,

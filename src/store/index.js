@@ -11,6 +11,10 @@ export default new Vuex.Store({
     missionsResponse: [],
     user: new User(),
     newMissions: [],
+    teamForCorrection: undefined,
+    playerToCorrect: {},
+    campaignToCorrect: undefined,
+    pendingMissionToCorrect: undefined
   },
   getters: {
     getActualNewGame: (state) => state.actualNewGame,
@@ -18,6 +22,11 @@ export default new Vuex.Store({
     getMissionsResponse: (state) => state.missionsResponse,
     getUser: (state) => state.user,
     getNewMissions: (state) => state.newMissions,
+    getPlayerToCorrect: (state) => state.playerToCorrect,
+    getTeamForCorrection: (state) => state.teamForCorrection,
+    getCampaignToCorrect: (state) => state.campaignToCorrect,
+    getPendingMissionToCorrect: (state) => state.pendingMissionToCorrect
+
   },
   mutations: {
     addActualNewGame: (state, newGame) =>
@@ -38,6 +47,10 @@ export default new Vuex.Store({
     addUser: (state, user) => (state.user = user),
     addNewMission: (state, mission) => state.newMissions.push(mission),
     resetNewMissions: (state) => (state.newMissions = []),
+    addPlayerToCorrect: (state, player) => (state.playerToCorrect = player),
+    addTeamForCorrection: (state, team) => state.teamForCorrection = team,
+    addCampaignToCorrect: (state, campaingId) => state.campaignToCorrect = campaingId,
+    addPendingMission: (state, pendingMission) => state.pendingMissionToCorrect = pendingMission
   },
   actions: {},
   modules: {},

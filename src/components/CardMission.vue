@@ -22,7 +22,7 @@
                   </b-form-radio-group>
                 </b-form-group>
               </template>
-              <template v-if="mission.missionTypeId === 2 && !this.$store.getters.getUser.isLeader()" >
+              <template v-if="mission.missionTypeId === 2 && !this.$store.getters.getUser.isLeader() || (mission.missionTypeId === 2  && this.$store.getters.getUser.isLeader() && currentRouteName === 'MissionCorrect')" >
                 <label class="mt-2 virtuaula-label" for="virtuaula-story"
                   >Tell a Story</label
                 >
@@ -32,6 +32,7 @@
                   placeholder="Tell a story..."
                   rows="3"
                   max-rows="6"
+                  :disabled="this.$store.getters.getUser.isLeader() && currentRouteName === 'MissionCorrect'"
                 ></b-form-textarea>
               </template>
             </b-card>
@@ -59,6 +60,11 @@ export default {
       isLeader: this.$store.getters.getUser.isLeader(),
       storyWrited: this.mission.story ? this.mission.story: ""
     };
+  },
+  computed: {
+    currentRouteName() {
+      return this.$route.name;
+    },
   },
   props: ["mission", "hide"],
   watch: {

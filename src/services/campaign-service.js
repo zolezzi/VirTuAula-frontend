@@ -28,6 +28,18 @@ const campaignService = (function() {
     );
   }
 
+  function correctMission(campaignId, accountId, playerMission, token) {
+    return axios.post(
+      `/api/campaigns/correct-mission/${campaignId}/${accountId}`,
+      playerMission,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+  }
+
   function create(newGameId, token, accountId, campaign) {
     return axios.post(
       `/api/campaigns/create/${newGameId}/${accountId}`,
@@ -45,6 +57,7 @@ const campaignService = (function() {
     fetchCampaigns: fetchCampaigns,
     fetchCampaignsLeader: fetchCampaignsLeader,
     create: create,
+    correctMission: correctMission,
   };
 })();
 

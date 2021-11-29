@@ -43,7 +43,9 @@ export default {
   },
   methods: {
     correct(item) {
-      console.log(item);
+      this.$store.commit("addTeamForCorrection", this.team.id);
+      this.$store.commit("addPlayerToCorrect", item);
+      setTimeout(() => this.$router.push({ name: "PlayerCorrection" }), 500);
     },
   },
 };

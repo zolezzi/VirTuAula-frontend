@@ -156,7 +156,8 @@ export default {
         this.$store.commit("addCampaignToCorrect", this.campaign.id);
         setTimeout(() => this.$router.push({ name: "MissionCorrect" }), 500);
       } else if(this.currentRouteName === "PlayerCorrection" && this.campaign.state !== 'PENDING') {
-        console.log("Deberia ver las respuestas del alumno...")
+        this.$store.commit("addCampaignToCorrect", this.campaign.id);
+        setTimeout(() => this.$router.push({ name: "MissionCheck" }), 500);
       }else {
         this.$store.commit("resetMissionResponse");
         this.$emit("update", true);

@@ -16,6 +16,7 @@ import Public from "../views/Public.vue";
 import Teams from "../views/Teams.vue";
 import PlayerCorrection from "../views/PlayerCorrection.vue";
 import MissionCorrect from "../views/MissionCorrect.vue";
+import MissionCheck from "../views/MissionCheck.vue";
 import store from "../store";
 
 Vue.use(VueRouter);
@@ -52,6 +53,15 @@ const routes = [
     path: "/mission-correction",
     name: "MissionCorrect",
     component: MissionCorrect,
+    meta: {
+      requiresAuth: true,
+      requiresRole: true,
+    },
+  },
+  {
+    path: "/mission-check",
+    name: "MissionCheck",
+    component: MissionCheck,
     meta: {
       requiresAuth: true,
       requiresRole: true,

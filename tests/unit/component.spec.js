@@ -5,9 +5,11 @@ import Missions from "../../src/components/Missions.vue";
 import { BootstrapVue } from "bootstrap-vue";
 const User = require('../../src/entity/User');
 const localVue = createLocalVue();
+import VueRouter from 'vue-router'
 
 localVue.use(Vuex);
 localVue.use(BootstrapVue);
+localVue.use(VueRouter)
 
 describe("CardMission.vue", () => {
   const actualCampaign = { progress: 0 };
@@ -58,6 +60,7 @@ describe("Missions.vue", () => {
   const missionsResponse = [];
   const user = new User('teacher', 'token', {accountType: {name: 'STUDENT'}});
   let store;
+  const router = new VueRouter()
 
   beforeEach(() => {
     store = new Vuex.Store({
@@ -76,6 +79,7 @@ describe("Missions.vue", () => {
     const wrapper = mount(Missions, {
       store,
       localVue,
+      router,
       propsData: {
         campaignId: 1,
       },

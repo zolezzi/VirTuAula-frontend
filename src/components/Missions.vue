@@ -83,10 +83,14 @@ export default {
       setTimeout(() => this.$router.push({ name: "NewGame" }), 500);
     },
     sendMissionPendingNote(missions) {
-      let pendingMission = missions.find(mission => mission.state === 'PENDING');
-      this.$store.commit("addPendingMission", pendingMission);
-      this.$emit('send-note', pendingMission.score);
-    }
+      let pendingMission = missions.find(
+        (mission) => mission.state === "PENDING"
+      );
+      if (pendingMission) {
+        this.$store.commit("addPendingMission", pendingMission);
+        this.$emit("send-note", pendingMission.score);
+      }
+    },
   },
   computed: {
     complete() {
@@ -96,14 +100,22 @@ export default {
     },
   },
   async beforeCreate() {
-    if (this.$store.getters.getUser.isLeader() && this.$route.name !== 'MissionCorrect') {
+    if (
+      this.$store.getters.getUser.isLeader() &&
+      this.$route.name !== "MissionCorrect" &&
+      this.$route.name !== "MissionCheck"
+    ) {
       let response = await missionService.fetchMissionsLeader(
         this.$store.getters.getActualCampaign.id,
         this.$store.getters.getUser.getAccountId(),
         this.$store.getters.getUser.getToken()
       );
       this.missions = response.data;
-    }else if(this.$store.getters.getUser.isLeader() && this.$route.name === 'MissionCorrect') {
+    } else if (
+      (this.$store.getters.getUser.isLeader() &&
+        this.$route.name === "MissionCorrect") ||
+      this.$route.name === "MissionCheck"
+    ) {
       let response = await missionService.fetchMissions(
         this.$store.getters.getCampaignToCorrect,
         this.$store.getters.getUser.getToken(),

@@ -6,10 +6,7 @@
       <b-container>
         <b-row>
           <b-col>
-            <b-card
-              :title="mission.statement"
-              class="mb-3 virtuaula-card"
-            >
+            <b-card :title="mission.statement" class="mb-3 virtuaula-card">
               <template v-if="mission.missionTypeId === 1">
                 <b-form-group class="virtuaula-group">
                   <b-form-radio-group
@@ -22,7 +19,16 @@
                   </b-form-radio-group>
                 </b-form-group>
               </template>
-              <template v-if="mission.missionTypeId === 2 && !this.$store.getters.getUser.isLeader() || (mission.missionTypeId === 2  && this.$store.getters.getUser.isLeader() && currentRouteName === 'MissionCorrect')" >
+              <template
+                v-if="
+                  (mission.missionTypeId === 2 &&
+                    !this.$store.getters.getUser.isLeader()) ||
+                  (mission.missionTypeId === 2 &&
+                    this.$store.getters.getUser.isLeader() &&(
+                    currentRouteName === 'MissionCorrect' ||
+                  currentRouteName === 'MissionCheck'))
+                "
+              >
                 <label class="mt-2 virtuaula-label" for="virtuaula-story"
                   >Tell a Story</label
                 >
@@ -32,7 +38,11 @@
                   placeholder="Tell a story..."
                   rows="3"
                   max-rows="6"
-                  :disabled="this.$store.getters.getUser.isLeader() && currentRouteName === 'MissionCorrect'"
+                  :disabled="
+                    (this.$store.getters.getUser.isLeader() &&
+                      currentRouteName === 'MissionCorrect') ||
+                    currentRouteName === 'MissionCheck'
+                  "
                 ></b-form-textarea>
               </template>
             </b-card>
@@ -53,12 +63,12 @@ export default {
         return { text: option.responseValue, value: option.id };
       }),
       timer: null,
-      selected: this.$store.getters.getUser.isLeader()
+      selected: this.$store.getters.getUser.isLeader() && this.$route.name !== 'MissionCheck'
         ? this.mission.correctAnswer
         : this.mission.answer,
       disabled: this.$store.getters.getActualCampaign.progress,
       isLeader: this.$store.getters.getUser.isLeader(),
-      storyWrited: this.mission.story ? this.mission.story: ""
+      storyWrited: this.mission.story ? this.mission.story : "",
     };
   },
   computed: {
@@ -78,15 +88,15 @@ export default {
       }
     },
     storyWrited(newStory) {
-      if(newStory) {
+      if (newStory) {
         this.mission.answer = this.options[0].value;
         this.$store.commit("addMissionResponse", {
           id: this.mission.id,
           answerId: this.options[0].value,
-          story: newStory
-        })
+          story: newStory,
+        });
       }
-    }
+    },
   },
 };
 </script>

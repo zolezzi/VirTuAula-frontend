@@ -94,6 +94,8 @@ export default {
             if (!this.$store.getters.getUser.isLeader()) {
               this.addExperience();
               this.addLevel();
+              this.addBuffers();
+              this.addGoals();
             }
             this.$router.push("/home");
           }
@@ -135,6 +137,22 @@ export default {
         .then((response) =>
           this.$store.getters.getUser.setLevel(response.data)
         );
+    },
+    addBuffers() {
+      accountService
+        .getBuffers(
+          this.$store.getters.getUser.getToken(),
+          this.$store.getters.getUser.getAccountId()
+        )
+        .then((response) => this.$store.commit("addBuffers", response.data));
+    },
+    addGoals() {
+      accountService
+        .getGoals(
+          this.$store.getters.getUser.getToken(),
+          this.$store.getters.getUser.getAccountId()
+        )
+        .then((response) => this.$store.commit("addGoals", response.data));
     },
   },
 };

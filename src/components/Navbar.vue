@@ -37,7 +37,7 @@
           this.$store.getters.getUser.isLeader() &&
           !(currentRouteName === 'Teams')
         "
-        :class="currentRouteName === 'Players' ? 'ml-5': ''"
+        :class="currentRouteName === 'Players' ? 'ml-5' : ''"
         class="
           mt-2
           virtuaula-img
@@ -68,13 +68,34 @@
         >
           <b-badge variant="warning" class="mr-2 ml-2 mb-1">
             <div v-if="!isMobile">
-              <h5 class="virtuaula-h5">
+              <h5 class="virtuaula-h5" id="virtuaula-popover">
                 {{
                   this.$store.getters.getUser.getLevel().getName() +
                   " Lvl." +
                   this.$store.getters.getUser.getLevel().getNumberLevel()
                 }}
               </h5>
+              <b-popover
+                :disabled="this.$store.getters.getBuffers.length === 0"
+                target="virtuaula-popover"
+                triggers="hover"
+                placement="bottom"
+              >
+                <template #title>Benefits</template>
+                <b-list-group>
+                  <template
+                    v-for="(buffer, index) in this.$store.getters.getBuffers"
+                  >
+                    <b-list-group-item :key="index"
+                      ><b>{{
+                        buffer.name.charAt(0).toUpperCase() +
+                        buffer.name.slice(1)
+                      }}</b
+                      >: {{ buffer.description }}</b-list-group-item
+                    >
+                  </template>
+                </b-list-group>
+              </b-popover>
             </div>
             <div v-else>
               <h5 class="virtuaula-h5">
@@ -102,7 +123,29 @@
           class="virtuaula-guest ml-3"
         >
           {{ this.$store.getters.getUser.getUsername() }}
-          <b-avatar variant="warning" class="ml-2"></b-avatar>
+          <b-avatar
+            variant="warning"
+            class="ml-2"
+            id="virtuaula-popover-goals"
+          ></b-avatar>
+          <b-popover
+            :disabled="this.$store.getters.getGoals.length === 0"
+            target="virtuaula-popover-goals"
+            triggers="hover"
+            placement="bottomleft"
+          >
+            <template #title>Goals</template>
+            <b-list-group>
+              <template v-for="(goal, index) in this.$store.getters.getGoals">
+                <b-list-group-item :key="index"
+                  ><b>{{
+                    goal.name.charAt(0).toUpperCase() + goal.name.slice(1)
+                  }}</b
+                  >: {{ goal.description }}</b-list-group-item
+                >
+              </template>
+            </b-list-group>
+          </b-popover>
         </b-nav-text>
       </b-navbar-nav>
     </b-navbar>
@@ -139,9 +182,15 @@ export default {
       setTimeout(() => this.$router.push({ name: "Register" }), 500);
     },
     redirect() {
-      if (this.$store.getters.getUser.account && this.currentRouteName !== "Home" ) {
+      if (
+        this.$store.getters.getUser.account &&
+        this.currentRouteName !== "Home"
+      ) {
         setTimeout(() => this.$router.push({ name: "Home" }), 500);
-      } else  if (!this.$store.getters.getUser.account && this.currentRouteName !== "Public") {
+      } else if (
+        !this.$store.getters.getUser.account &&
+        this.currentRouteName !== "Public"
+      ) {
         setTimeout(() => this.$router.push({ name: "Public" }), 500);
       }
     },

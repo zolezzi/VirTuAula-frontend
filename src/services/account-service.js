@@ -33,6 +33,22 @@ const accountService = (function() {
     });
   }
 
+  function getBuffers(token, accountId) {
+    return axios.get(`/api/account/buffers/${accountId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+  
+  function getGoals(token, accountId) {
+    return axios.get(`/api/account/goals/${accountId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+
   function getPlayers(token, accountId) {
     return axios.get(`/api/account/players/${accountId}`, {
       headers: {
@@ -47,6 +63,8 @@ const accountService = (function() {
     addPlayers: addPlayers,
     getPlayers: getPlayers,
     getLevel: getLevel,
+    getBuffers: getBuffers,
+    getGoals: getGoals
   };
 })();
 

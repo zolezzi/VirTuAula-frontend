@@ -6,6 +6,9 @@
         align-h="center"
         class="mb-4"
       >
+        <Back backRoute="Home" :class="
+            hide ? 'animate__animated animate__zoomOut animate__faster' : ''
+          " />
         <b-button
           class="ml-1"
           variant="success"
@@ -27,9 +30,20 @@
           + Add Players to Game</b-button
         >
       </b-row>
+      <b-row
+        v-show="!this.$store.getters.getUser.isLeader()"
+        align-h="center"
+        class="mb-4"
+      >
+      <Back backRoute="Home" />
+      </b-row>
       <b-row align-h="center">
         <div v-for="campaign in campaigns" :key="campaign.id">
-          <CardCampaign :campaign="campaign" :hide="hide" @update="hideUpdate" />
+          <CardCampaign
+            :campaign="campaign"
+            :hide="hide"
+            @update="hideUpdate"
+          />
         </div>
       </b-row>
     </b-container>
@@ -39,9 +53,11 @@
 <script>
 import CardCampaign from "./CardCampaign.vue";
 import campaignService from "../services/campaign-service";
+import Back from "./Back.vue";
 export default {
   components: {
     CardCampaign,
+    Back,
   },
   props: ["newGameId"],
   data() {

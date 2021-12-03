@@ -10,6 +10,15 @@
       <b-row align-h="center">
         <h2>Add a Campaign</h2>
       </b-row>
+      <Back
+      backRoute="NewGame"
+      class="mb-2"
+      :class="
+        hide
+          ? 'animate__animated animate__zoomOut animate__faster'
+          : 'animate__animated animate__bounceInDown animate__faster'
+      "
+    />
       <b-row align-h="center" class="mt-4 mb-4">
         <b-card class="virtuaula-card">
           <b-form>
@@ -105,9 +114,13 @@
 
 <script>
 import campaignService from "../services/campaign-service";
+import Back from "../components/Back.vue";
 
 export default {
   name: "FormCampaign",
+  components: {
+    Back
+  },
   data() {
     return {
       hide: false,

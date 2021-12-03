@@ -4,6 +4,10 @@
       Mission Correction of
       {{ this.$store.getters.getPlayerToCorrect.firstName }}
     </h2>
+    <Back
+      backRoute="PlayerCorrection"
+      class="mb-2"
+    />
     <Missions
       :campaignId="this.$store.getters.getCampaignToCorrect"
       class="animate__animated animate__zoomIn animate__faster"
@@ -43,6 +47,7 @@
 
 <script>
 import Missions from "../components/Missions.vue";
+import Back from "../components/Back.vue";
 import campaignService from "../services/campaign-service";
 export default {
   data() {
@@ -54,6 +59,7 @@ export default {
   },
   components: {
     Missions,
+    Back
   },
   methods: {
     correct() {

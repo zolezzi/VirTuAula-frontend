@@ -9,6 +9,15 @@
     >
       Players
     </h2>
+    <Back
+      backRoute="Home"
+      class="mb-2"
+      :class="
+        hide
+          ? 'animate__animated animate__zoomOut animate__faster'
+          : 'animate__animated animate__bounceInDown animate__faster'
+      "
+    />
     <b-form
       :class="
         hide
@@ -59,8 +68,12 @@
 <script>
 import Papa from "papaparse";
 import accountService from "../services/account-service";
+import Back from "../components/Back.vue"
 
 export default {
+  components: {
+    Back
+  },
   data() {
     return {
       file: null,

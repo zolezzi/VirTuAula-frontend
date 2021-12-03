@@ -12,6 +12,17 @@
           {{ "Add Players to " + this.$store.getters.getActualNewGame.name }}
         </h2>
       </b-row>
+      <b-row align-h="center">
+        <Back
+          backRoute="NewGame"
+          class="mb-2"
+          :class="
+            hide
+              ? 'animate__animated animate__zoomOut animate__faster'
+              : 'animate__animated animate__bounceInDown animate__faster'
+          "
+        />
+      </b-row>
       <b-row align-h="center" class="mt-4 mb-4">
         <b-card class="virtuaula-card">
           <b-form>
@@ -43,8 +54,12 @@
 <script>
 import newGameService from "../services/new-game-service";
 import accountService from "../services/account-service";
+import Back from "../components/Back.vue";
 
 export default {
+  components: {
+    Back
+  },
   data() {
     return {
       hide: false,

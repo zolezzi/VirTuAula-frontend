@@ -49,6 +49,14 @@ const accountService = (function() {
     });
   }
 
+  function getLifes(token, accountId) {
+    return axios.get(`/api/account/life/${accountId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+
   function getPlayers(token, accountId) {
     return axios.get(`/api/account/players/${accountId}`, {
       headers: {
@@ -64,7 +72,8 @@ const accountService = (function() {
     getPlayers: getPlayers,
     getLevel: getLevel,
     getBuffers: getBuffers,
-    getGoals: getGoals
+    getGoals: getGoals,
+    getLifes: getLifes
   };
 })();
 

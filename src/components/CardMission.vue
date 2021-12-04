@@ -13,7 +13,7 @@
                     class="virtuaula-options"
                     stacked
                     v-model="selected"
-                    :disabled="disabled === 100 || isLeader"
+                    :disabled="(disabled === 100 || isLeader) && !this.$store.getters.getRedo"
                     :options="options"
                   >
                   </b-form-radio-group>
@@ -24,9 +24,9 @@
                   (mission.missionTypeId === 2 &&
                     !this.$store.getters.getUser.isLeader()) ||
                   (mission.missionTypeId === 2 &&
-                    this.$store.getters.getUser.isLeader() &&(
-                    currentRouteName === 'MissionCorrect' ||
-                  currentRouteName === 'MissionCheck'))
+                    this.$store.getters.getUser.isLeader() &&
+                    (currentRouteName === 'MissionCorrect' ||
+                      currentRouteName === 'MissionCheck'))
                 "
               >
                 <label class="mt-2 virtuaula-label" for="virtuaula-story"
@@ -63,12 +63,20 @@ export default {
         return { text: option.responseValue, value: option.id };
       }),
       timer: null,
-      selected: this.$store.getters.getUser.isLeader() && this.$route.name !== 'MissionCheck'
-        ? this.mission.correctAnswer
-        : this.mission.answer,
+      selected:
+        this.$store.getters.getUser.isLeader() &&
+        this.$route.name !== "MissionCheck"
+          ? this.mission.correctAnswer
+          : this.$store.getters.getRedo
+          ? undefined
+          : this.mission.answer,
       disabled: this.$store.getters.getActualCampaign.progress,
       isLeader: this.$store.getters.getUser.isLeader(),
-      storyWrited: this.mission.story ? this.mission.story : "",
+      storyWrited: this.$store.getters.getRedo
+        ? ""
+        : this.mission.story
+        ? this.mission.story
+        : "",
     };
   },
   computed: {

@@ -31,6 +31,7 @@
 
 <script>
 import NewGames from "@/components/NewGames.vue";
+import accountService from "../services/account-service";
 
 export default {
   name: "Home",
@@ -41,6 +42,17 @@ export default {
     return {
       hide: false,
     };
+  },
+  mounted() {
+    if (!this.$store.getters.getUser.isLeader()) {
+      accountService
+        .getLifes(
+          this.$store.getters.getUser.getToken(),
+          this.$store.getters.getUser.getAccountId()
+        )
+        .then((response) => this.$store.commit("addLifes", response.data))
+        .catch((error) => console.log(error));
+    }
   },
   computed: {
     isMobile() {

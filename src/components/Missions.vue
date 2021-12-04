@@ -17,7 +17,9 @@
           ><b-button
             variant="success"
             @click="send"
-            :disabled="disabled === 100 || complete"
+            :disabled="
+              (disabled === 100 || complete) && !this.$store.getters.getRedo
+            "
             >Send</b-button
           ></b-col
         >
@@ -50,6 +52,55 @@ export default {
       this.$parent.hide = newValue;
     },
     send() {
+      if (this.$store.getters.getRedo) {
+        this.redo();
+      } else {
+        this.completeCampaign();
+      }
+    },
+    redo() {
+      campaignService
+        .redoMission(
+          this.campaignId,
+          this.$store.getters.getUser.getAccountId(),
+          this.$store.getters.getMissionsResponse,
+          this.$store.getters.getUser.getToken()
+        )
+        .then(() => {
+          this.$store.commit("redo", false);
+          accountService
+            .getExperience(
+              this.$store.getters.getUser.getToken(),
+              this.$store.getters.getUser.getAccountId()
+            )
+            .then((response) =>
+              this.$store.getters.getUser.setExperience(response.data)
+            );
+        })
+        .then(() => {
+          accountService
+            .getLevel(
+              this.$store.getters.getUser.getToken(),
+              this.$store.getters.getUser.getAccountId()
+            )
+            .then((response) =>
+              this.$store.getters.getUser.setLevel(response.data)
+            );
+        })
+        .then(() => {
+          accountService
+            .getLifes(
+              this.$store.getters.getUser.getToken(),
+              this.$store.getters.getUser.getAccountId()
+            )
+            .then((response) => this.$store.commit("addLifes", response.data))
+            .catch((error) => console.log(error));
+        });
+
+      this.hideUpdate(true);
+      setTimeout(() => this.$router.push({ name: "NewGame" }), 500);
+    },
+    completeCampaign() {
       campaignService
         .completeMission(
           this.$store.getters.getActualNewGame.id,
@@ -59,6 +110,7 @@ export default {
           this.$store.getters.getUser.getAccountId()
         )
         .then(() => {
+          this.$store.commit("redo", false);
           accountService
             .getExperience(
               this.$store.getters.getUser.getToken(),

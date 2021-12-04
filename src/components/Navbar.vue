@@ -66,6 +66,10 @@
           "
           class="virtuaula-experience"
         >
+          <div class="virtuaula-lifes">
+            <h4 class="mr-1 mt-2">{{this.$store.getters.getLifes}}</h4>
+            <b-icon icon="suit-heart-fill" variant="danger" font-scale="2"></b-icon>
+          </div>
           <b-badge variant="warning" class="mr-2 ml-2 mb-1">
             <div v-if="!isMobile">
               <h5 class="virtuaula-h5" id="virtuaula-popover">
@@ -120,7 +124,7 @@
         </div>
         <b-nav-text
           v-show="this.$store.getters.getUser.getToken()"
-          class="virtuaula-guest ml-3"
+          class="virtuaula-guest ml-5"
         >
           {{ this.$store.getters.getUser.getUsername() }}
           <b-avatar
@@ -303,5 +307,12 @@ export default {
 
 .virtuaula-h5 {
   margin-bottom: 0;
+}
+
+.virtuaula-lifes {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
 }
 </style>

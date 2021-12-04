@@ -155,10 +155,24 @@ export default {
       ) {
         this.$store.commit("addCampaignToCorrect", this.campaign.id);
         setTimeout(() => this.$router.push({ name: "MissionCorrect" }), 500);
-      } else if(this.currentRouteName === "PlayerCorrection" && this.campaign.state !== 'PENDING') {
+      } else if (
+        this.currentRouteName === "PlayerCorrection" &&
+        this.campaign.state !== "PENDING"
+      ) {
         this.$store.commit("addCampaignToCorrect", this.campaign.id);
         setTimeout(() => this.$router.push({ name: "MissionCheck" }), 500);
-      }else {
+      } else if (
+        this.$store.getters.getLifes > 0 &&
+        this.campaign.note < 7 &&
+        !this.$store.getters.getUser.isLeader() &&
+        this.campaign.state === "COMPLETED"
+      ) {
+        this.$store.commit("resetMissionResponse");
+        this.$emit("update", true);
+        this.$store.commit("addActualCampaign", this.campaign);
+        this.$store.commit("redo", true);
+        setTimeout(() => this.$router.push({ name: "Campaign" }), 500);
+      } else {
         this.$store.commit("resetMissionResponse");
         this.$emit("update", true);
         this.$store.commit("addActualCampaign", this.campaign);
@@ -166,22 +180,37 @@ export default {
       }
     },
     buttonName() {
-      if(this.currentRouteName === "PlayerCorrection" && this.campaign.state === "PENDING") {
+      if (
+        this.currentRouteName === "PlayerCorrection" &&
+        this.campaign.state === "PENDING"
+      ) {
         return "Correct";
-      } else if (!this.$store.getters.getUser.isLeader() && this.campaign.state === "UNCOMPLETED") {
+      } else if (
+        !this.$store.getters.getUser.isLeader() &&
+        this.campaign.state === "UNCOMPLETED"
+      ) {
         return "Do";
+      } else if (
+        this.$store.getters.getLifes > 0 &&
+        this.campaign.note < 7 &&
+        !this.$store.getters.getUser.isLeader() &&
+        this.campaign.state !== "PENDING"
+      ) {
+        return "Redo";
       } else {
         return "View";
       }
     },
     variantButton() {
-      if(this.currentRouteName === "PlayerCorrection" && this.campaign.state === "PENDING") {
+      if (
+        this.currentRouteName === "PlayerCorrection" &&
+        this.campaign.state === "PENDING"
+      ) {
         return "success";
-      }else {
+      } else {
         return "warning";
       }
-    }
-
+    },
   },
 };
 </script>

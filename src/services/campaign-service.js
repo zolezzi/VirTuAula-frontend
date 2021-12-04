@@ -39,6 +39,18 @@ const campaignService = (function() {
       }
     );
   }
+  
+  function redoMission(campaignId, accountId, playerMission, token) {
+    return axios.post(
+      `/api/campaigns/retry/${campaignId}/${accountId}`,
+      playerMission,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+  }
 
   function create(newGameId, token, accountId, campaign) {
     return axios.post(
@@ -58,6 +70,7 @@ const campaignService = (function() {
     fetchCampaignsLeader: fetchCampaignsLeader,
     create: create,
     correctMission: correctMission,
+    redoMission: redoMission
   };
 })();
 

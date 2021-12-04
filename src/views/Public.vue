@@ -17,18 +17,59 @@
             @sliding-end="onSlideEnd"
           >
             <b-carousel-slide
-              caption="First slide"
-              text="Nulla vitae elit libero, a pharetra augue mollis interdum."
+              caption="Learning is amazing!"
+              text="Children are the future, that is why they should learn and what better way to learn than by playing."
               img-src="../assets/image1.jpg"
             ></b-carousel-slide>
 
-            <b-carousel-slide img-src="../assets/image2.jpg">
-              <h1>Hello world!</h1>
+            <b-carousel-slide
+              caption="All children like to play"
+              text="Improve your learning and teaching techniques."
+              img-src="../assets/image2.jpg"
+            >
             </b-carousel-slide>
 
-            <b-carousel-slide img-src="../assets/image3.jpg"></b-carousel-slide>
+            <b-carousel-slide
+              caption="Complete amazing missions!"
+              text="Gain experience to have better benefits."
+              img-src="../assets/image3.jpg"
+            ></b-carousel-slide>
           </b-carousel>
         </b-col>
+      </b-row>
+      <b-row class="justify-content-md-center mt-5">
+        <b-col align-self="center"
+          ><b-card class="virtuaula-card mb-2"
+            ><b-icon
+              icon="binoculars-fill"
+              variant="warning"
+              font-scale="3"
+            ></b-icon>
+            <h2>Complete Games</h2></b-card
+          ></b-col
+        >
+        <b-col align-self="center"
+          ><b-card class="virtuaula-card mb-2"
+            ><b-icon icon="bricks" variant="danger" font-scale="3"></b-icon>
+            <h2>Make Missions</h2></b-card
+          ></b-col
+        >
+        <b-col align-self="center"
+          ><b-card class="virtuaula-card mb-2"
+            ><b-icon
+              icon="capslock-fill"
+              variant="primary"
+              font-scale="3"
+            ></b-icon>
+            <h2>Gain Experience</h2></b-card
+          ></b-col
+        >
+        <b-col align-self="center"
+          ><b-card class="virtuaula-card mb-2"
+            ><b-icon icon="cash" variant="success" font-scale="3"></b-icon>
+            <h2>Obtain Benefits</h2></b-card
+          ></b-col
+        >
       </b-row>
     </b-container>
   </div>
@@ -54,4 +95,13 @@ export default {
 </script>
 
 <style scoped>
+.virtuaula-card {
+  background-color: #e0e0e0;
+  width: 255px;
+  height: 220px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
 </style>

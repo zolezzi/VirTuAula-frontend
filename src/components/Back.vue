@@ -6,9 +6,10 @@
 
 <script>
 export default {
-    props: ["backRoute"],
+    props: ["backRoute", "redo"],
     methods: {
         back() {
+            this.$store.commit("redo", this.redo);
             setTimeout(() => this.$router.push({ name: this.backRoute }), 500)
         }
     }
